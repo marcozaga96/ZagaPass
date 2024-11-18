@@ -3,6 +3,7 @@ package marcozagaria.ZagaPass.tools;
 import kong.unirest.core.HttpResponse;
 import kong.unirest.core.JsonNode;
 import kong.unirest.core.Unirest;
+import marcozagaria.ZagaPass.entities.Pagamento;
 import marcozagaria.ZagaPass.entities.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -26,7 +27,15 @@ public class MailgunSender {
                 .queryString("subject", "Registrazione completata!")
                 .queryString("text", "Benvenuto " + recipient.getName() + " sulla nostra piattaforma!")
                 .asJson();
-        System.out.println(response.getBody()); // <-- Consiglio di stampare, soprattutto le prime volte,
-        // la risposta che ci mandano, per rilevare eventuali problemi
+    }
+
+    public void sendPagamentoEmail(Pagamento recipient) {
+        HttpResponse<JsonNode> response = Unirest.post("https://api.mailgun.net/v3/" + this.domain + "/messages")
+                .basicAuth("api", this.apiKey)
+                .queryString("from", "marcozagaria@live.com")
+                .queryString("to", recipient.getAbbonamento())
+                .queryString("subject", "Abbonamento completato!")
+                .queryString("text", "Abbonamento " + recipient.getAbbonamento() + " effettuato con successo!")
+                .asJson();
     }
 }

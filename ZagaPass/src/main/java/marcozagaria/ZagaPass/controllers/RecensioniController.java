@@ -28,7 +28,7 @@ public class RecensioniController {
 
     @GetMapping("/film/{filmId}")
     public List<Recensioni> getReviewsByFilm(@PathVariable UUID filmId) {
-        Film film = filmService.findById(filmId).orElseThrow(() -> new NotFoundException("Film not found with id " + filmId));
+        Film film = filmService.findById(filmId).orElseThrow(() -> new NotFoundException("Film con id " + filmId + " non trovato"));
         return recensioniService.findByFilm(film);
     }
 }

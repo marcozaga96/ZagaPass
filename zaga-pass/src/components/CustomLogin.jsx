@@ -30,7 +30,7 @@ const CustomLogin = () => {
       console.log("I tuoi dati", data);
 
       localStorage.setItem("Access Token", data.accessToken);
-      navigate("/homepage");
+      navigate("/home");
     } catch (err) {
       console.log("Errore durante il login", err);
     }
