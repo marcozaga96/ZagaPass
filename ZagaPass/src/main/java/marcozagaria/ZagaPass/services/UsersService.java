@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -60,6 +61,10 @@ public class UsersService {
 
     public User findById(UUID userId) {
         return this.usersRepository.findById(userId).orElseThrow(() -> new NotFoundException(userId));
+    }
+
+    public Optional<User> findByUsername(String username) {
+        return usersRepository.findByUsername(username);
     }
 
     public User findByIdAndUpdate(UUID userId, NewUserDTO body) {

@@ -1,8 +1,9 @@
 import "./App.css";
-import Login from "./components/Login";
+import "bootstrap/dist/css/bootstrap.min.css";
+import CustomLogin from "./components/CustomLogin";
 
 function App() {
-  return <Login />;
+  return <CustomLogin />;
 }
 
 export default App;

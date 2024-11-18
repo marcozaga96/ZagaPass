@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5eaadf03-f66e-4596-af66-31ccfc93d624" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ZagaPass.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zaga-pass/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/zaga-pass/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zaga-pass/src/components/Login.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zaga-pass/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/zaga-pass/src/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,9 +31,9 @@
   <component name="OptimizeOnSaveOptions">
     <option name="myRunOnSave" value="true" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2ocjQYZ8pZqTt7g7s4LzoTXn5o5" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -50,7 +45,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/marco/Desktop/corso epicode/back-end/unità 2/settimana 3/giorno 1/app_viaggi_2/app_viaggi_2",
+    "last_opened_file_path": "C:/Users/marco/Desktop/corso epicode/capstone/ZagaPass/ZagaPass",
     "rearrange.code.on.save": "true",
     "settings.editor.selected.configurable": "actions.on.save"
   }
