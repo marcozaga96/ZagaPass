@@ -42,10 +42,6 @@ public class FilmService {
         return allFilms;
     }
 
-    public List<Film> findAll() {
-        return filmRepository.findAll();
-    }
-
     public Optional<Film> findById(long id) {
         return filmRepository.findById(id);
     }
