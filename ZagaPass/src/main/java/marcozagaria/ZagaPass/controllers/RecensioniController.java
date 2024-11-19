@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/recensioni")
@@ -27,7 +26,7 @@ public class RecensioniController {
     }
 
     @GetMapping("/film/{filmId}")
-    public List<Recensioni> getReviewsByFilm(@PathVariable UUID filmId) {
+    public List<Recensioni> getReviewsByFilm(@PathVariable long filmId) {
         Film film = filmService.findById(filmId).orElseThrow(() -> new NotFoundException("Film con id " + filmId + " non trovato"));
         return recensioniService.findByFilm(film);
     }
