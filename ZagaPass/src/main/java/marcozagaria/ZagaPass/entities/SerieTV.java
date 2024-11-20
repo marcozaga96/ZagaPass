@@ -3,6 +3,7 @@ package marcozagaria.ZagaPass.entities;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Table(name = "serietv")
-public class SerieTV {
+public class SerieTV extends RepresentationModel<SerieTV> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)

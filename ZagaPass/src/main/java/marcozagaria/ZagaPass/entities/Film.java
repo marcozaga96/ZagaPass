@@ -3,6 +3,7 @@ package marcozagaria.ZagaPass.entities;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 @Setter
 @ToString
 @NoArgsConstructor
-public class Film {
+public class Film extends RepresentationModel<Film> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
