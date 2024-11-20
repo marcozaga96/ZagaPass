@@ -2,22 +2,24 @@ package marcozagaria.ZagaPass.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "film")
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
 public class Film extends RepresentationModel<Film> {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("id")
     private long id;
     @JsonProperty("title")
     private String title;
@@ -47,6 +49,8 @@ public class Film extends RepresentationModel<Film> {
     @ElementCollection
     @JsonProperty("genre_ids")
     private List<Integer> genreIds;
+    @OneToMany(mappedBy = "film")
+    private List<Recensioni> recensioni;
 
     public Film(String title, String overview, LocalDate releaseDate, double popularity, double voteAverage, int voteCount, String originalLanguage, String originalTitle, String posterPath, String backdropPath, boolean adult, boolean video, List<Integer> genreIds) {
         this.title = title;

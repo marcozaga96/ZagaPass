@@ -68,6 +68,7 @@ public class FilmService {
         int start = (int) pageable.getOffset();
         int end = Math.min((start + pageable.getPageSize()), allFilms.size());
         List<Film> moviesPage = allFilms.subList(start, end);
+
         return new PageImpl<>(moviesPage, pageable, allFilms.size());
     }
 
