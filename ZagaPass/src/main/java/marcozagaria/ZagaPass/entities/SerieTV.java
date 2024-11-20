@@ -1,8 +1,14 @@
 package marcozagaria.ZagaPass.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -11,8 +17,7 @@ import java.util.List;
 @Setter
 @ToString
 @Entity
-@NoArgsConstructor
-@Table(name = "serietv")
+
 public class SerieTV {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

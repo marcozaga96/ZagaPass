@@ -2,17 +2,20 @@ package marcozagaria.ZagaPass.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "film")
+
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
+
 public class Film {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
