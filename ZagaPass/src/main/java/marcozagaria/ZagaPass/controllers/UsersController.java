@@ -23,19 +23,11 @@ public class UsersController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('ADMIN')")
-    // <-- Solo gli ADMIN possono visualizzare la lista degli utenti in questa app
     public Page<User> findAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
                               @RequestParam(defaultValue = "id") String sortBy) {
-        // Mettiamo dei valori di default per far si che non ci siano errori se il client non ci invia uno dei query parameters
         return this.usersService.findAll(page, size, sortBy);
     }
 
-    // ************************************************* /ME ENDPOINTS ***********************************************
-    // Se ho effettuato SecurityContextHolder.getContext().setAuthentication(authentication) nel Filter, allora negli endpoint autenticati
-    // posso accedere a chi è l'utente che sta effettuando la richiesta, tramite @AuthenticationPrincipal. Grazie a questo Principal quindi
-    // possiamo andare ad implementare tutta una serie di endpoint "personali", cioè endpoint per leggere il proprio profilo, cambiare i propri
-    // dati oppure anche cancellare se stessi. Inoltre grazie al Principal potremo in futuro anche andare ad effettuare dei controlli, es:
-    // endpoint per cancellare un record di cui sono proprietario, devo fare una verifica che il proprietario corrisponda al Principal
 
     @GetMapping("/me")
     public User getProfile(@AuthenticationPrincipal User currentAuthenticatedUser) {
@@ -65,7 +57,6 @@ public class UsersController {
             validationResult.getAllErrors().forEach(System.out::println);
             throw new BadRequestException("Ci sono stati errori nel payload!");
         }
-        // Ovunque ci sia un body bisognerebbe validarlo!
         return this.usersService.findByIdAndUpdate(userId, body);
     }
 

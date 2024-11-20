@@ -59,27 +59,21 @@ public class UsersService {
 
 
     public User findByIdAndUpdate(UUID userId, NewUserDTO body) {
-        // 1. Cerco l'utente nel db
         User found = this.findById(userId);
-
-        // 2. Controllo se l'email nuova è già in uso
         if (!found.getEmail().equals(body.email())) {
             this.usersRepository.findByEmail(body.email()).ifPresent(
-                    // 1.1 Se trovo uno user con quell'indirizzo triggera un errore
                     user -> {
                         throw new BadRequestException("Email " + body.email() + " già in uso!");
                     }
             );
         }
 
-        // 3. Modifico l'utente trovato nel db
         found.setName(body.name());
         found.setSurname(body.surname());
         found.setEmail(body.email());
         found.setPassword(body.password());
         found.setAvatarURL("https://ui-avatars.com/api/?name=" + body.name() + "+" + body.surname());
 
-        // 4. Risalvo l'utente
         return this.usersRepository.save(found);
     }
 
