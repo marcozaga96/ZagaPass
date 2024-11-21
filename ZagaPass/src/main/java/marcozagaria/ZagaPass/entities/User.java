@@ -32,9 +32,9 @@ public class User implements UserDetails {
     private String avatarURL;
     @Enumerated(EnumType.STRING)
     private Role role;
-    @OneToMany(mappedBy = "user")
-    @JsonManagedReference
-    private List<Recensioni> recensioni;
+    //    @OneToMany(mappedBy = "user")
+//    @JsonManagedReference
+//    private List<Recensioni> recensioni;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Pagamento> pagamento;

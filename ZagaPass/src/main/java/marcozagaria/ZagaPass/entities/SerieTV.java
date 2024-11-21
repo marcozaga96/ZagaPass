@@ -1,8 +1,10 @@
 package marcozagaria.ZagaPass.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -44,9 +46,9 @@ public class SerieTV extends RepresentationModel<SerieTV> {
     private String backdropPath;
     @JsonProperty("genre_ids")
     private List<Integer> genreIds;
-    @OneToMany(mappedBy = "serieTV")
-    @JsonManagedReference
-    private List<Recensioni> recensioni;
+//    @OneToMany(mappedBy = "serieTV")
+//    @JsonManagedReference
+//    private List<Recensioni> recensioni;
 
     public SerieTV(String name, String overview, LocalDate firstAirDate, double popularity, double voteAverage, int voteCount, String originalLanguage, String originalName, String posterPath, String backdropPath, List<Integer> genreIds) {
         this.name = name;

@@ -1,6 +1,5 @@
 package marcozagaria.ZagaPass.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -50,9 +49,9 @@ public class Film extends RepresentationModel<Film> {
     @ElementCollection
     @JsonProperty("genre_ids")
     private List<Integer> genreIds;
-    @OneToMany(mappedBy = "film")
-    @JsonManagedReference
-    private List<Recensioni> recensioni;
+//    @OneToMany(mappedBy = "film")
+//    @JsonManagedReference
+//    private List<Recensioni> recensioni;
 
     public Film(String title, String overview, LocalDate releaseDate, double popularity, double voteAverage, int voteCount, String originalLanguage, String originalTitle, String posterPath, String backdropPath, boolean adult, boolean video, List<Integer> genreIds) {
         this.title = title;
