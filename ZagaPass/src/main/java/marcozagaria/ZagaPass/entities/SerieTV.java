@@ -44,7 +44,7 @@ public class SerieTV extends RepresentationModel<SerieTV> {
     private String backdropPath;
     @JsonProperty("genre_ids")
     private List<Integer> genreIds;
-    @OneToMany(mappedBy = "serietv")
+    @OneToMany(mappedBy = "serieTV")
     @JsonManagedReference
     private List<Recensioni> recensioni;
 
