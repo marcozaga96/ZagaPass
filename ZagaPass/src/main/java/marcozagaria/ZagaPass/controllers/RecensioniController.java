@@ -32,12 +32,12 @@ public class RecensioniController {
     @GetMapping("/film/{filmId}")
     public List<Recensioni> getRecensioniByFilm(@PathVariable long filmId) {
         Film film = filmService.findById(filmId).orElseThrow(() -> new NotFoundException("Film con id " + filmId + " non trovato"));
-        return recensioniService.findByFilm(film);
+        return recensioniService.findByFilmId(film);
     }
 
     @GetMapping("/serietv/{serietvId}")
     public List<Recensioni> getRecensioniBySerieTV(@PathVariable long serieTVId) {
         SerieTV serieTV = serieTVService.findById(serieTVId).orElseThrow(() -> new NotFoundException("SerieTV con id " + serieTVId + " non trovato"));
-        return recensioniService.findBySerieTV(serieTV);
+        return recensioniService.findBySerieTVId(serieTV);
     }
 }

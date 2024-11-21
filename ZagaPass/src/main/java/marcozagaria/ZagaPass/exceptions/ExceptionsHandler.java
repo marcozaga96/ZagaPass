@@ -9,19 +9,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
 
-@RestControllerAdvice // <-- OBBLIGATORIA
-// @RestControllerAdvice ci rende questa classe un 'Controller' specifico per la GESTIONE DELLE ECCEZIONI a livello centralizzato
-// Controller è messo tra virgolette, perché qua non andremo a creare degli endpoint, bensì andremo a scrivere dei metodi che gestiscono le varie
-// eccezioni. Gestire le eccezioni vuol dire che, ogniqualvolta si scatena un certo tipo di eccezione, devo inviare una risposta con tanto di status
-// code opportuno e messaggio di errore adeguato al client in maniera che sappia quale sia stato il problema
-// Questa classe è quindi utile per una gestione CENTRALIZZATA delle eccezioni, quindi invece di gestire le eccezioni a livello di singolo endpoint
-// (con dei try-catch), tutte le eccezioni arriveranno ai seguenti metodi, ognuno dei quali sarà responsabile della gestione di una specifica eccezione
-// Ci sarà un'annotazione speciale che si chiama @ExceptionHandler da utilizzare sui metodi, in modo da poter specificare quale eccezione quel
-// metodo debba gestire
+@RestControllerAdvice
 public class ExceptionsHandler {
 
     @ExceptionHandler(BadRequestException.class)
-    // Tra le parentesi indico quale eccezione dovrà essere gestita da questo metodo
     @ResponseStatus(HttpStatus.BAD_REQUEST) // 400
     public ErrorsResponseDTO handleBadrequest(BadRequestException ex) {
         return new ErrorsResponseDTO(ex.getMessage(), LocalDateTime.now());
@@ -48,7 +39,7 @@ public class ExceptionsHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) // 500
     public ErrorsResponseDTO handleGeneric(Exception ex) {
-        ex.printStackTrace(); // Non dimentichiamoci che è estremamente utile sapere dove è stata generata un'eccezione per poterla facilmente fixare
+        ex.printStackTrace();
         return new ErrorsResponseDTO("Problema lato server! Giuro che risolveremo presto!", LocalDateTime.now());
     }
 }
