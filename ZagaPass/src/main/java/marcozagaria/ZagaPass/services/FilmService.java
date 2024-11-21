@@ -2,6 +2,8 @@ package marcozagaria.ZagaPass.services;
 
 import marcozagaria.ZagaPass.entities.Film;
 import marcozagaria.ZagaPass.entities.MovieResponse;
+import marcozagaria.ZagaPass.entities.Video;
+import marcozagaria.ZagaPass.entities.VideoResponse;
 import marcozagaria.ZagaPass.repositories.FilmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +23,7 @@ public class FilmService {
     private static final String API_URL = "https://api.themoviedb.org/3/discover/movie";
     private static final String SEARCH_API_URL = "https://api.themoviedb.org/3/search/movie";
     private static final String API_KEY = "2f3bd3e37f32b5ad4602ce2b7150af6e";
+    private static final String VIDEOS_URL = "https://api.themoviedb.org/3/movie/{movieId}/videos";
     private static final int MAX_PAGES = 500;
     @Autowired
     private FilmRepository filmRepository;
@@ -70,6 +73,12 @@ public class FilmService {
         List<Film> moviesPage = allFilms.subList(start, end);
 
         return new PageImpl<>(moviesPage, pageable, allFilms.size());
+    }
+
+    public List<Video> getMovieTrailers(Long filmId) {
+        String videosUrl = UriComponentsBuilder.fromHttpUrl(VIDEOS_URL).queryParam("api_key", API_KEY).buildAndExpand(filmId).toUriString();
+        VideoResponse videoResponse = restTemplate.getForObject(videosUrl, VideoResponse.class);
+        return videoResponse != null ? videoResponse.getResults() : null;
     }
 
     public Optional<Film> findById(long id) {

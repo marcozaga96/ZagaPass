@@ -1,7 +1,10 @@
 package marcozagaria.ZagaPass.controllers;
 
 import marcozagaria.ZagaPass.entities.Film;
+import marcozagaria.ZagaPass.entities.Valutazione;
+import marcozagaria.ZagaPass.entities.Video;
 import marcozagaria.ZagaPass.services.FilmService;
+import marcozagaria.ZagaPass.services.ValutazioneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -9,14 +12,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/films")
 public class FilmController {
+    @Autowired
+    ValutazioneService valutazioneService;
     @Autowired
     private FilmService filmService;
     @Autowired
@@ -39,6 +43,16 @@ public class FilmController {
                         return entity;
                     }
                 });
+    }
+
+    @GetMapping("/{movieId}/videos")
+    public List<Video> getMovieTrailers(@PathVariable Long movieId) {
+        return filmService.getMovieTrailers(movieId);
+    }
+
+    @PostMapping("/{filmId}/rate")
+    public void rateMovie(@PathVariable Long filmId, @RequestParam Valutazione valutazione) {
+        valutazioneService.rateMovie(filmId, valutazione.getValutazione());
     }
 
 }
