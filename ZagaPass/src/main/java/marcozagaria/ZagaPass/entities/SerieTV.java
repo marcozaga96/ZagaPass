@@ -9,6 +9,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,10 +19,12 @@ import java.util.List;
 @ToString
 @Entity
 
-public class SerieTV {
+public class SerieTV extends RepresentationModel<SerieTV> {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
+    @JsonProperty("id")
     private long id;
     @JsonProperty("name")
     private String name;
@@ -45,6 +48,9 @@ public class SerieTV {
     private String backdropPath;
     @JsonProperty("genre_ids")
     private List<Integer> genreIds;
+//    @OneToMany(mappedBy = "serieTV")
+//    @JsonManagedReference
+//    private List<Recensioni> recensioni;
 
     public SerieTV(String name, String overview, LocalDate firstAirDate, double popularity, double voteAverage, int voteCount, String originalLanguage, String originalName, String posterPath, String backdropPath, List<Integer> genreIds) {
         this.name = name;

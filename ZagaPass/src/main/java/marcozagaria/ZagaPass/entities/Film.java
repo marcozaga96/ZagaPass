@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,11 +16,12 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+public class Film extends RepresentationModel<Film> {
 
-public class Film {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("id")
     private long id;
     @JsonProperty("title")
     private String title;
@@ -49,6 +51,9 @@ public class Film {
     @ElementCollection
     @JsonProperty("genre_ids")
     private List<Integer> genreIds;
+//    @OneToMany(mappedBy = "film")
+//    @JsonManagedReference
+//    private List<Recensioni> recensioni;
 
     public Film(String title, String overview, LocalDate releaseDate, double popularity, double voteAverage, int voteCount, String originalLanguage, String originalTitle, String posterPath, String backdropPath, boolean adult, boolean video, List<Integer> genreIds) {
         this.title = title;

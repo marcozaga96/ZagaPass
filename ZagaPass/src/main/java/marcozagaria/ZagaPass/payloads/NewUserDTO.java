@@ -17,6 +17,5 @@ public record NewUserDTO(
         @NotEmpty(message = "La password è un campo obbligatorio!")
         @Size(min = 4, message = "La password deve avere almeno 4 caratteri!")
         // @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[]:;<>,.?/~_+-=|\]).{8,32}$")
-        // Tramite questa annotazione possiamo utilizzare le Regex per validare praticamente qualsiasi cosa (ad es. PW fatte secondo certi criteri)
         String password) {
 }
