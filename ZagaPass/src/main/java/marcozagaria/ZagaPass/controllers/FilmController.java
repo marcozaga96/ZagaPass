@@ -50,9 +50,9 @@ public class FilmController {
         return filmService.getMovieTrailers(movieId);
     }
 
-    @PostMapping("/{filmId}/rate")
-    public void rateMovie(@PathVariable Long filmId, @RequestParam Valutazione valutazione) {
-        valutazioneService.rateMovie(filmId, valutazione.getValutazione());
+    @PostMapping("/{movieId}/rate")
+    public void rateMovie(@PathVariable Long movieId, @RequestParam Valutazione value) {
+        valutazioneService.rateMovie(movieId, value.getValue());
     }
 
 }

@@ -16,9 +16,9 @@ public class Valutazione {
     @Setter(AccessLevel.NONE)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private double valutazione;
+    private double value;
 
-    public Valutazione(double valutazione) {
-        this.valutazione = valutazione;
+    public Valutazione(double value) {
+        this.value = value;
     }
 }
