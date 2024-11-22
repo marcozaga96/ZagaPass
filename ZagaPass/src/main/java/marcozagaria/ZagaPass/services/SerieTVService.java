@@ -2,6 +2,8 @@ package marcozagaria.ZagaPass.services;
 
 import marcozagaria.ZagaPass.entities.SerieTV;
 import marcozagaria.ZagaPass.entities.SerieTVResponse;
+import marcozagaria.ZagaPass.entities.Video;
+import marcozagaria.ZagaPass.entities.VideoResponse;
 import marcozagaria.ZagaPass.repositories.SerieTVRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +22,7 @@ public class SerieTVService {
     private static final String API_URL = "https://api.themoviedb.org/3/discover/tv";
     private static final String SEARCH_API_URL = "https://api.themoviedb.org/3/search/tv";
     private static final String API_KEY = "2f3bd3e37f32b5ad4602ce2b7150af6e";
+    private static final String VIDEOS_URL = "https://api.themoviedb.org/3/tv/{tvShowId}/videos";
     private static final int MAX_PAGES = 500;
 
     @Autowired
@@ -70,6 +73,14 @@ public class SerieTVService {
         int end = Math.min((start + pageable.getPageSize()), allSerieTv.size());
         List<SerieTV> serieTVPage = allSerieTv.subList(start, end);
         return new PageImpl<>(serieTVPage, pageable, allSerieTv.size());
+    }
+
+    public List<Video> getSerieTVVideos(Long serieTVId) {
+        String videosUrl = UriComponentsBuilder.fromHttpUrl(VIDEOS_URL).queryParam("api_key", API_KEY)
+                .queryParam("language", "it-IT")
+                .buildAndExpand(serieTVId).toUriString();
+        VideoResponse videoResponse = restTemplate.getForObject(videosUrl, VideoResponse.class);
+        return videoResponse != null ? videoResponse.getResults() : null;
     }
 
     public Optional<SerieTV> findById(long id) {

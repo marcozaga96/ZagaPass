@@ -76,7 +76,9 @@ public class FilmService {
     }
 
     public List<Video> getMovieTrailers(Long filmId) {
-        String videosUrl = UriComponentsBuilder.fromHttpUrl(VIDEOS_URL).queryParam("api_key", API_KEY).buildAndExpand(filmId).toUriString();
+        String videosUrl = UriComponentsBuilder.fromHttpUrl(VIDEOS_URL).queryParam("api_key", API_KEY)
+                .queryParam("language", "it-IT")
+                .buildAndExpand(filmId).toUriString();
         VideoResponse videoResponse = restTemplate.getForObject(videosUrl, VideoResponse.class);
         return videoResponse != null ? videoResponse.getResults() : null;
     }
