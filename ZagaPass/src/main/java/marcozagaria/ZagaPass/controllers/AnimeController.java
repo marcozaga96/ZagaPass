@@ -5,6 +5,7 @@ import marcozagaria.ZagaPass.services.AnimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,5 +19,10 @@ public class AnimeController {
     @GetMapping
     public List<Anime> getAnimes() {
         return animeService.getAnimes();
+    }
+
+    @GetMapping("/search")
+    public List<Anime> searchAnime(@RequestParam String q) {
+        return animeService.searchAnimeByName(q);
     }
 }

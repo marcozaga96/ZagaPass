@@ -23,4 +23,10 @@ public class AnimeService {
         AnimeResponse response = restTemplate.getForObject(url, AnimeResponse.class);
         return response != null ? response.getData() : null;
     }
+
+    public List<Anime> searchAnimeByName(String query) {
+        String url = UriComponentsBuilder.fromHttpUrl(API_URL).queryParam("q", query).toUriString();
+        AnimeResponse response = restTemplate.getForObject(url, AnimeResponse.class);
+        return response != null ? response.getData() : null;
+    }
 }
