@@ -2,8 +2,6 @@ package marcozagaria.ZagaPass.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -22,7 +20,7 @@ import java.util.List;
 public class SerieTV extends RepresentationModel<SerieTV> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Setter(AccessLevel.NONE)
     @JsonProperty("id")
     private long id;
