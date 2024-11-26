@@ -18,14 +18,21 @@ public class AnimeService {
     @Autowired
     private ObjectMapper objectMapper;
 
-    public List<Anime> getAnimes() {
-        String url = UriComponentsBuilder.fromHttpUrl(API_URL).toUriString();
+    public List<Anime> getAnimes(Integer page, Integer size) {
+        String url = UriComponentsBuilder.fromHttpUrl(API_URL)
+                .queryParam("page", page != null ? page : 1)
+                .queryParam("limit", size != null ? size : 20)
+                .toUriString();
         AnimeResponse response = restTemplate.getForObject(url, AnimeResponse.class);
         return response != null ? response.getData() : null;
     }
 
-    public List<Anime> searchAnimeByName(String query) {
-        String url = UriComponentsBuilder.fromHttpUrl(API_URL).queryParam("q", query).toUriString();
+    public List<Anime> searchAnimeByName(String query, Integer page, Integer size) {
+        String url = UriComponentsBuilder.fromHttpUrl(API_URL)
+                .queryParam("q", query)
+                .queryParam("page", page != null ? page : 1)
+                .queryParam("limit", size != null ? size : 20)
+                .toUriString();
         AnimeResponse response = restTemplate.getForObject(url, AnimeResponse.class);
         return response != null ? response.getData() : null;
     }

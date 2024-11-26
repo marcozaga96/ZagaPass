@@ -6,13 +6,14 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.*;
+import org.springframework.hateoas.RepresentationModel;
 
 @Entity
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-public class Anime {
+public class Anime extends RepresentationModel<Anime> {
     @Id
     @Setter(AccessLevel.NONE)
     @JsonProperty("mal_id")
