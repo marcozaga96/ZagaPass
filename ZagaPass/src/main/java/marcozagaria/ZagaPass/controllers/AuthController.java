@@ -31,8 +31,6 @@ public class AuthController {
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public User save(@RequestBody @Validated NewUserDTO body, BindingResult validationResult) {
-        // @Validated serve per "attivare" le regole di validazione descritte nel DTO
-        // BindingResult contiene l'esito della validazione, quindi sarà utile per capire se ci sono stati errori e quali essi siano
         if (validationResult.hasErrors()) {
             String message = validationResult.getAllErrors().stream().map(objectError -> objectError.getDefaultMessage())
                     .collect(Collectors.joining(". "));

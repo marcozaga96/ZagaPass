@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Col, Container, Row, Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 
 const CustomLogin = () => {
@@ -37,80 +37,65 @@ const CustomLogin = () => {
   };
 
   return (
-    <>
-      <Container
-        fluid
-        className="vh-100 d-flex align-items-center justify-content-center"
-      >
-        <Row className="w-100 d-flex justify-content-center">
-          <Col lg={4} className="card-login">
-            <div className="d-flex align-items-center justify-content-center py-4">
-              <h4 style={{ fontWeight: "300" }} className="text-light m-0">
-                {" "}
-                Benvenuto!
-              </h4>
-            </div>
-            <div className="d-flex align-items-center justify-content-center">
-              <p style={{ fontWeight: "300" }} className="text-light">
-                {" "}
-                Il tuo gestionale aziendale di fiducia.
-              </p>
-            </div>
-            <form className="py-3" onSubmit={handleSubmit}>
-              <div data-mdb-input-init className="py-2 px-3">
-                <input
-                  placeholder="Inserisci email"
-                  type="email"
-                  id="form2Example1"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="form-input"
-                />
-              </div>
-              <div data-mdb-input-init className="py-2 px-3">
-                <input
-                  placeholder="Inserisci password"
-                  type="password"
-                  id="form2Example2"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="form-input"
-                />
-              </div>
-              <div className="py-2 px-2 d-flex align-items-center justify-content-center">
-                <Link to="/resetPasswordPage" className="reset-password">
-                  <p>Forgot password?</p>
-                </Link>
-              </div>
+    <Container
+      fluid
+      className="vh-100 d-flex align-items-center justify-content-center"
+      style={{ backgroundColor: "#f8f9fa" }}
+    >
+      <Row className="w-100 d-flex justify-content-center">
+        <Col lg={4} className="card p-4 shadow-sm">
+          <div className="text-center mb-4">
+            <h4 style={{ fontWeight: "300" }}>Benvenuto!</h4>
+            <p style={{ fontWeight: "300", color: "#6c757d" }}>
+              Il tuo gestionale aziendale di fiducia.
+            </p>
+          </div>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </Form.Group>
 
-              <div className="py-2 d-flex align-items-center justify-content-center">
-                <button
-                  data-mdb-button-init
-                  data-mdb-ripple-init
-                  className="custom-button"
-                  type="submit"
-                >
-                  Sign in
-                </button>
-              </div>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </Form.Group>
 
-              <div className="text-center py-2 d-flex align-items-center justify-content-center">
-                <div className="px-1">
-                  <p style={{ opacity: "0.6" }} className="text-light">
-                    Not a member?
-                  </p>
-                </div>
-                <div className="px-1">
-                  <Link to="/register" className="register-link">
-                    <p> Register.</p>
-                  </Link>
-                </div>
-              </div>
-            </form>
-          </Col>
-        </Row>
-      </Container>
-    </>
+            <div className="d-flex justify-content-between align-items-center mb-3">
+              <Link to="/resetPasswordPage" className="text-muted">
+                Forgot password?
+              </Link>
+            </div>
+
+            <Button
+              variant="primary"
+              type="submit"
+              className="w-100"
+              style={{ backgroundColor: "#007bff", borderColor: "#007bff" }}
+            >
+              Sign in
+            </Button>
+
+            <div className="text-center mt-3">
+              <span className="text-muted">Not a member?</span>
+              <Link to="/register" className="ms-2">
+                Register
+              </Link>
+            </div>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
