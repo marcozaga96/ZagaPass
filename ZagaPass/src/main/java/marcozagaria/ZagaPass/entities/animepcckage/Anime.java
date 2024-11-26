@@ -18,7 +18,6 @@ public class Anime extends RepresentationModel<Anime> {
     @Setter(AccessLevel.NONE)
     @JsonProperty("mal_id")
     private int malId;
-
     @JsonProperty("url")
     private String url;
     @JsonProperty("title")
