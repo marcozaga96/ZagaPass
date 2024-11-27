@@ -62,6 +62,8 @@ public class FilmController {
         if (film.isPresent()) {
             FilmModelAssembler assembler = new FilmModelAssembler();
             FilmModel model = assembler.toModel(film.get());
+            String trailerUrl = filmService.getTrailerUrl(id);
+            model.setTrailerUrl(trailerUrl);
             return ResponseEntity.ok(model);
         } else {
             return ResponseEntity.notFound().build();

@@ -30,7 +30,7 @@ public class SerieTVController {
     private PagedResourcesAssembler<SerieTV> pagedResourcesAssembler;
 
     @GetMapping
-    public PagedModel<SerieTVModel> getSerieTV(@RequestParam(defaultValue = "popularity.desc") String sortBy, @RequestParam(required = false) String year, @RequestParam(required = false) String genre, @RequestParam(required = false) String query, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
+    public PagedModel<SerieTVModel> getSerieTV(@RequestParam(defaultValue = "vote_count.desc") String sortBy, @RequestParam(required = false) String year, @RequestParam(required = false) String genre, @RequestParam(required = false) String query, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<SerieTV> serieTVPage = serieTVService.getSerieTv(sortBy, year, genre, query, pageable);
         return pagedResourcesAssembler.toModel(serieTVPage, new SerieTVModelAssembler());
@@ -42,6 +42,8 @@ public class SerieTVController {
         if (serieTV.isPresent()) {
             SerieTVModelAssembler assembler = new SerieTVModelAssembler();
             SerieTVModel model = assembler.toModel(serieTV.get());
+            String trailerUrl = serieTVService.getTrailerUrl(id);
+            model.setTrailerUrl(trailerUrl);
             return ResponseEntity.ok(model);
         } else {
             return ResponseEntity.notFound().build();

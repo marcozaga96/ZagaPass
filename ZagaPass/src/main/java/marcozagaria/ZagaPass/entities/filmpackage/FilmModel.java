@@ -39,4 +39,6 @@ public class FilmModel extends RepresentationModel<FilmModel> {
     private boolean video;
     @JsonProperty("genre_ids")
     private List<Integer> genreIds;
+    @JsonProperty("trailer_url")
+    private String trailerUrl;
 }

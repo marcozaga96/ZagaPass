@@ -83,6 +83,18 @@ public class FilmService {
         return videoResponse != null ? videoResponse.getResults() : null;
     }
 
+    public String getTrailerUrl(Long filmId) {
+        List<Video> videos = getMovieTrailers(filmId);
+        if (videos != null) {
+            for (Video video : videos) {
+                if ("Trailer".equals(video.getType())) {
+                    return "https://www.youtube.com/embed/" + video.getKey() + "?autoplay=1";
+                }
+            }
+        }
+        return null;
+    }
+
     public Optional<Film> findById(long id) {
         return filmRepository.findById(id);
     }

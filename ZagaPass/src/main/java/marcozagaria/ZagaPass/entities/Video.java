@@ -12,7 +12,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-
 public class Video {
     @Id
     @Setter(AccessLevel.NONE)

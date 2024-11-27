@@ -35,4 +35,6 @@ public class SerieTVModel extends RepresentationModel<SerieTVModel> {
     private String backdropPath;
     @JsonProperty("genre_ids")
     private List<Integer> genreIds;
+    @JsonProperty("trailer_url")
+    private String trailerUrl;
 }
