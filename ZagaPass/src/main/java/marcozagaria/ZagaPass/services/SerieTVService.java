@@ -1,9 +1,9 @@
 package marcozagaria.ZagaPass.services;
 
-import marcozagaria.ZagaPass.entities.SerieTV;
-import marcozagaria.ZagaPass.entities.SerieTVResponse;
 import marcozagaria.ZagaPass.entities.Video;
 import marcozagaria.ZagaPass.entities.VideoResponse;
+import marcozagaria.ZagaPass.entities.serietvpackage.SerieTV;
+import marcozagaria.ZagaPass.entities.serietvpackage.SerieTVResponse;
 import marcozagaria.ZagaPass.repositories.SerieTVRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

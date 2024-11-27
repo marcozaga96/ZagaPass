@@ -5,19 +5,21 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.hateoas.RepresentationModel;
 
 @Entity
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
 public class Anime extends RepresentationModel<Anime> {
     @Id
     @Setter(AccessLevel.NONE)
     @JsonProperty("mal_id")
-    private int malId;
+    private long malId;
     @JsonProperty("url")
     private String url;
     @JsonProperty("title")

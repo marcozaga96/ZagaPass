@@ -15,6 +15,7 @@ function App() {
       <CustomNavbar />
       <Routes>
         <Route path="/login" element={<CustomLogin />} />
+        <Route path="/" element={<CustomLogin />} />
         <Route path="/register" element={<CustomRegister />} />
         <Route path="/home" element={<CustomHome />} />
         <Route path="/anime" element={<AnimeComponets />} />

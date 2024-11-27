@@ -1,8 +1,7 @@
-package marcozagaria.ZagaPass.entities;
+package marcozagaria.ZagaPass.entities.filmpackage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,24 +11,23 @@ import org.springframework.hateoas.RepresentationModel;
 import java.time.LocalDate;
 import java.util.List;
 
+@Entity
 @Getter
 @Setter
 @ToString
-@Entity
-
-public class SerieTV extends RepresentationModel<SerieTV> {
-
+public class Film extends RepresentationModel<Film> {
     @Id
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     @JsonProperty("id")
     private long id;
-    @JsonProperty("name")
-    private String name;
+    @JsonProperty("title")
+    private String title;
     @JsonProperty("overview")
+    @Column(length = 100000)
     private String overview;
-    @JsonProperty("first_air_date")
-    private LocalDate firstAirDate;
+    @JsonProperty("release_date")
+    private LocalDate releaseDate;
     @JsonProperty("popularity")
     private double popularity;
     @JsonProperty("vote_average")
@@ -38,29 +36,36 @@ public class SerieTV extends RepresentationModel<SerieTV> {
     private int voteCount;
     @JsonProperty("original_language")
     private String originalLanguage;
-    @JsonProperty("original_name")
-    private String originalName;
+    @JsonProperty("original_title")
+    private String originalTitle;
     @JsonProperty("poster_path")
     private String posterPath;
     @JsonProperty("backdrop_path")
     private String backdropPath;
+    @JsonProperty("adult")
+    private boolean adult;
+    @JsonProperty("video")
+    private boolean video;
+    @ElementCollection
     @JsonProperty("genre_ids")
     private List<Integer> genreIds;
-//    @OneToMany(mappedBy = "serieTV")
+//    @OneToMany(mappedBy = "film")
 //    @JsonManagedReference
 //    private List<Recensioni> recensioni;
 
-    public SerieTV(String name, String overview, LocalDate firstAirDate, double popularity, double voteAverage, int voteCount, String originalLanguage, String originalName, String posterPath, String backdropPath, List<Integer> genreIds) {
-        this.name = name;
+    public Film(String title, String overview, LocalDate releaseDate, double popularity, double voteAverage, int voteCount, String originalLanguage, String originalTitle, String posterPath, String backdropPath, boolean adult, boolean video, List<Integer> genreIds) {
+        this.title = title;
         this.overview = overview;
-        this.firstAirDate = firstAirDate;
+        this.releaseDate = releaseDate;
         this.popularity = popularity;
         this.voteAverage = voteAverage;
         this.voteCount = voteCount;
         this.originalLanguage = originalLanguage;
-        this.originalName = originalName;
+        this.originalTitle = originalTitle;
         this.posterPath = posterPath;
         this.backdropPath = backdropPath;
+        this.adult = adult;
+        this.video = video;
         this.genreIds = genreIds;
     }
 }

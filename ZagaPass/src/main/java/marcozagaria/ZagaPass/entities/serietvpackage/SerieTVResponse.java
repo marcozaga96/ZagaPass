@@ -1,4 +1,4 @@
-package marcozagaria.ZagaPass.entities;
+package marcozagaria.ZagaPass.entities.serietvpackage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -12,17 +12,17 @@ import java.util.List;
 @Setter
 @ToString
 @NoArgsConstructor
-public class MovieResponse {
-    @JsonProperty("results")
-    private List<Film> results;
+public class SerieTVResponse {
     @JsonProperty("page")
     private int page;
     @JsonProperty("total_pages")
     private int totalPages;
+    @JsonProperty("results")
+    private List<SerieTV> results;
 
-    public MovieResponse(List<Film> results, int page, int totalPages) {
-        this.results = results;
+    public SerieTVResponse(int page, int totalPages, List<SerieTV> results) {
         this.page = page;
         this.totalPages = totalPages;
+        this.results = results;
     }
 }

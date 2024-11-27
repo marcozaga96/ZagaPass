@@ -17,7 +17,7 @@ const SerieTVComponents = () => {
         throw new Error("Failed to fetch TV shows");
       }
       const data = await response.json();
-      setTVShowList(data._embedded.serieTVs);
+      setTVShowList(data._embedded.serieTVModels);
     };
 
     fetchTVShows().catch((error) => console.error("Error:", error));

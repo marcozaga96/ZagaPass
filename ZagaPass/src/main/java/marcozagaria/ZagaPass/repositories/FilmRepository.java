@@ -1,6 +1,6 @@
 package marcozagaria.ZagaPass.repositories;
 
-import marcozagaria.ZagaPass.entities.Film;
+import marcozagaria.ZagaPass.entities.filmpackage.Film;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

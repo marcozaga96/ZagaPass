@@ -1,9 +1,9 @@
 package marcozagaria.ZagaPass.services;
 
-import marcozagaria.ZagaPass.entities.Film;
-import marcozagaria.ZagaPass.entities.MovieResponse;
 import marcozagaria.ZagaPass.entities.Video;
 import marcozagaria.ZagaPass.entities.VideoResponse;
+import marcozagaria.ZagaPass.entities.filmpackage.Film;
+import marcozagaria.ZagaPass.entities.filmpackage.MovieResponse;
 import marcozagaria.ZagaPass.repositories.FilmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

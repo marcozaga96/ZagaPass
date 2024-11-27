@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
 
 const AnimeComponets = () => {
   const [animeList, setAnimeList] = useState([]);
@@ -13,7 +13,7 @@ const AnimeComponets = () => {
         throw new Error("Failed to fetch animes");
       }
       const data = await response.json();
-      setAnimeList(data._embedded.animes);
+      setAnimeList(data._embedded.animeModels);
     };
     fetchAnimes().catch((error) => console.error("Error:", error));
   }, []);
@@ -23,7 +23,7 @@ const AnimeComponets = () => {
       <h2>Anime</h2>
       <Row>
         {animeList.map((anime) => (
-          <Col md={2} className="mb-4" key={anime.id}>
+          <Col md={2} className="mb-4" key={anime.mal_id}>
             <Card>
               <Card.Img variant="top" src={anime.images.jpg.image_url} />
               <Card.Body>

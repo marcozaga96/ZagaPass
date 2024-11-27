@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
 
 const FilmComponents = () => {
   const [movieList, setMovieList] = useState([]);
@@ -17,7 +17,7 @@ const FilmComponents = () => {
         throw new Error("Failed to fetch movies");
       }
       const data = await response.json();
-      setMovieList(data._embedded.films);
+      setMovieList(data._embedded.filmModels);
     };
 
     fetchMovies().catch((error) => console.error("Error:", error));
