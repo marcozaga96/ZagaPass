@@ -53,7 +53,7 @@ const FilmComponents = () => {
 
   return (
     <Container className="mt-4">
-      <h2>Movies</h2>
+      <h2>Film</h2>
       <Row>
         {movieList.map((movie) => (
           <Col md={2} className="mb-4" key={movie.id}>
@@ -61,6 +61,7 @@ const FilmComponents = () => {
               <Card.Img
                 variant="top"
                 src={`${BASE_URL}${movie.poster_path}`}
+                style={{ height: "400px", objectFit: "fill" }}
                 onClick={() => handleShow(movie.id)}
               />
               <Card.Body>

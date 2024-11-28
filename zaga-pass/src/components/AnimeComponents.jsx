@@ -35,6 +35,7 @@ const AnimeComponets = () => {
               <Card.Img
                 variant="top"
                 src={anime.images.jpg.image_url}
+                style={{ height: "400px", objectFit: "fill" }}
                 onClick={() => handleShow(anime.trailer.embed_url)}
               />
               <Card.Body>

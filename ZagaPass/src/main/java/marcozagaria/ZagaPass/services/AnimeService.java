@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Service
 public class AnimeService {
-    private static final String API_URL = "https://api.jikan.moe/v4/anime";
+    private static final String API_URL = "https://api.jikan.moe/v4/top/anime";
     @Autowired
     AnimeRepository animeRepository;
     @Autowired

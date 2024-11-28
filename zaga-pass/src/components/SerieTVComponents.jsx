@@ -52,7 +52,7 @@ const SerieTVComponents = () => {
 
   return (
     <Container className="mt-4">
-      <h2>TV Shows</h2>
+      <h2>Serie TV</h2>
       <Row>
         {tvShowList.map((tvShow) => (
           <Col md={2} className="mb-4" key={tvShow.id}>
@@ -60,6 +60,7 @@ const SerieTVComponents = () => {
               <Card.Img
                 variant="top"
                 src={`${BASE_URL}${tvShow.poster_path}`}
+                style={{ height: "400px", objectFit: "fill" }}
                 onClick={() => handleShow(tvShow.id)}
               />
               <Card.Body>
