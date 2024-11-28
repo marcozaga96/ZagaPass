@@ -1,54 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Modal, Button } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFilms, fetchTrailer } from "../action/filmactions";
 
-const FilmComponents = () => {
-  const [movieList, setMovieList] = useState([]);
+const FilmComponents = ({ movieList }) => {
   const BASE_URL = "https://image.tmdb.org/t/p/w500";
   const [show, setShow] = useState(false);
-  const [selectedTrailer, setSelectedTrailer] = useState(null);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    const fetchMovies = async () => {
-      const token = localStorage.getItem("Access Token");
-      const response = await fetch("http://localhost:3001/api/films", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (!response.ok) {
-        throw new Error("Failed to fetch movies");
-      }
-      const data = await response.json();
+  const selectedTrailer = useSelector((state) => state.films.selectedTrailer);
 
-      setMovieList(data._embedded.filmModels);
-    };
-
-    fetchMovies().catch((error) => console.error("Error:", error));
-  }, []);
   const handleClose = () => setShow(false);
-
   const handleShow = async (movieId) => {
-    const token = localStorage.getItem("Access Token");
-    try {
-      const response = await fetch(
-        `http://localhost:3001/api/films/${movieId}/videos`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      const data = await response.json();
-      console.log("sono data", data);
-      const trailer = data.find((video) => video.type === "Trailer");
-      const trailerUrl = trailer
-        ? `https://www.youtube.com/embed/${trailer.key}?autoplay=1`
-        : null;
-      setSelectedTrailer(trailerUrl);
-      setShow(true);
-    } catch (error) {
-      console.error("Error fetching video:", error);
-      setSelectedTrailer(null);
-      setShow(true);
-    }
+    dispatch(fetchTrailer(movieId));
+    setShow(true);
   };
 
   return (

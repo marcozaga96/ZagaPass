@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Container, Row, Col, Card, Button, Modal } from "react-bootstrap";
 
-const AnimeComponets = () => {
-  const [animeList, setAnimeList] = useState([]);
+const AnimeComponets = ({ animeList }) => {
   const [show, setShow] = useState(false);
   const [selectedTrailer, setSelectedTrailer] = useState(null);
   const handleClose = () => setShow(false);
@@ -10,20 +9,6 @@ const AnimeComponets = () => {
     setSelectedTrailer(trailerUrl);
     setShow(true);
   };
-  useEffect(() => {
-    const fetchAnimes = async () => {
-      const token = localStorage.getItem("Access Token");
-      const response = await fetch("http://localhost:3001/api/anime", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (!response.ok) {
-        throw new Error("Failed to fetch animes");
-      }
-      const data = await response.json();
-      setAnimeList(data._embedded.animeModels);
-    };
-    fetchAnimes().catch((error) => console.error("Error:", error));
-  }, []);
 
   return (
     <Container className="mt-4">

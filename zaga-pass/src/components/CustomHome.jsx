@@ -3,6 +3,8 @@ import { Container, Row, Col, Carousel } from "react-bootstrap";
 import AnimeComponets from "./AnimeComponents";
 import SerieTVComponents from "./SerieTVComponents";
 import FilmComponents from "./FilmComponents";
+import IlMeglioDaVedere from "./IlMeglioDaVedere";
+import { useSelector } from "react-redux";
 
 const CustomHome = () => {
   return (
@@ -54,11 +56,12 @@ const CustomHome = () => {
 
       <Row>
         <Col>
-          <h2>Featured Products</h2>
+          <h2>Il Meglio Da Vedere</h2>
         </Col>
       </Row>
       <Row>
-        <AnimeComponets />
+        <IlMeglioDaVedere />
+        {/* <AnimeComponets animeList={useSelector((state) => state.animes)} /> */}
       </Row>
 
       <Row>
@@ -66,17 +69,13 @@ const CustomHome = () => {
           <h2>Featured Products</h2>
         </Col>
       </Row>
-      <Row>
-        <SerieTVComponents />
-      </Row>
+      <Row>{/* <SerieTVComponents /> */}</Row>
       <Row>
         <Col>
           <h2>Featured Products</h2>
         </Col>
       </Row>
-      <Row>
-        <FilmComponents />
-      </Row>
+      <Row>{/* <FilmComponents /> */}</Row>
     </Container>
   );
 };

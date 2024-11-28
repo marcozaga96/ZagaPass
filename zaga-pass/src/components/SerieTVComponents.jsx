@@ -1,54 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Button, Modal } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchSerietv, fetchTrailer } from "../action/serietvActions";
 
-const SerieTVComponents = () => {
-  const [tvShowList, setTVShowList] = useState([]);
+const SerieTVComponents = ({ tvShowList }) => {
   const BASE_URL = "https://image.tmdb.org/t/p/w500";
   const [show, setShow] = useState(false);
-  const [selectedTrailer, setSelectedTrailer] = useState(null);
-
-  useEffect(() => {
-    const fetchTVShows = async () => {
-      const token = localStorage.getItem("Access Token");
-      const response = await fetch("http://localhost:3001/api/serietv", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (!response.ok) {
-        throw new Error("Failed to fetch TV shows");
-      }
-      const data = await response.json();
-      setTVShowList(data._embedded.serieTVModels);
-    };
-
-    fetchTVShows().catch((error) => console.error("Error:", error));
-  }, []);
+  const dispatch = useDispatch();
   const handleClose = () => setShow(false);
-
   const handleShow = async (serietvId) => {
-    const token = localStorage.getItem("Access Token");
-    try {
-      const response = await fetch(
-        `http://localhost:3001/api/serietv/${serietvId}/videos`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      const data = await response.json();
-      console.log("sono data", data);
-      const trailer = data.find((video) => video.type === "Trailer");
-      const trailerUrl = trailer
-        ? `https://www.youtube.com/embed/${trailer.key}?autoplay=1`
-        : null;
-      setSelectedTrailer(trailerUrl);
-      setShow(true);
-    } catch (error) {
-      console.error("Error fetching video:", error);
-      setSelectedTrailer(null);
-      setShow(true);
-    }
+    dispatch(fetchTrailer(serietvId));
+    setShow(true);
   };
+
+  const selectedTrailer = useSelector((state) => state.serietv.selectedTrailer);
 
   return (
     <Container className="mt-4">
