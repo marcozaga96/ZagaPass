@@ -7,17 +7,25 @@ export const setTrailer = (trailerUrl) => ({
   type: "SET_TRAILER",
   payload: trailerUrl,
 });
+export const setPage = (page) => ({
+  type: "SET_PAGE",
+  payload: page,
+});
 
-export const fetchFilms = () => {
+export const fetchFilms = (page = 0) => {
   return async (dispatch) => {
     const token = localStorage.getItem("Access Token");
-    const response = await fetch("http://localhost:3001/api/films", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await fetch(
+      `http://localhost:3001/api/films?page=${page}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     const data = await response.json();
     dispatch(setFilms(data._embedded.filmModels));
+    dispatch(setPage(page));
   };
 };
 

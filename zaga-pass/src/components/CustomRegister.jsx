@@ -51,8 +51,7 @@ const CustomRegister = () => {
   return (
     <Container
       fluid
-      className="vh-100 d-flex align-items-center justify-content-center"
-      style={{ backgroundColor: "#f8f9fa" }}
+      className="vh-100 d-flex align-items-center justify-content-center background"
     >
       <Row className="w-100 d-flex justify-content-center">
         <Col lg={4} className="card p-4 shadow-sm">
@@ -124,12 +123,7 @@ const CustomRegister = () => {
               />
             </Form.Group>
 
-            <Button
-              variant="primary"
-              type="submit"
-              className="w-100"
-              style={{ backgroundColor: "#007bff", borderColor: "#007bff" }}
-            >
+            <Button variant="dark" type="submit" className="w-100">
               Registrati
             </Button>
 

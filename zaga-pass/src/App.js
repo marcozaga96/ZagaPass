@@ -1,5 +1,6 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import CustomLogin from "./components/CustomLogin";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CustomRegister from "./components/CustomRegister.jsx";
@@ -8,6 +9,7 @@ import AnimeComponets from "./components/AnimeComponents.jsx";
 import FilmComponents from "./components/FilmComponents.jsx";
 import SerieTVComponents from "./components/SerieTVComponents.jsx";
 import CustomNavbar from "./components/CustomNavbar.jsx";
+import { useSelector } from "react-redux";
 
 function App() {
   return (
@@ -18,9 +20,29 @@ function App() {
         <Route path="/" element={<CustomLogin />} />
         <Route path="/register" element={<CustomRegister />} />
         <Route path="/home" element={<CustomHome />} />
-        <Route path="/anime" element={<AnimeComponets />} />
-        <Route path="/films" element={<FilmComponents />} />
-        <Route path="/serietv" element={<SerieTVComponents />} />
+        <Route
+          path="/anime"
+          element={
+            <AnimeComponets animeList={useSelector((state) => state.animes)} />
+          }
+        />
+
+        <Route
+          path="/films"
+          element={
+            <FilmComponents
+              movieList={useSelector((state) => state.films.filmsList)}
+            />
+          }
+        />
+        <Route
+          path="/serietv"
+          element={
+            <SerieTVComponents
+              tvShowList={useSelector((state) => state.serietv.serietvList)}
+            />
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

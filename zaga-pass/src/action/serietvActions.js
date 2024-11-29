@@ -6,14 +6,22 @@ export const setTrailer = (trailerUrl) => ({
   type: "SET_TRAILER",
   payload: trailerUrl,
 });
-export const fetchSerietv = () => {
+export const setPage = (page) => ({
+  type: "SET_PAGE",
+  payload: page,
+});
+export const fetchSerietv = (page = 0) => {
   return async (dispatch) => {
     const token = localStorage.getItem("Access Token");
-    const response = await fetch("http://localhost:3001/api/serietv", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const response = await fetch(
+      `http://localhost:3001/api/serietv?page=${page}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
     const data = await response.json();
     dispatch(setSerietv(data._embedded.serieTVModels));
+    dispatch(setPage(page));
   };
 };
 

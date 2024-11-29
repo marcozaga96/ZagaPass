@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 const CustomNavbar = () => {
   return (
-    <Navbar variant="dark" expand="lg">
+    <Navbar variant="dark" expand="lg" className="background">
       <Container>
         <Navbar.Brand as={Link} to="/home">
           <img
@@ -22,7 +22,10 @@ const CustomNavbar = () => {
             className="d-inline-block align-top"
           />
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Toggle
+          aria-controls="basic-navbar-nav"
+          className="bg-primary"
+        />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/serietv">
@@ -39,10 +42,12 @@ const CustomNavbar = () => {
             <FormControl
               type="search"
               placeholder="Cerca"
-              className="me-2"
+              className="me-2 bg-secondary"
               aria-label="Search"
             />
-            <Button variant="outline-success">Cerca</Button>
+            <Button variant="outline-secondary">
+              <i class="bi bi-search"></i>
+            </Button>
           </Form>
           <Nav>
             <Nav.Link as={Link} to="/profile">

@@ -1,26 +1,38 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Card, Button, Modal } from "react-bootstrap";
+import { Container, Row, Col, Card, Modal, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSerietv, fetchTrailer } from "../action/serietvActions";
+import { fetchSerietv, fetchTrailer, setPage } from "../action/serietvActions";
 
 const SerieTVComponents = ({ tvShowList }) => {
   const BASE_URL = "https://image.tmdb.org/t/p/w500";
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
+  const currentPage = useSelector((state) => state.serietv.currentPage);
   const handleClose = () => setShow(false);
   const handleShow = async (serietvId) => {
     dispatch(fetchTrailer(serietvId));
     setShow(true);
   };
+  useEffect(() => {
+    dispatch(fetchSerietv(currentPage));
+  }, [dispatch, currentPage]);
+
+  const handleNext = () => {
+    dispatch(setPage(currentPage + 1));
+  };
+  const handlePrevious = () => {
+    if (currentPage > 0) {
+      dispatch(setPage(currentPage - 1));
+    }
+  };
 
   const selectedTrailer = useSelector((state) => state.serietv.selectedTrailer);
 
   return (
-    <Container className="mt-4">
-      <h2>Serie TV</h2>
+    <Container fluid className="pt-4 background">
       <Row>
         {tvShowList.map((tvShow) => (
-          <Col md={2} className="mb-4" key={tvShow.id}>
+          <Col md={2} className="mb-4 flex-grow-1" key={tvShow.id}>
             <Card>
               <Card.Img
                 variant="top"
@@ -30,14 +42,31 @@ const SerieTVComponents = ({ tvShowList }) => {
               />
               <Card.Body>
                 <Card.Title>{tvShow.name}</Card.Title>
-                <Button variant="primary" onClick={() => handleShow(tvShow.id)}>
-                  Guarda il Trailer
-                </Button>
+                <div className="card-overlay d-flex align-items-center justify-content-center ">
+                  <i
+                    className="bi bi-play-circle transparent-button"
+                    style={{ fontSize: "3rem" }}
+                    onClick={() => handleShow(tvShow.id)}
+                  ></i>
+                </div>
               </Card.Body>
             </Card>
           </Col>
         ))}
       </Row>
+      <div className="d-flex justify-content-between mt-4">
+        <Button
+          variant="secondary"
+          onClick={handlePrevious}
+          disabled={currentPage === 0}
+        >
+          Precedente
+        </Button>
+        <span>Pagina {currentPage}</span>
+        <Button variant="secondary" onClick={handleNext}>
+          Successivo
+        </Button>
+      </div>
       <Modal show={show} onHide={handleClose} size="lg" centered>
         <Modal.Header closeButton>
           <Modal.Title>Trailer</Modal.Title>

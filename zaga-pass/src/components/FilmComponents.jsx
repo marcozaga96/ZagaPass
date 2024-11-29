@@ -1,14 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Modal, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFilms, fetchTrailer } from "../action/filmactions";
+import { fetchFilms, fetchTrailer, setPage } from "../action/filmactions";
 
 const FilmComponents = ({ movieList }) => {
   const BASE_URL = "https://image.tmdb.org/t/p/w500";
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
-
+  const currentPage = useSelector((state) => state.films.currentPage);
   const selectedTrailer = useSelector((state) => state.films.selectedTrailer);
+
+  useEffect(() => {
+    dispatch(fetchFilms(currentPage));
+  }, [dispatch, currentPage]);
+
+  const handleNext = () => {
+    dispatch(setPage(currentPage + 1));
+  };
+  const handlePrevious = () => {
+    if (currentPage > 0) {
+      dispatch(setPage(currentPage - 1));
+    }
+  };
 
   const handleClose = () => setShow(false);
   const handleShow = async (movieId) => {
@@ -17,11 +30,10 @@ const FilmComponents = ({ movieList }) => {
   };
 
   return (
-    <Container className="mt-4">
-      <h2>Film</h2>
+    <Container fluid className="pt-4 background">
       <Row>
         {movieList.map((movie) => (
-          <Col md={2} className="mb-4" key={movie.id}>
+          <Col md={2} className="mb-4 flex-grow-1" key={movie.id}>
             <Card>
               <Card.Img
                 variant="top"
@@ -31,14 +43,31 @@ const FilmComponents = ({ movieList }) => {
               />
               <Card.Body>
                 <Card.Title>{movie.title}</Card.Title>
-                <Button variant="primary" onClick={() => handleShow(movie.id)}>
-                  Guarda il Trailer
-                </Button>
+                <div className="card-overlay d-flex align-items-center justify-content-center">
+                  <i
+                    class="bi bi-play-circle transparent-button"
+                    style={{ fontSize: "3rem" }}
+                    onClick={() => handleShow(movie.id)}
+                  ></i>
+                </div>
               </Card.Body>
             </Card>
           </Col>
         ))}
       </Row>
+      <div className="d-flex justify-content-between mt-4">
+        <Button
+          variant="secondary"
+          onClick={handlePrevious}
+          disabled={currentPage === 0}
+        >
+          Precedente
+        </Button>
+        <span>Pagina {currentPage}</span>
+        <Button variant="secondary" onClick={handleNext}>
+          Successivo
+        </Button>
+      </div>
       <Modal show={show} onHide={handleClose} size="lg" centered>
         <Modal.Header closeButton>
           <Modal.Title>Trailer</Modal.Title>
