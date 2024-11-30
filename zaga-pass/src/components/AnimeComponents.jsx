@@ -32,7 +32,7 @@ const AnimeComponets = ({ animeList }) => {
   return (
     <Container fluid className="pt-4 background">
       <Row>
-        {animeList.map((anime) => (
+        {animeList.animesList.map((anime) => (
           <Col md={2} className="mb-4 flex-grow-1" key={anime.mal_id}>
             <Card>
               <Card.Img

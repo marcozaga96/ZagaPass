@@ -15,8 +15,14 @@ import java.util.List;
 public class AnimeResponse {
     @JsonProperty("data")
     private List<Anime> data;
+    @JsonProperty("page")
+    private int page;
+    @JsonProperty("total_pages")
+    private int totalPages;
 
-    public AnimeResponse(List<Anime> data) {
+    public AnimeResponse(List<Anime> data, int page, int totalPages) {
         this.data = data;
+        this.page = page;
+        this.totalPages = totalPages;
     }
 }
