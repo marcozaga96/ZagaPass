@@ -22,6 +22,7 @@ import java.util.Optional;
 public class FilmService {
     private static final String API_URL = "https://api.themoviedb.org/3/discover/movie";
     private static final String SEARCH_API_URL = "https://api.themoviedb.org/3/search/movie";
+    private static final String NOW_PLAYING_URL = "https://api.themoviedb.org/3/movie/now_playing";
     private static final String API_KEY = "2f3bd3e37f32b5ad4602ce2b7150af6e";
     private static final String VIDEOS_URL = "https://api.themoviedb.org/3/movie/{movieId}/videos";
     private static final int MAX_PAGES = 500;
@@ -73,6 +74,32 @@ public class FilmService {
         List<Film> moviesPage = allFilms.subList(start, end);
 
         return new PageImpl<>(moviesPage, pageable, allFilms.size());
+    }
+
+    public Page<Film> getNowPlayingFilms(Pageable pageable) {
+        List<Film> nowPlayingFilms = new ArrayList<>();
+        int page = pageable.getPageNumber() + 1;
+        int size = pageable.getPageSize();
+        boolean morePages = true;
+        while (morePages && page <= MAX_PAGES && nowPlayingFilms.size() < size * pageable.getPageNumber() + size) {
+            UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(NOW_PLAYING_URL).queryParam("api_key", API_KEY).queryParam("language", "it-IT").queryParam("page", page);
+            String url = uriBuilder.toUriString();
+            MovieResponse movieResponse = restTemplate.getForObject(url, MovieResponse.class);
+            if (movieResponse != null && movieResponse.getResults() != null) {
+                nowPlayingFilms.addAll(movieResponse.getResults());
+                if (page >= movieResponse.getTotalPages() || page >= MAX_PAGES) {
+                    morePages = false;
+                } else {
+                    page++;
+                }
+            } else {
+                morePages = false;
+            }
+        }
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), nowPlayingFilms.size());
+        List<Film> nowPlayingPage = nowPlayingFilms.subList(start, end);
+        return new PageImpl<>(nowPlayingPage, pageable, nowPlayingFilms.size());
     }
 
     public List<Video> getMovieTrailers(Long filmId) {

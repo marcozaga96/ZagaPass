@@ -30,9 +30,22 @@ public class SerieTVController {
     private PagedResourcesAssembler<SerieTV> pagedResourcesAssembler;
 
     @GetMapping
-    public PagedModel<SerieTVModel> getSerieTV(@RequestParam(defaultValue = "vote_count.desc") String sortBy, @RequestParam(required = false) String year, @RequestParam(required = false) String genre, @RequestParam(required = false) String query, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
+    public PagedModel<SerieTVModel> getSerieTV(@RequestParam(defaultValue = "vote_count.desc") String sortBy,
+                                               @RequestParam(required = false) String year,
+                                               @RequestParam(required = false) String genre,
+                                               @RequestParam(required = false) String query,
+                                               @RequestParam(defaultValue = "0") int page,
+                                               @RequestParam(defaultValue = "20") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<SerieTV> serieTVPage = serieTVService.getSerieTv(sortBy, year, genre, query, pageable);
+        return pagedResourcesAssembler.toModel(serieTVPage, new SerieTVModelAssembler());
+    }
+
+    @GetMapping("/playing-now")
+    public PagedModel<SerieTVModel> getNowPlayingSerieTV(@RequestParam(defaultValue = "0") int page,
+                                                         @RequestParam(defaultValue = "20") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<SerieTV> serieTVPage = serieTVService.getNowPlayingSerieTV(pageable);
         return pagedResourcesAssembler.toModel(serieTVPage, new SerieTVModelAssembler());
     }
 

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +22,7 @@ import java.util.Optional;
 public class SerieTVService {
     private static final String API_URL = "https://api.themoviedb.org/3/discover/tv";
     private static final String SEARCH_API_URL = "https://api.themoviedb.org/3/search/tv";
+    private static final String NOW_PLAYING_URL = "https://api.themoviedb.org/3/discover/tv?sort_by=vote_count.desc";
     private static final String API_KEY = "2f3bd3e37f32b5ad4602ce2b7150af6e";
     private static final String VIDEOS_URL = "https://api.themoviedb.org/3/tv/{tvShowId}/videos";
     private static final int MAX_PAGES = 500;
@@ -73,6 +75,36 @@ public class SerieTVService {
         int end = Math.min((start + pageable.getPageSize()), allSerieTv.size());
         List<SerieTV> serieTVPage = allSerieTv.subList(start, end);
         return new PageImpl<>(serieTVPage, pageable, allSerieTv.size());
+    }
+
+    public Page<SerieTV> getNowPlayingSerieTV(Pageable pageable) {
+        List<SerieTV> nowPlayingSerieTV = new ArrayList<>();
+        int page = pageable.getPageNumber() + 1;
+        int size = pageable.getPageSize();
+        boolean morePages = true;
+        while (morePages && page <= MAX_PAGES && nowPlayingSerieTV.size() < size * pageable.getPageNumber() + size) {
+            UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(NOW_PLAYING_URL)
+                    .queryParam("first_air_date.gte", LocalDate.now().getMonth())
+                    .queryParam("api_key", API_KEY)
+                    .queryParam("language", "it-IT")
+                    .queryParam("page", page);
+            String url = uriBuilder.toUriString();
+            SerieTVResponse serieTVResponse = restTemplate.getForObject(url, SerieTVResponse.class);
+            if (serieTVResponse != null && serieTVResponse.getResults() != null) {
+                nowPlayingSerieTV.addAll(serieTVResponse.getResults());
+                if (page >= serieTVResponse.getTotalPages() || page >= MAX_PAGES) {
+                    morePages = false;
+                } else {
+                    page++;
+                }
+            } else {
+                morePages = false;
+            }
+        }
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), nowPlayingSerieTV.size());
+        List<SerieTV> nowPlayingPage = nowPlayingSerieTV.subList(start, end);
+        return new PageImpl<>(nowPlayingPage, pageable, nowPlayingSerieTV.size());
     }
 
     public List<Video> getSerieTVVideos(Long serieTVId) {

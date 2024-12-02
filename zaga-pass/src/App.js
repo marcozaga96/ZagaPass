@@ -11,6 +11,8 @@ import SerieTVComponents from "./components/SerieTVComponents.jsx";
 import CustomNavbar from "./components/CustomNavbar.jsx";
 import { useSelector } from "react-redux";
 import AnimeComponets2 from "./components/AnimeComponents2.jsx";
+import FilmComponents2 from "./components/FilmComponents2.jsx";
+import SerieTVComponents2 from "./components/SerieTVComponents2.jsx";
 
 function App() {
   return (
@@ -49,10 +51,28 @@ function App() {
           }
         />
         <Route
+          path="/films/playing-now"
+          element={
+            <FilmComponents2
+              movieList={useSelector((state) => state.films.currentFilmsList)}
+            />
+          }
+        />
+        <Route
           path="/serietv"
           element={
             <SerieTVComponents
               tvShowList={useSelector((state) => state.serietv.serietvList)}
+            />
+          }
+        />
+        <Route
+          path="/serietv/playing-now"
+          element={
+            <SerieTVComponents2
+              tvShowList={useSelector(
+                (state) => state.serietv.currentSerietvList
+              )}
             />
           }
         />

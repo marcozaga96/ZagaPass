@@ -2,7 +2,10 @@ export const setFilms = (films) => ({
   type: "SET_FILMS",
   payload: films,
 });
-
+export const setCurrentFilms = (films) => ({
+  type: "SET_CURRENT_FILMS",
+  payload: films,
+});
 export const setTrailer = (trailerUrl) => ({
   type: "SET_TRAILER",
   payload: trailerUrl,
@@ -25,6 +28,22 @@ export const fetchFilms = (page = 0) => {
     );
     const data = await response.json();
     dispatch(setFilms(data._embedded.filmModels));
+    dispatch(setPage(page));
+  };
+};
+export const fetchCurrentFilms = (page = 0) => {
+  return async (dispatch) => {
+    const token = localStorage.getItem("Access Token");
+    const response = await fetch(
+      `http://localhost:3001/api/films/playing-now?page=${page}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const data = await response.json();
+    dispatch(setCurrentFilms(data._embedded.filmModels));
     dispatch(setPage(page));
   };
 };
