@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Modal, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAnimes } from "../action/animeActions";
+import { fetchAnimes, fetchCurrentSeasonAnimes } from "../action/animeActions";
 import { setPage } from "../action/animeActions";
 
-const AnimeComponets = ({ animeList }) => {
+const AnimeComponets2 = ({ animeList }) => {
   const [show, setShow] = useState(false);
   const [selectedTrailer, setSelectedTrailer] = useState(null);
   const loader = useSelector((state) => state.animes.loader);
@@ -13,7 +13,7 @@ const AnimeComponets = ({ animeList }) => {
   const currentPage = useSelector((state) => state.animes.currentPage);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchAnimes(currentPage));
+    dispatch(fetchCurrentSeasonAnimes(currentPage));
   }, [dispatch, currentPage]);
 
   const handleNext = () => {
@@ -31,7 +31,7 @@ const AnimeComponets = ({ animeList }) => {
     setShow(true);
   };
 
-  console.log("sono animelist1", animeList);
+  console.log("sono animelist2", animeList);
   return (
     <Container fluid className="pt-4 background">
       <Row>
@@ -95,4 +95,4 @@ const AnimeComponets = ({ animeList }) => {
   );
 };
 
-export default AnimeComponets;
+export default AnimeComponets2;

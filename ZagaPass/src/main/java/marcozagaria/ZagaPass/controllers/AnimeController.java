@@ -33,12 +33,19 @@ public class AnimeController {
     @GetMapping
     public PagedModel<AnimeModel> getAnimes(@RequestParam(defaultValue = "0") int page,
                                             @RequestParam(defaultValue = "20") int size) {
-        System.out.println("Fetching animes with " + ", page: " + page + ", size: " + size);
         Pageable pageable = PageRequest.of(page, size);
         Page<Anime> animePage = animeService.getAnimes(pageable);
-        System.out.println("Fetched " + animePage.getNumberOfElements() + " animes, total elements: " + animePage.getTotalElements() + ", total pages: " + animePage.getTotalPages());
         return pagedResourcesAssembler.toModel(animePage, new AnimeModelAssembler());
     }
+
+    @GetMapping("/season-now")
+    public PagedModel<AnimeModel> getCurrentSeasonAnimes(@RequestParam(defaultValue = "0") int page,
+                                                         @RequestParam(defaultValue = "20") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Anime> animePage = animeService.getCurrentSeasonAnimes(pageable);
+        return pagedResourcesAssembler.toModel(animePage, new AnimeModelAssembler());
+    }
+
 
     @GetMapping("/{mal_id}")
     public ResponseEntity<AnimeModel> getAnimeById(@PathVariable("mal_id") long malId) {

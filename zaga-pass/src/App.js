@@ -10,6 +10,7 @@ import FilmComponents from "./components/FilmComponents.jsx";
 import SerieTVComponents from "./components/SerieTVComponents.jsx";
 import CustomNavbar from "./components/CustomNavbar.jsx";
 import { useSelector } from "react-redux";
+import AnimeComponets2 from "./components/AnimeComponents2.jsx";
 
 function App() {
   return (
@@ -25,6 +26,16 @@ function App() {
           element={
             <AnimeComponets
               animeList={useSelector((state) => state.animes.animesList)}
+            />
+          }
+        />
+        <Route
+          path="/anime/season-now"
+          element={
+            <AnimeComponets2
+              animeList={useSelector(
+                (state) => state.animes.currentSeasonAnimesList
+              )}
             />
           }
         />
