@@ -23,7 +23,9 @@ function App() {
         <Route
           path="/anime"
           element={
-            <AnimeComponets animeList={useSelector((state) => state.animes)} />
+            <AnimeComponets
+              animeList={useSelector((state) => state.animes.animesList)}
+            />
           }
         />
 

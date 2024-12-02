@@ -28,6 +28,7 @@ const FilmComponents = ({ movieList }) => {
     dispatch(fetchTrailer(movieId));
     setShow(true);
   };
+  console.log(movieList);
 
   return (
     <Container fluid className="pt-4 background">

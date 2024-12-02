@@ -6,7 +6,7 @@ import Carosello from "./Carosello";
 const CustomHome = () => {
   return (
     <Container fluid className="p-4 background">
-      <Carosello />
+      {/* <Carosello /> */}
 
       <Row>
         <Col>
@@ -22,17 +22,13 @@ const CustomHome = () => {
           <h2> Ultime Uscite</h2>
         </Col>
       </Row>
-      <Row>
-        <IlMeglioDaVedere />
-      </Row>
+      <Row>{/* <IlMeglioDaVedere /> */}</Row>
       <Row>
         <Col>
           <h2>I Più Votati</h2>
         </Col>
       </Row>
-      <Row>
-        <IlMeglioDaVedere />
-      </Row>
+      <Row>{/* <IlMeglioDaVedere /> */}</Row>
     </Container>
   );
 };

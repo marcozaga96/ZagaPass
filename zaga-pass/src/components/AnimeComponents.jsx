@@ -7,6 +7,8 @@ import { setPage } from "../action/animeActions";
 const AnimeComponets = ({ animeList }) => {
   const [show, setShow] = useState(false);
   const [selectedTrailer, setSelectedTrailer] = useState(null);
+  const loader = useSelector((state) => state.animes.loader);
+  console.log(loader);
 
   const currentPage = useSelector((state) => state.animes.currentPage);
   const dispatch = useDispatch();
@@ -29,10 +31,11 @@ const AnimeComponets = ({ animeList }) => {
     setShow(true);
   };
 
+  console.log(animeList);
   return (
     <Container fluid className="pt-4 background">
       <Row>
-        {animeList.animesList.map((anime) => (
+        {animeList?.map((anime) => (
           <Col md={2} className="mb-4 flex-grow-1" key={anime.mal_id}>
             <Card>
               <Card.Img

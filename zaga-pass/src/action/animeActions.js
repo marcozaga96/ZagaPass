@@ -6,6 +6,10 @@ export const setPage = (page) => ({
   type: "SET_PAGE",
   payload: page,
 });
+export const setLoader = (loader) => ({
+  type: "SET_LOADER",
+  payload: loader,
+});
 export const fetchAnimes = (page = 0) => {
   return async (dispatch) => {
     try {
@@ -20,6 +24,7 @@ export const fetchAnimes = (page = 0) => {
       const data = await response.json();
       dispatch(setAnimes(data._embedded.animeModels));
       dispatch(setPage(page));
+      dispatch(setLoader(false));
     } catch (error) {
       console.error("Error fetching animes:", error);
     }
