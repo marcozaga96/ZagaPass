@@ -7,7 +7,7 @@ import {
   setPage,
 } from "../action/filmactions";
 
-const FilmComponents = ({ movieList }) => {
+const FilmComponents2 = ({ movieList }) => {
   const BASE_URL = "https://image.tmdb.org/t/p/w500";
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
@@ -97,4 +97,4 @@ const FilmComponents = ({ movieList }) => {
   );
 };
 
-export default FilmComponents;
+export default FilmComponents2;

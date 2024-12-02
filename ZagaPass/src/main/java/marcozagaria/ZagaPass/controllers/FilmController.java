@@ -54,6 +54,14 @@ public class FilmController {
         return pagedResourcesAssembler.toModel(filmPage, new FilmModelAssembler());
     }
 
+    @GetMapping("/top")
+    public PagedModel<FilmModel> getTopFilms(@RequestParam(defaultValue = "0") int page,
+                                             @RequestParam(defaultValue = "20") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Film> filmPage = filmService.getTopFilms(pageable);
+        return pagedResourcesAssembler.toModel(filmPage, new FilmModelAssembler());
+    }
+
     @GetMapping("/{movieId}/videos")
     public List<Video> getMovieTrailers(@PathVariable Long movieId) {
         return filmService.getMovieTrailers(movieId);

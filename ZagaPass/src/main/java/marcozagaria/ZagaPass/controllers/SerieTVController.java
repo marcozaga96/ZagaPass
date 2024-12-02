@@ -49,6 +49,14 @@ public class SerieTVController {
         return pagedResourcesAssembler.toModel(serieTVPage, new SerieTVModelAssembler());
     }
 
+    @GetMapping("/top")
+    public PagedModel<SerieTVModel> getTopSerieTV(@RequestParam(defaultValue = "0") int page,
+                                                  @RequestParam(defaultValue = "20") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<SerieTV> serieTVPage = serieTVService.getTopSerieTV(pageable);
+        return pagedResourcesAssembler.toModel(serieTVPage, new SerieTVModelAssembler());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<SerieTVModel> getSerieTVById(@PathVariable Long id) {
         Optional<SerieTV> serieTV = serieTVService.findById(id);

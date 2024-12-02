@@ -3,6 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import IlMeglioDaVedere from "./IlMeglioDaVedere";
 import Carosello from "./Carosello";
 import UltimeUscite from "./UltimeUscite";
+import IPiùVotati from "./IPiùVotati";
 
 const CustomHome = () => {
   return (
@@ -31,7 +32,9 @@ const CustomHome = () => {
           <h2>I Più Votati</h2>
         </Col>
       </Row>
-      <Row>{/* <IlMeglioDaVedere /> */}</Row>
+      <Row>
+        <IPiùVotati />
+      </Row>
     </Container>
   );
 };

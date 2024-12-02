@@ -2,9 +2,13 @@ export const setSerietv = (serietv) => ({
   type: "SET_SERIETV",
   payload: serietv,
 });
-export const setCurrentSerietv = (films) => ({
+export const setCurrentSerietv = (serietv) => ({
   type: "SET_CURRENT_SERIETV",
-  payload: films,
+  payload: serietv,
+});
+export const setTopSerietv = (serietv) => ({
+  type: "SET_TOP_SERIETV",
+  payload: serietv,
 });
 export const setTrailer = (trailerUrl) => ({
   type: "SET_TRAILER",
@@ -39,6 +43,20 @@ export const fetchCurrentSerietv = (page = 0) => {
     );
     const data = await response.json();
     dispatch(setCurrentSerietv(data._embedded.serieTVModels));
+    dispatch(setPage(page));
+  };
+};
+export const fetchTopSerietv = (page = 0) => {
+  return async (dispatch) => {
+    const token = localStorage.getItem("Access Token");
+    const response = await fetch(
+      `http://localhost:3001/api/serietv/top?page=${page}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    const data = await response.json();
+    dispatch(setTopSerietv(data._embedded.serieTVModels));
     dispatch(setPage(page));
   };
 };

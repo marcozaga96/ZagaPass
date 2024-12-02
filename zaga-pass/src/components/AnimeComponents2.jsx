@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Modal, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAnimes, fetchCurrentSeasonAnimes } from "../action/animeActions";
+import { fetchCurrentSeasonAnimes } from "../action/animeActions";
 import { setPage } from "../action/animeActions";
 
 const AnimeComponets2 = ({ animeList }) => {

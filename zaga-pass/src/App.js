@@ -13,6 +13,9 @@ import { useSelector } from "react-redux";
 import AnimeComponets2 from "./components/AnimeComponents2.jsx";
 import FilmComponents2 from "./components/FilmComponents2.jsx";
 import SerieTVComponents2 from "./components/SerieTVComponents2.jsx";
+import AnimeComponets3 from "./components/AnimeComponents3.jsx";
+import FilmComponents3 from "./components/FilmComponents3.jsx";
+import SerieTVComponents3 from "./components/SerieTVComponents3.jsx";
 
 function App() {
   return (
@@ -41,6 +44,14 @@ function App() {
             />
           }
         />
+        <Route
+          path="/anime/top"
+          element={
+            <AnimeComponets3
+              animeList={useSelector((state) => state.animes.topAnimesList)}
+            />
+          }
+        />
 
         <Route
           path="/films"
@@ -59,6 +70,15 @@ function App() {
           }
         />
         <Route
+          path="/films/top"
+          element={
+            <FilmComponents3
+              movieList={useSelector((state) => state.films.topFilmsList)}
+            />
+          }
+        />
+
+        <Route
           path="/serietv"
           element={
             <SerieTVComponents
@@ -73,6 +93,14 @@ function App() {
               tvShowList={useSelector(
                 (state) => state.serietv.currentSerietvList
               )}
+            />
+          }
+        />
+        <Route
+          path="/serietv/top"
+          element={
+            <SerieTVComponents3
+              tvShowList={useSelector((state) => state.serietv.topSerietvList)}
             />
           }
         />

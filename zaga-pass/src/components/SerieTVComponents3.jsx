@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Modal, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  fetchCurrentSerietv,
+  fetchTopSerietv,
   fetchTrailer,
   setPage,
 } from "../action/serietvActions";
 
-const SerieTVComponents2 = ({ tvShowList }) => {
+const SerieTVComponents3 = ({ tvShowList }) => {
   const BASE_URL = "https://image.tmdb.org/t/p/w500";
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const SerieTVComponents2 = ({ tvShowList }) => {
     setShow(true);
   };
   useEffect(() => {
-    dispatch(fetchCurrentSerietv(currentPage));
+    dispatch(fetchTopSerietv(currentPage));
   }, [dispatch, currentPage]);
 
   const handleNext = () => {
@@ -95,4 +95,4 @@ const SerieTVComponents2 = ({ tvShowList }) => {
   );
 };
 
-export default SerieTVComponents2;
+export default SerieTVComponents3;

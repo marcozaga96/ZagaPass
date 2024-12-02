@@ -1,24 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Modal, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchCurrentSerietv,
-  fetchTrailer,
-  setPage,
-} from "../action/serietvActions";
+import { fetchTopFilms, fetchTrailer, setPage } from "../action/filmactions";
 
-const SerieTVComponents2 = ({ tvShowList }) => {
+const FilmComponents3 = ({ movieList }) => {
   const BASE_URL = "https://image.tmdb.org/t/p/w500";
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
-  const currentPage = useSelector((state) => state.serietv.currentPage);
-  const handleClose = () => setShow(false);
-  const handleShow = async (serietvId) => {
-    dispatch(fetchTrailer(serietvId));
-    setShow(true);
-  };
+  const currentPage = useSelector((state) => state.films.currentPage);
+  const selectedTrailer = useSelector((state) => state.films.selectedTrailer);
+
   useEffect(() => {
-    dispatch(fetchCurrentSerietv(currentPage));
+    dispatch(fetchTopFilms(currentPage));
   }, [dispatch, currentPage]);
 
   const handleNext = () => {
@@ -30,27 +23,32 @@ const SerieTVComponents2 = ({ tvShowList }) => {
     }
   };
 
-  const selectedTrailer = useSelector((state) => state.serietv.selectedTrailer);
+  const handleClose = () => setShow(false);
+  const handleShow = async (movieId) => {
+    dispatch(fetchTrailer(movieId));
+    setShow(true);
+  };
+  console.log(movieList);
 
   return (
     <Container fluid className="pt-4 background">
       <Row>
-        {tvShowList.map((tvShow) => (
-          <Col md={2} className="mb-4 flex-grow-1" key={tvShow.id}>
+        {movieList.map((movie) => (
+          <Col md={2} className="mb-4 flex-grow-1" key={movie.id}>
             <Card>
               <Card.Img
                 variant="top"
-                src={`${BASE_URL}${tvShow.poster_path}`}
+                src={`${BASE_URL}${movie.poster_path}`}
                 style={{ height: "400px", objectFit: "fill" }}
-                onClick={() => handleShow(tvShow.id)}
+                onClick={() => handleShow(movie.id)}
               />
               <Card.Body>
-                <Card.Title>{tvShow.name}</Card.Title>
-                <div className="card-overlay d-flex align-items-center justify-content-center ">
+                <Card.Title>{movie.title}</Card.Title>
+                <div className="card-overlay d-flex align-items-center justify-content-center">
                   <i
-                    className="bi bi-play-circle transparent-button"
+                    class="bi bi-play-circle transparent-button"
                     style={{ fontSize: "3rem" }}
-                    onClick={() => handleShow(tvShow.id)}
+                    onClick={() => handleShow(movie.id)}
                   ></i>
                 </div>
               </Card.Body>
@@ -95,4 +93,4 @@ const SerieTVComponents2 = ({ tvShowList }) => {
   );
 };
 
-export default SerieTVComponents2;
+export default FilmComponents3;

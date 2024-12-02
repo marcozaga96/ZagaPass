@@ -46,6 +46,14 @@ public class AnimeController {
         return pagedResourcesAssembler.toModel(animePage, new AnimeModelAssembler());
     }
 
+    @GetMapping("/top")
+    public PagedModel<AnimeModel> getTopAnimes(@RequestParam(defaultValue = "0") int page,
+                                               @RequestParam(defaultValue = "20") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Anime> animePage = animeService.getTopAnimes(pageable);
+        return pagedResourcesAssembler.toModel(animePage, new AnimeModelAssembler());
+    }
+
 
     @GetMapping("/{mal_id}")
     public ResponseEntity<AnimeModel> getAnimeById(@PathVariable("mal_id") long malId) {

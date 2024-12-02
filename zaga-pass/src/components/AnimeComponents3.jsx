@@ -1,24 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Modal, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchCurrentSerietv,
-  fetchTrailer,
-  setPage,
-} from "../action/serietvActions";
+import { fetchTopAnimes } from "../action/animeActions";
+import { setPage } from "../action/animeActions";
 
-const SerieTVComponents2 = ({ tvShowList }) => {
-  const BASE_URL = "https://image.tmdb.org/t/p/w500";
+const AnimeComponets3 = ({ animeList }) => {
   const [show, setShow] = useState(false);
+  const [selectedTrailer, setSelectedTrailer] = useState(null);
+  const loader = useSelector((state) => state.animes.loader);
+  console.log(loader);
+
+  const currentPage = useSelector((state) => state.animes.currentPage);
   const dispatch = useDispatch();
-  const currentPage = useSelector((state) => state.serietv.currentPage);
-  const handleClose = () => setShow(false);
-  const handleShow = async (serietvId) => {
-    dispatch(fetchTrailer(serietvId));
-    setShow(true);
-  };
   useEffect(() => {
-    dispatch(fetchCurrentSerietv(currentPage));
+    dispatch(fetchTopAnimes(currentPage));
   }, [dispatch, currentPage]);
 
   const handleNext = () => {
@@ -30,27 +25,32 @@ const SerieTVComponents2 = ({ tvShowList }) => {
     }
   };
 
-  const selectedTrailer = useSelector((state) => state.serietv.selectedTrailer);
+  const handleClose = () => setShow(false);
+  const handleShow = (trailerUrl) => {
+    setSelectedTrailer(trailerUrl);
+    setShow(true);
+  };
 
+  console.log("sono animelist2", animeList);
   return (
     <Container fluid className="pt-4 background">
       <Row>
-        {tvShowList.map((tvShow) => (
-          <Col md={2} className="mb-4 flex-grow-1" key={tvShow.id}>
+        {animeList?.map((anime) => (
+          <Col md={2} className="mb-4 flex-grow-1" key={anime.mal_id}>
             <Card>
               <Card.Img
                 variant="top"
-                src={`${BASE_URL}${tvShow.poster_path}`}
+                src={anime.images.jpg.image_url}
                 style={{ height: "400px", objectFit: "fill" }}
-                onClick={() => handleShow(tvShow.id)}
+                onClick={() => handleShow(anime.trailer.embed_url)}
               />
               <Card.Body>
-                <Card.Title>{tvShow.name}</Card.Title>
-                <div className="card-overlay d-flex align-items-center justify-content-center ">
+                <Card.Title>{anime.title}</Card.Title>
+                <div className="card-overlay d-flex align-items-center justify-content-center">
                   <i
-                    className="bi bi-play-circle transparent-button"
+                    class="bi bi-play-circle transparent-button"
                     style={{ fontSize: "3rem" }}
-                    onClick={() => handleShow(tvShow.id)}
+                    onClick={() => handleShow(anime.trailer.embed_url)}
                   ></i>
                 </div>
               </Card.Body>
@@ -95,4 +95,4 @@ const SerieTVComponents2 = ({ tvShowList }) => {
   );
 };
 
-export default SerieTVComponents2;
+export default AnimeComponets3;

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCurrentFilms, fetchFilms } from "../action/filmactions";
-import { fetchSerietv } from "../action/serietvActions";
+import { fetchCurrentFilms } from "../action/filmactions";
+import { fetchCurrentSerietv, fetchSerietv } from "../action/serietvActions";
 import { Col, Container, Row } from "react-bootstrap";
 import FilmComponents2 from "./FilmComponents2";
 import SerieTVComponents2 from "./SerieTVComponents2";
@@ -24,7 +24,7 @@ const UltimeUscite = () => {
   useEffect(() => {
     dispatch(fetchCurrentSeasonAnimes());
     dispatch(fetchCurrentFilms());
-    dispatch(fetchSerietv());
+    dispatch(fetchCurrentSerietv());
   }, [dispatch]);
   console.log(" sono currentSeasonAnimes", currentSeasonAnimes);
 

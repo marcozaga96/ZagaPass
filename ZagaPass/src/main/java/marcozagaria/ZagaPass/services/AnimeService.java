@@ -19,7 +19,8 @@ import java.util.Optional;
 
 @Service
 public class AnimeService {
-    private static final String API_URL = "https://api.jikan.moe/v4/top/anime";
+    private static final String API_URL = "https://api.jikan.moe/v4/anime";
+    private static final String TOP_URL = "https://api.jikan.moe/v4/top/anime";
     private static final String SEASON_NOW_URL = "https://api.jikan.moe/v4/seasons/now";
     private static final int MAX_PAGES = 500;
     @Autowired
@@ -84,6 +85,45 @@ public class AnimeService {
         boolean morePages = true;
         while (morePages && page <= MAX_PAGES && currentSeasonAnimes.size() < size * pageable.getPageNumber() + size) {
             UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(SEASON_NOW_URL)
+                    .queryParam("page", page)
+                    .queryParam("limit", size);
+            String url = uriBuilder.toUriString();
+            System.out.println("Fetching page " + page + " with URL: " + url);
+            AnimeResponse response = restTemplate.getForObject(url, AnimeResponse.class);
+            if (response != null && response.getData() != null) {
+                System.out.println("Fetched " + response.getData().size() + " current season animes");
+                currentSeasonAnimes.addAll(response.getData());
+                if (page >= response.getTotalPages() || page >= MAX_PAGES) {
+                    morePages = false;
+                } else {
+                    page++;
+                }
+            } else {
+                System.out.println("No results or error fetching data for page " + page);
+                morePages = false;
+            }
+        }
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), currentSeasonAnimes.size());
+        System.out.println("Creating sublist from " + start + " to " + end);
+        if (start >= currentSeasonAnimes.size()) {
+            start = currentSeasonAnimes.size() - pageable.getPageSize();
+            if (start < 0) {
+                start = 0;
+            }
+            end = currentSeasonAnimes.size();
+        }
+        List<Anime> currentSeasonAnimesPage = currentSeasonAnimes.subList(start, end);
+        return new PageImpl<>(currentSeasonAnimesPage, pageable, currentSeasonAnimes.size());
+    }
+
+    public Page<Anime> getTopAnimes(Pageable pageable) {
+        List<Anime> currentSeasonAnimes = new ArrayList<>();
+        int page = pageable.getPageNumber() + 1;
+        int size = pageable.getPageSize();
+        boolean morePages = true;
+        while (morePages && page <= MAX_PAGES && currentSeasonAnimes.size() < size * pageable.getPageNumber() + size) {
+            UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(TOP_URL)
                     .queryParam("page", page)
                     .queryParam("limit", size);
             String url = uriBuilder.toUriString();

@@ -1,6 +1,7 @@
 const initialState = {
   filmsList: [],
   currentFilmsList: [],
+  topFilmsList: [],
   selectedTrailer: null,
   currentPage: 0,
 };
@@ -11,6 +12,8 @@ const filmsReducer = (state = initialState, action) => {
       return { ...state, filmsList: action.payload };
     case "SET_CURRENT_FILMS":
       return { ...state, currentFilmsList: action.payload };
+    case "SET_TOP_FILMS":
+      return { ...state, topFilmsList: action.payload };
     case "SET_TRAILER":
       return { ...state, selectedTrailer: action.payload };
     case "SET_PAGE":
