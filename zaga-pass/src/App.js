@@ -6,8 +6,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CustomRegister from "./components/CustomRegister.jsx";
 import CustomHome from "./components/CustomHome.jsx";
 import CustomNavbar from "./components/CustomNavbar.jsx";
-import { useSelector } from "react-redux";
-
 import AnimePage from "./paginations/AnimePage.jsx";
 import AnimePageUltimeUscite from "./paginations/AnimaPageUltimeUscite.jsx";
 import AnimePagePiùVotati from "./paginations/AnimaPagePiùVotati.jsx";

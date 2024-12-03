@@ -1,20 +1,23 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Card, Modal } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import CommentSection from "./CommentSection";
 
 const AnimeComponets = ({ animeList }) => {
   const [show, setShow] = useState(false);
   const [selectedTrailer, setSelectedTrailer] = useState(null);
+  const [selectedAnime, setSelectedAnime] = useState(null);
   const loader = useSelector((state) => state.animes.loader);
   console.log(loader);
 
   const handleClose = () => setShow(false);
-  const handleShow = (trailerUrl) => {
+  const handleShow = (trailerUrl, anime) => {
     setSelectedTrailer(trailerUrl);
+    setSelectedAnime(anime);
     setShow(true);
   };
 
-  console.log("sono animelist1", animeList);
+  console.log("sono animecurrent", selectedAnime);
   return (
     <Container fluid className="pt-4 background">
       <Row>
@@ -33,7 +36,9 @@ const AnimeComponets = ({ animeList }) => {
                   <i
                     class="bi bi-play-circle transparent-button"
                     style={{ fontSize: "3rem" }}
-                    onClick={() => handleShow(anime.trailer.embed_url)}
+                    onClick={() =>
+                      handleShow(anime.trailer.embed_url, anime.mal_id)
+                    }
                   ></i>
                 </div>
               </Card.Body>
@@ -41,34 +46,28 @@ const AnimeComponets = ({ animeList }) => {
           </Col>
         ))}
       </Row>
-      {/* <div className="d-flex justify-content-between mt-4">
-        <Button
-          variant="secondary"
-          onClick={handlePrevious}
-          disabled={currentPage === 0}
-        >
-          Precedente
-        </Button>
-        <span>Pagina {currentPage}</span>
-        <Button variant="secondary" onClick={handleNext}>
-          Successivo
-        </Button>
-      </div> */}
+
       <Modal show={show} onHide={handleClose} size="lg" centered>
         <Modal.Header closeButton>
           <Modal.Title>Trailer</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {selectedTrailer ? (
-            <iframe
-              width="100%"
-              height="500"
-              src={selectedTrailer}
-              frameBorder="0"
-              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              title="Trailer"
-            ></iframe>
+            <div>
+              {" "}
+              <iframe
+                width="100%"
+                height="500"
+                src={selectedTrailer}
+                frameBorder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                title="Trailer"
+              ></iframe>{" "}
+              {selectedAnime && (
+                <CommentSection mediaId={selectedAnime} mediaType="anime" />
+              )}{" "}
+            </div>
           ) : (
             <p>Trailer non trovato</p>
           )}

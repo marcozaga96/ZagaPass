@@ -2,16 +2,19 @@ import React, { useState } from "react";
 import { Container, Row, Col, Card, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTrailer } from "../action/serietvActions";
+import CommentSection from "./CommentSection";
 
 const SerieTVComponents = ({ tvShowList }) => {
   const BASE_URL = "https://image.tmdb.org/t/p/w500";
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const selectedTrailer = useSelector((state) => state.serietv.selectedTrailer);
+  const [currentSerieTV, setCurrentSerieTV] = useState(null);
 
   const handleClose = () => setShow(false);
   const handleShow = async (serietvId) => {
     dispatch(fetchTrailer(serietvId));
+    setCurrentSerieTV(serietvId);
     setShow(true);
   };
 
@@ -48,15 +51,20 @@ const SerieTVComponents = ({ tvShowList }) => {
         </Modal.Header>
         <Modal.Body>
           {selectedTrailer ? (
-            <iframe
-              width="100%"
-              height="500"
-              src={selectedTrailer}
-              frameBorder="0"
-              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              title="Trailer"
-            ></iframe>
+            <div>
+              <iframe
+                width="100%"
+                height="500"
+                src={selectedTrailer}
+                frameBorder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                title="Trailer"
+              ></iframe>
+              {currentSerieTV && (
+                <CommentSection mediaId={currentSerieTV} mediaType="serieTV" />
+              )}
+            </div>
           ) : (
             <p>Trailer non trovato</p>
           )}

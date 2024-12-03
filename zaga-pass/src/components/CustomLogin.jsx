@@ -1,35 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Col, Container, Row, Form, Button } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { login } from "../action/authActions";
 
 const CustomLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
-  useEffect(() => {}, []);
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = "http://localhost:3001/auth/login";
-
     try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Errore nella fetch!");
-      }
-
-      const data = await response.json();
-      console.log("I tuoi dati", data);
-
-      localStorage.setItem("Access Token", data.accessToken);
+      await dispatch(login(email, password));
       navigate("/home");
     } catch (err) {
       console.log("Errore durante il login", err);
@@ -59,7 +43,6 @@ const CustomLogin = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
               <Form.Control
@@ -69,17 +52,14 @@ const CustomLogin = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </Form.Group>
-
             <div className="d-flex justify-content-between align-items-center mb-3">
               <Link to="/resetPasswordPage" className="text-muted">
                 Forgot password?
               </Link>
             </div>
-
-            <Button variant="dark" type="submit" className="w-100 ">
+            <Button variant="dark" type="submit" className="w-100">
               Sign in
             </Button>
-
             <div className="text-center mt-3">
               <span className="text-muted">Not a member?</span>
               <Link to="/register" className="ms-2">
