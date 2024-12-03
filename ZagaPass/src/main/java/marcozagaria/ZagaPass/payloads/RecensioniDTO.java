@@ -1,6 +1,4 @@
 package marcozagaria.ZagaPass.payloads;
 
-import java.util.UUID;
-
-public record RecensioniDTO(String commento, int voto, UUID userId, Long filmID, Long serieTVId) {
+public record RecensioniDTO(Long mediaId, String mediaType, String commento, int voto) {
 }

@@ -1,10 +1,17 @@
 package marcozagaria.ZagaPass.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -23,23 +30,21 @@ public class Recensioni {
     private String commento;
     private int voto;
     private LocalDate data;
-//    @ManyToOne
-//    @JoinColumn(name = "user_id", nullable = false)
-//    @JsonBackReference
-//    private User user;
-//    @ManyToOne
-//    @JoinColumn(name = "film_id", nullable = true)
-//    @JsonBackReference
-//    private Film film;
-//    @ManyToOne
-//    @JoinColumn(name = "serieTV_id", nullable = true)
-//    @JsonBackReference
-//    private SerieTV serieTV;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
+    private User user;
 
-//    public Recensioni(String commento, int voto, User user) {
-//        this.commento = commento;
-//        this.voto = voto;
-//        this.user = user;
-//        this.data = LocalDate.now();
-//    }
+    private Long filmId;
+
+    private Long serieTVId;
+
+    private Long animeMalId;
+
+    public Recensioni(String commento, int voto, User user) {
+        this.commento = commento;
+        this.voto = voto;
+        this.user = user;
+        this.data = LocalDate.now();
+    }
 }

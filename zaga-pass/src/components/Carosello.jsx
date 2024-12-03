@@ -15,7 +15,7 @@ const Carosello = () => {
   const serietv = useSelector((state) => state.serietv.serietvList);
 
   return (
-    <Row className="mb-4">
+    <Row className="mb-4 w-50">
       <Col>
         <Carousel>
           <Carousel.Item>
