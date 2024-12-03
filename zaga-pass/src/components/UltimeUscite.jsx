@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCurrentFilms } from "../action/filmactions";
-import { fetchCurrentSerietv, fetchSerietv } from "../action/serietvActions";
+import { fetchCurrentSerietv } from "../action/serietvActions";
 import { Col, Container, Row } from "react-bootstrap";
-import FilmComponents2 from "./FilmComponents2";
-import SerieTVComponents2 from "./SerieTVComponents2";
+import FilmComponents from "./FilmComponents";
+import SerieTVComponents from "./SerieTVComponents";
 import { fetchCurrentSeasonAnimes } from "../action/animeActions";
-import AnimeComponets2 from "./AnimeComponents2";
+import AnimeComponets from "./AnimeComponents";
 
 const getRandomElements = (list, count) => {
   const shuffled = [...list].sort(() => 0.5 - Math.random());
@@ -32,15 +32,15 @@ const UltimeUscite = () => {
     <Container className="mt-4 ">
       <Row>
         <Col md={4} className="flex-grow-1">
-          <FilmComponents2 movieList={getRandomElements(currentFilms, 2)} />
+          <FilmComponents movieList={getRandomElements(currentFilms, 2)} />
         </Col>
         <Col md={4} className="flex-grow-1">
-          <AnimeComponets2
+          <AnimeComponets
             animeList={getRandomElements(currentSeasonAnimes, 2)}
           />
         </Col>
         <Col md={4} className="flex-grow-1">
-          <SerieTVComponents2
+          <SerieTVComponents
             tvShowList={getRandomElements(currentSerietv, 2)}
           />
         </Col>

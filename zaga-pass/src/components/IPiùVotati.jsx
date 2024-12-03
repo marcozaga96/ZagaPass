@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchTopFilms } from "../action/filmactions";
 import { fetchTopSerietv } from "../action/serietvActions";
 import { Col, Container, Row } from "react-bootstrap";
-import FilmComponents3 from "./FilmComponents3";
-import SerieTVComponents3 from "./SerieTVComponents3";
+import FilmComponents from "./FilmComponents";
+import SerieTVComponents from "./SerieTVComponents";
 import { fetchTopAnimes } from "../action/animeActions";
-import AnimeComponets3 from "./AnimeComponents3";
+import AnimeComponets from "./AnimeComponents";
 
 const getRandomElements = (list, count) => {
   const shuffled = [...list].sort(() => 0.5 - Math.random());
@@ -27,13 +27,13 @@ const IPiùVotati = () => {
     <Container className="mt-4 ">
       <Row>
         <Col md={4} className="flex-grow-1">
-          <FilmComponents3 movieList={getRandomElements(topFilms, 2)} />
+          <FilmComponents movieList={getRandomElements(topFilms, 2)} />
         </Col>
         <Col md={4} className="flex-grow-1">
-          <AnimeComponets3 animeList={getRandomElements(topAnimes, 2)} />
+          <AnimeComponets animeList={getRandomElements(topAnimes, 2)} />
         </Col>
         <Col md={4} className="flex-grow-1">
-          <SerieTVComponents3 tvShowList={getRandomElements(topSerietv, 2)} />
+          <SerieTVComponents tvShowList={getRandomElements(topSerietv, 2)} />
         </Col>
       </Row>
     </Container>

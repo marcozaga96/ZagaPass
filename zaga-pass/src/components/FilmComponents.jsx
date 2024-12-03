@@ -1,27 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Card, Modal, Button } from "react-bootstrap";
+import React, { useState } from "react";
+import { Container, Row, Col, Card, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFilms, fetchTrailer, setPage } from "../action/filmactions";
+import { fetchTrailer } from "../action/filmactions";
 
 const FilmComponents = ({ movieList }) => {
   const BASE_URL = "https://image.tmdb.org/t/p/w500";
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
-  const currentPage = useSelector((state) => state.films.currentPage);
+
   const selectedTrailer = useSelector((state) => state.films.selectedTrailer);
-
-  useEffect(() => {
-    dispatch(fetchFilms(currentPage));
-  }, [dispatch, currentPage]);
-
-  const handleNext = () => {
-    dispatch(setPage(currentPage + 1));
-  };
-  const handlePrevious = () => {
-    if (currentPage > 0) {
-      dispatch(setPage(currentPage - 1));
-    }
-  };
 
   const handleClose = () => setShow(false);
   const handleShow = async (movieId) => {
@@ -56,19 +43,7 @@ const FilmComponents = ({ movieList }) => {
           </Col>
         ))}
       </Row>
-      <div className="d-flex justify-content-between mt-4">
-        <Button
-          variant="secondary"
-          onClick={handlePrevious}
-          disabled={currentPage === 0}
-        >
-          Precedente
-        </Button>
-        <span>Pagina {currentPage}</span>
-        <Button variant="secondary" onClick={handleNext}>
-          Successivo
-        </Button>
-      </div>
+
       <Modal show={show} onHide={handleClose} size="lg" centered>
         <Modal.Header closeButton>
           <Modal.Title>Trailer</Modal.Title>

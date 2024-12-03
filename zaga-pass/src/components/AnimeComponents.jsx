@@ -1,29 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Card, Modal, Button } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchAnimes } from "../action/animeActions";
-import { setPage } from "../action/animeActions";
+import React, { useState } from "react";
+import { Container, Row, Col, Card, Modal } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
 const AnimeComponets = ({ animeList }) => {
   const [show, setShow] = useState(false);
   const [selectedTrailer, setSelectedTrailer] = useState(null);
   const loader = useSelector((state) => state.animes.loader);
   console.log(loader);
-
-  const currentPage = useSelector((state) => state.animes.currentPage);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchAnimes(currentPage));
-  }, [dispatch, currentPage]);
-
-  const handleNext = () => {
-    dispatch(setPage(currentPage + 1));
-  };
-  const handlePrevious = () => {
-    if (currentPage > 0) {
-      dispatch(setPage(currentPage - 1));
-    }
-  };
 
   const handleClose = () => setShow(false);
   const handleShow = (trailerUrl) => {
@@ -58,7 +41,7 @@ const AnimeComponets = ({ animeList }) => {
           </Col>
         ))}
       </Row>
-      <div className="d-flex justify-content-between mt-4">
+      {/* <div className="d-flex justify-content-between mt-4">
         <Button
           variant="secondary"
           onClick={handlePrevious}
@@ -70,7 +53,7 @@ const AnimeComponets = ({ animeList }) => {
         <Button variant="secondary" onClick={handleNext}>
           Successivo
         </Button>
-      </div>
+      </div> */}
       <Modal show={show} onHide={handleClose} size="lg" centered>
         <Modal.Header closeButton>
           <Modal.Title>Trailer</Modal.Title>
