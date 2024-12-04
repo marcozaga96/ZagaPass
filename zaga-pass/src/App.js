@@ -15,6 +15,7 @@ import FilmPageUltimeUscite from "./paginations/FilmPageUltimeUscite.jsx";
 import SerieTVPage from "./paginations/SerieTVPage.jsx";
 import SerieTVPagePiùVotati from "./paginations/SerieTVPagePiùVotati.jsx";
 import SerieTVPageUltimeUscite from "./paginations/SerieTVPageUltimeUscite.jsx";
+import PreferitiPage from "./components/PreferitiPage.jsx";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           element={<SerieTVPageUltimeUscite />}
         />
         <Route path="/serietv/top" element={<SerieTVPagePiùVotati />} />
+        <Route path="/favorites" element={<PreferitiPage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -33,6 +33,12 @@ public class PreferitiController {
         return ResponseEntity.ok("Preferito eliminato con successo!");
     }
 
+    @GetMapping
+    public ResponseEntity<List<Preferiti>> getPreferitiForCurrentUser() {
+        List<Preferiti> preferiti = preferitiService.getPreferiti();
+        return ResponseEntity.ok(preferiti);
+    }
+
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Preferiti>> getPreferiti(@PathVariable UUID userId) {
         return ResponseEntity.ok(preferitiService.getPreferitiByUserId(userId));

@@ -51,35 +51,30 @@ const SerieTVComponents = ({ tvShowList }) => {
           );
           return (
             <Col md={2} className="mb-4 flex-grow-1" key={tvShow.id}>
-              {" "}
               <Card>
-                {" "}
                 <Card.Img
                   variant="top"
                   src={`${BASE_URL}${tvShow.poster_path}`}
                   style={{ height: "400px", objectFit: "fill" }}
                   onClick={() => handleShow(tvShow.id)}
-                />{" "}
+                />
                 <Card.Body>
-                  {" "}
-                  <Card.Title>{tvShow.name}</Card.Title>{" "}
+                  <Card.Title>{tvShow.name}</Card.Title>
                   <div className="card-overlay d-flex align-items-center justify-content-center">
-                    {" "}
                     <i
                       className="bi bi-play-circle transparent-button"
                       style={{ fontSize: "3rem" }}
                       onClick={() => handleShow(tvShow.id)}
-                    ></i>{" "}
-                  </div>{" "}
+                    ></i>
+                  </div>
                   <div
                     className="favorite-icon"
                     onClick={() => handleFavoriteClick(tvShow)}
                   >
-                    {" "}
-                    {isFavorite ? <FaHeart color="red" /> : <FaRegHeart />}{" "}
-                  </div>{" "}
-                </Card.Body>{" "}
-              </Card>{" "}
+                    {isFavorite ? <FaHeart color="red" /> : <FaRegHeart />}
+                  </div>
+                </Card.Body>
+              </Card>
             </Col>
           );
         })}

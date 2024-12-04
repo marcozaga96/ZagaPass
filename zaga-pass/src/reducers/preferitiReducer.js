@@ -20,7 +20,10 @@ const preferitiReducer = (state = initialState, action) => {
       };
     case "ADD_FAVORITE_FAILURE":
     case "REMOVE_FAVORITE_FAILURE":
-      return { ...state, error: action.payload };
+      return {
+        ...state,
+        error: action.payload,
+      };
     default:
       return state;
   }

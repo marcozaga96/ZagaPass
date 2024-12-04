@@ -39,6 +39,17 @@ public class PreferitiService {
         preferitiRepository.deleteById(id);
     }
 
+    public List<Preferiti> getPreferiti() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
+        System.out.println("Utente autenticato: " + userEmail);
+        Optional<User> userFound = usersRepository.findByEmail(userEmail);
+        if (userFound.isEmpty()) {
+            throw new NotFoundException("Utente non trovato!");
+        }
+        return preferitiRepository.findByUserId(userFound.get().getId());
+    }
+
     public List<Preferiti> getPreferitiByUserId(UUID userId) {
         return preferitiRepository.findByUserId(userId);
     }

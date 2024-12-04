@@ -41,7 +41,7 @@ const AnimeComponets = ({ animeList }) => {
     setSelectedAnime(anime);
     setShow(true);
   };
-
+  console.log("Anime List:", animeList);
   console.log("sono animecurrent", selectedAnime);
   return (
     <Container fluid className="pt-4 background">
@@ -50,41 +50,38 @@ const AnimeComponets = ({ animeList }) => {
           const isFavorite = favoritesList.some(
             (item) => item.mediaId === anime.mal_id
           );
+          const imageUrl =
+            anime.images?.jpg?.image_url || "https://placedog.net/500/280";
           return (
             <Col md={2} className="mb-4 flex-grow-1" key={anime.mal_id}>
-              {" "}
               <Card>
-                {" "}
                 <Card.Img
                   variant="top"
-                  src={anime.images.jpg.image_url}
+                  src={imageUrl}
                   style={{ height: "400px", objectFit: "fill" }}
                   onClick={() =>
                     handleShow(anime.trailer.embed_url, anime.mal_id)
                   }
-                />{" "}
+                />
                 <Card.Body>
-                  {" "}
-                  <Card.Title>{anime.title}</Card.Title>{" "}
+                  <Card.Title>{anime.title}</Card.Title>
                   <div className="card-overlay d-flex align-items-center justify-content-center">
-                    {" "}
                     <i
                       className="bi bi-play-circle transparent-button"
                       style={{ fontSize: "3rem" }}
                       onClick={() =>
                         handleShow(anime.trailer.embed_url, anime.mal_id)
                       }
-                    ></i>{" "}
-                  </div>{" "}
+                    ></i>
+                  </div>
                   <div
                     className="favorite-icon"
                     onClick={() => handleFavoriteClick(anime)}
                   >
-                    {" "}
-                    {isFavorite ? <FaHeart color="red" /> : <FaRegHeart />}{" "}
-                  </div>{" "}
-                </Card.Body>{" "}
-              </Card>{" "}
+                    {isFavorite ? <FaHeart color="red" /> : <FaRegHeart />}
+                  </div>
+                </Card.Body>
+              </Card>
             </Col>
           );
         })}
@@ -97,7 +94,6 @@ const AnimeComponets = ({ animeList }) => {
         <Modal.Body>
           {selectedTrailer ? (
             <div>
-              {" "}
               <iframe
                 width="100%"
                 height="500"
@@ -106,10 +102,10 @@ const AnimeComponets = ({ animeList }) => {
                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
                 title="Trailer"
-              ></iframe>{" "}
+              ></iframe>
               {selectedAnime && (
                 <CommentSection mediaId={selectedAnime} mediaType="anime" />
-              )}{" "}
+              )}
             </div>
           ) : (
             <p>Trailer non trovato</p>
