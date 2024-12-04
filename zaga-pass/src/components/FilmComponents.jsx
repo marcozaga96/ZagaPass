@@ -3,14 +3,32 @@ import { Container, Row, Col, Card, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTrailer } from "../action/filmactions";
 import CommentSection from "./CommentSection";
+import {
+  addFavoriteItem,
+  removeFavoriteItem,
+} from "../action/preferitiActions";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 const FilmComponents = ({ movieList }) => {
   const BASE_URL = "https://image.tmdb.org/t/p/w500";
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const [currentMovie, setCurrentMovie] = useState(null);
-
+  const favoritesList = useSelector((state) => state.preferiti.favoritesList);
   const selectedTrailer = useSelector((state) => state.films.selectedTrailer);
+
+  const handleFavoriteClick = (movie) => {
+    const isFavorite = favoritesList.some((item) => item.mediaId === movie.id);
+    if (isFavorite) {
+      const favoriteItem = favoritesList.find(
+        (item) => item.mediaId === movie.id
+      );
+      dispatch(removeFavoriteItem(favoriteItem.id));
+    } else {
+      const favoriteItem = { mediaId: movie.id, mediaType: "film" };
+      dispatch(addFavoriteItem(favoriteItem));
+    }
+  };
 
   const handleClose = () => setShow(false);
   const handleShow = async (movieId) => {
@@ -24,30 +42,40 @@ const FilmComponents = ({ movieList }) => {
   return (
     <Container fluid className="pt-4 background">
       <Row>
-        {movieList.map((movie) => (
-          <Col md={2} className="mb-4 flex-grow-1" key={movie.id}>
-            <Card>
-              <Card.Img
-                variant="top"
-                src={`${BASE_URL}${movie.poster_path}`}
-                style={{ height: "400px", objectFit: "fill" }}
-                onClick={() => handleShow(movie.id)}
-              />
-              <Card.Body>
-                <Card.Title>{movie.title}</Card.Title>
-                <div className="card-overlay d-flex align-items-center justify-content-center">
-                  <i
-                    class="bi bi-play-circle transparent-button"
-                    style={{ fontSize: "3rem" }}
-                    onClick={() => handleShow(movie.id)}
-                  ></i>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
+        {movieList.map((movie) => {
+          const isFavorite = favoritesList.some(
+            (item) => item.mediaId === movie.id
+          );
+          return (
+            <Col md={2} className="mb-4 flex-grow-1" key={movie.id}>
+              <Card>
+                <Card.Img
+                  variant="top"
+                  src={`${BASE_URL}${movie.poster_path}`}
+                  style={{ height: "400px", objectFit: "fill" }}
+                  onClick={() => handleShow(movie.id)}
+                />
+                <Card.Body>
+                  <Card.Title>{movie.title}</Card.Title>
+                  <div className="card-overlay d-flex align-items-center justify-content-center">
+                    <i
+                      className="bi bi-play-circle transparent-button"
+                      style={{ fontSize: "3rem" }}
+                      onClick={() => handleShow(movie.id)}
+                    ></i>
+                  </div>
+                  <div
+                    className="favorite-icon"
+                    onClick={() => handleFavoriteClick(movie)}
+                  >
+                    {isFavorite ? <FaHeart color="red" /> : <FaRegHeart />}
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          );
+        })}
       </Row>
-
       <Modal show={show} onHide={handleClose} size="lg" centered>
         <Modal.Header closeButton>
           <Modal.Title>Trailer</Modal.Title>

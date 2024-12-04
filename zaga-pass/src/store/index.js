@@ -6,6 +6,7 @@ import recensioniReducer from "../reducers/recensioniReducer";
 import authReducer from "../reducers/authReducer";
 import { persistStore, persistReducer } from "redux-persist";
 import localStorage from "redux-persist/lib/storage";
+import preferitiReducer from "../reducers/preferitiReducer";
 
 const persisConfig = {
   storage: localStorage,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   serietv: serietvReducer,
   recensioni: recensioniReducer,
   auth: authReducer,
+  preferiti: preferitiReducer,
 });
 const persistedReducer = persistReducer(persisConfig, rootReducer);
 

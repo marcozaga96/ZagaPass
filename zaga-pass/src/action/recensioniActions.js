@@ -1,20 +1,20 @@
 export const addRecensione = (recensioneDTO) => async (dispatch, getState) => {
   const token = getState().auth.token;
-  console.log("Invio recensione: ", recensioneDTO); // Log del corpo della richiesta
-  console.log("Token di autorizzazione: ", token); // Log del token
+  console.log("Invio recensione: ", recensioneDTO);
+  console.log("Token di autorizzazione: ", token);
 
   try {
     const response = await fetch("http://localhost:3001/api/recensioni", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, // Includi il token di autorizzazione
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(recensioneDTO),
     });
 
     const data = await response.json();
-    console.log("Risposta del backend: ", data); // Log della risposta del backend
+    console.log("Risposta del backend: ", data);
 
     if (!response.ok) {
       throw new Error("Failed to add recensione");
@@ -35,20 +35,20 @@ export const fetchRecensioniPerMedia =
       mediaId,
       " e tipo: ",
       mediaType
-    ); // Log della richiesta
+    );
 
     try {
       const response = await fetch(
         `http://localhost:3001/api/recensioni/${mediaType}/${mediaId}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Includi il token di autorizzazione
+            Authorization: `Bearer ${token}`,
           },
         }
       );
 
       const data = await response.json();
-      console.log("Recensioni recuperate: ", data); // Log della risposta del backend
+      console.log("Recensioni recuperate: ", data);
 
       if (!response.ok) {
         throw new Error("Failed to fetch recensioni");
