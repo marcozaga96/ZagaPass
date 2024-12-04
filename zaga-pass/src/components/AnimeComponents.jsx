@@ -28,7 +28,9 @@ const AnimeComponets = ({ animeList }) => {
                 variant="top"
                 src={anime.images.jpg.image_url}
                 style={{ height: "400px", objectFit: "fill" }}
-                onClick={() => handleShow(anime.trailer.embed_url)}
+                onClick={() =>
+                  handleShow(anime.trailer.embed_url, anime.mal_id)
+                }
               />
               <Card.Body>
                 <Card.Title>{anime.title}</Card.Title>

@@ -6,6 +6,7 @@ import {
   Form,
   FormControl,
   Button,
+  Dropdown,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
@@ -28,15 +29,54 @@ const CustomNavbar = () => {
         />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="/serietv">
-              Serie TV
-            </Nav.Link>
-            <Nav.Link as={Link} to="/films">
-              Film
-            </Nav.Link>
-            <Nav.Link as={Link} to="/anime">
-              Anime
-            </Nav.Link>
+            <Dropdown>
+              <Dropdown.Toggle variant="dark" id="dropdown-serietv">
+                Serie TV
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item as={Link} to="/serietv">
+                  Il Meglio Da Vedere
+                </Dropdown.Item>
+                <Dropdown.Item as={Link} to="/serietv/playing-now">
+                  Ultime Uscite
+                </Dropdown.Item>
+                <Dropdown.Item as={Link} to="/serietv/top">
+                  I Più Votati
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+            <Dropdown>
+              <Dropdown.Toggle variant="dark" id="dropdown-anime">
+                Anime
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item as={Link} to="/anime">
+                  Il Meglio Da Vedere
+                </Dropdown.Item>
+                <Dropdown.Item as={Link} to="/anime/playing-now">
+                  Ultime Uscite
+                </Dropdown.Item>
+                <Dropdown.Item as={Link} to="/anime/top">
+                  I Più Votati
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+            <Dropdown>
+              <Dropdown.Toggle variant="dark" id="dropdown-films">
+                Film
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item as={Link} to="/films">
+                  Il Meglio Da Vedere
+                </Dropdown.Item>
+                <Dropdown.Item as={Link} to="/films/playing-now">
+                  Ultime Uscite
+                </Dropdown.Item>
+                <Dropdown.Item as={Link} to="/films/top">
+                  I Più Votati
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           </Nav>
           <Form className="d-flex">
             <FormControl

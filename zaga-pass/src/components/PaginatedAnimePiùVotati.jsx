@@ -1,16 +1,16 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Button } from "react-bootstrap";
-import { fetchTopFilms } from "../action/filmactions";
-import { setPage } from "../action/filmactions";
-import FilmComponents from "./FilmComponents";
+import { fetchTopAnimes } from "../action/animeActions";
+import { setPage } from "../action/animeActions";
+import AnimeComponets from "./AnimeComponents";
 
-const PaginatedFilmPiùVotati = () => {
-  const films = useSelector((state) => state.films.topFilmsList);
-  const currentPage = useSelector((state) => state.films.currentPage);
+const PaginatedAnimePiùVotati = () => {
+  const animes = useSelector((state) => state.animes.topAnimesList);
+  const currentPage = useSelector((state) => state.animes.currentPage);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchTopFilms(currentPage));
+    dispatch(fetchTopAnimes(currentPage));
   }, [dispatch, currentPage]);
 
   const handleNext = () => {
@@ -24,7 +24,7 @@ const PaginatedFilmPiùVotati = () => {
 
   return (
     <Container fluid className="pt-4 background">
-      <FilmComponents movieList={films} />
+      <AnimeComponets animeList={animes} />
       <div className="d-flex justify-content-between mt-4">
         <Button
           variant="secondary"
@@ -42,4 +42,4 @@ const PaginatedFilmPiùVotati = () => {
   );
 };
 
-export default PaginatedFilmPiùVotati;
+export default PaginatedAnimePiùVotati;

@@ -26,7 +26,7 @@ function App() {
         <Route path="/register" element={<CustomRegister />} />
         <Route path="/home" element={<CustomHome />} />
         <Route path="/anime" element={<AnimePage />} />
-        <Route path="/anime/season-now" element={<AnimePageUltimeUscite />} />
+        <Route path="/anime/playing-now" element={<AnimePageUltimeUscite />} />
         <Route path="/anime/top" element={<AnimePagePiùVotati />} />
         <Route path="/films" element={<FilmPage />} />
         <Route path="/films/playing-now" element={<FilmPageUltimeUscite />} />
