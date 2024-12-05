@@ -15,7 +15,7 @@ import FilmPageUltimeUscite from "./paginations/FilmPageUltimeUscite.jsx";
 import SerieTVPage from "./paginations/SerieTVPage.jsx";
 import SerieTVPagePiùVotati from "./paginations/SerieTVPagePiùVotati.jsx";
 import SerieTVPageUltimeUscite from "./paginations/SerieTVPageUltimeUscite.jsx";
-import PreferitiPage from "./components/PreferitiPage.jsx";
+import PreferitiPage from "./paginations/PreferitiPage.jsx";
 
 function App() {
   return (

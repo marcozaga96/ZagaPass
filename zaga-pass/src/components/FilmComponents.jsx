@@ -43,9 +43,9 @@ const FilmComponents = ({ movieList }) => {
     <Container fluid className="pt-4 background">
       <Row>
         {movieList.map((movie) => {
-          const isFavorite = favoritesList.some(
-            (item) => item.mediaId === movie.id
-          );
+          const isFavorite =
+            Array.isArray(favoritesList) &&
+            favoritesList.some((item) => item.mediaId === movie.id);
           return (
             <Col md={2} className="mb-4 flex-grow-1" key={movie.id}>
               <Card>

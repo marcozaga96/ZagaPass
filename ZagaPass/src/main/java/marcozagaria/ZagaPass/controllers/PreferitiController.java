@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/preferiti")
@@ -42,8 +41,5 @@ public class PreferitiController {
         return ResponseEntity.ok(preferiti);
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Preferiti>> getPreferiti(@PathVariable UUID userId) {
-        return ResponseEntity.ok(preferitiService.getPreferitiByUserId(userId));
-    }
+    
 }

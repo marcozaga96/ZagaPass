@@ -6,11 +6,11 @@ const initialState = {
 
 const preferitiReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "SET_FAVORITES": // Nuovo caso per gestire il recupero dei preferiti
+    case "SET_FAVORITES":
       return {
         ...state,
-        favoritesList: action.payload, // Aggiungi i preferiti ricevuti
-        loading: false, // Assicurati di settare il loading su false dopo il caricamento
+        favoritesList: action.payload,
+        loading: false,
       };
     case "ADD_FAVORITE_SUCCESS":
       return {
@@ -26,16 +26,16 @@ const preferitiReducer = (state = initialState, action) => {
       };
     case "ADD_FAVORITE_FAILURE":
     case "REMOVE_FAVORITE_FAILURE":
-    case "SET_FAVORITES_ERROR": // Aggiungi un'azione per gestire errori nei preferiti
+    case "SET_FAVORITES_ERROR":
       return {
         ...state,
-        error: action.payload, // Salva l'errore nel state
-        loading: false, // Assicurati che il loading sia disabilitato in caso di errore
+        error: action.payload,
+        loading: false,
       };
-    case "SET_FAVORITES_LOADING": // Aggiungi un'azione di caricamento
+    case "SET_FAVORITES_LOADING":
       return {
         ...state,
-        loading: true, // Imposta il loading su true quando si sta caricando i preferiti
+        loading: true,
       };
 
     default:

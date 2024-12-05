@@ -62,14 +62,14 @@ export const removeFavoriteItem = (id) => async (dispatch, getState) => {
 };
 
 export const fetchUserFavorites = () => async (dispatch, getState) => {
-  const token = getState().auth.token; // Ottieni il token dallo stato
+  const token = getState().auth.token;
   dispatch({ type: "SET_FAVORITES_LOADING" });
   try {
     const response = await fetch("http://localhost:3001/preferiti/list", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, // Includi il token nella richiesta
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -80,51 +80,13 @@ export const fetchUserFavorites = () => async (dispatch, getState) => {
     const data = await response.json();
     dispatch({
       type: "SET_FAVORITES",
-      payload: data, // Salva i preferiti nel Redux store
+      payload: data,
     });
   } catch (error) {
     console.error("Errore durante il recupero dei preferiti:", error);
     dispatch({
       type: "SET_FAVORITES_ERROR",
-      payload: error.message, // Gestisci l'errore
+      payload: error.message,
     });
-  }
-};
-
-export const fetchFavorites = () => async (dispatch, getState) => {
-  const token = getState().auth.token;
-  try {
-    const response = await fetch("http://localhost:3001/preferiti", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    if (!response.ok) {
-      throw new Error("Failed to fetch favorites");
-    }
-    const data = await response.json();
-    const detailedFavorites = await Promise.all(
-      data.map(async (preferiti) => {
-        const mediaUrl =
-          preferiti.mediaType === "film"
-            ? `http://localhost:3001/api/films/${preferiti.mediaId}`
-            : preferiti.mediaType === "serieTV"
-            ? `http://localhost:3001/api/serietv/${preferiti.mediaId}`
-            : `http://localhost:3001/api/anime/${preferiti.mediaId}`;
-        const mediaResponse = await fetch(mediaUrl);
-        const mediaData = await mediaResponse.json();
-        console.log(
-          `Details for ${preferiti.mediaType} ${preferiti.mediaId}:`,
-          mediaData
-        );
-        return { ...preferiti, ...mediaData };
-      })
-    );
-    dispatch({ type: "FETCH_FAVORITES_SUCCESS", payload: detailedFavorites });
-  } catch (error) {
-    console.error("Errore durante il recupero dei preferiti:", error);
-    dispatch({ type: "FETCH_FAVORITES_FAILURE", payload: error });
   }
 };
