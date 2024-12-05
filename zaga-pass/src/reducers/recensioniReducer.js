@@ -10,7 +10,7 @@ const recensioniReducer = (state = initialState, action) => {
       console.log(
         "Aggiunta recensione avvenuta con successo: ",
         action.payload
-      ); // Log del successo
+      );
       return {
         ...state,
         recensioniList: [...state.recensioniList, action.payload],
@@ -19,13 +19,13 @@ const recensioniReducer = (state = initialState, action) => {
       console.error(
         "Errore durante l'aggiunta della recensione: ",
         action.payload
-      ); // Log dell'errore
+      );
       return {
         ...state,
         error: action.payload,
       };
     case "FETCH_RECENSIONI_SUCCESS":
-      console.log("Recensioni recuperate con successo: ", action.payload); // Log del successo
+      console.log("Recensioni recuperate con successo: ", action.payload);
       return {
         ...state,
         recensioniList: action.payload,
@@ -34,7 +34,7 @@ const recensioniReducer = (state = initialState, action) => {
       console.error(
         "Errore durante il recupero delle recensioni: ",
         action.payload
-      ); // Log dell'errore
+      );
       return {
         ...state,
         error: action.payload,

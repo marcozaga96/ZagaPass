@@ -8,18 +8,39 @@ import {
   Button,
   Dropdown,
 } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setSearchQuery, setSearchContext } from "../action/searchActions";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const CustomNavbar = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchInput, setSearchInput] = useState("");
+  const dispatch = useDispatch();
+  const location = useLocation();
   const navigate = useNavigate();
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/searchSerietv?query=${encodeURIComponent(searchQuery)}`);
-      setSearchQuery("");
+
+    // Determina il contesto basato sul percorso
+    let context = "home";
+    if (location.pathname.includes("/films")) context = "films";
+    if (location.pathname.includes("/anime")) context = "anime";
+    if (location.pathname.includes("/serietv")) context = "serietv";
+
+    // Invio delle action
+    dispatch(setSearchQuery(searchInput));
+    dispatch(setSearchContext(context));
+
+    if (context === "films") {
+      navigate(`/films/search?query=${searchInput}`);
+    } else if (context === "anime") {
+      navigate(`/anime/search?query=${searchInput}`);
+    } else if (context === "serietv") {
+      navigate(`/serietv/search?query=${searchInput}`);
+    } else {
+      navigate(`/search?query=${searchInput}`);
     }
+    setSearchInput("");
   };
 
   return (
@@ -95,8 +116,8 @@ const CustomNavbar = () => {
               placeholder="Cerca"
               className="me-2 bg-secondary"
               aria-label="Search"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
             />
             <Button variant="outline-secondary">
               <i class="bi bi-search"></i>

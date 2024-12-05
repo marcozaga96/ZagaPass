@@ -8,7 +8,7 @@ const SearchPageAnime = () => {
   const [query, setQuery] = useState("");
   const location = useLocation();
   const dispatch = useDispatch();
-  const animes = useSelector((state) => state.animes.searchResults);
+  const animes = useSelector((state) => state.animes.searchResultsAnime);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);

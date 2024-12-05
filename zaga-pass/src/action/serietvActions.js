@@ -18,8 +18,8 @@ export const setPage = (page) => ({
   type: "SET_PAGE",
   payload: page,
 });
-export const setSearchResults = (serietv) => ({
-  type: "SET_SEARCH_RESULTS",
+export const searchResultsSerieTV = (serietv) => ({
+  type: "SET_SEARCH_RESULTS_SERIETV",
   payload: serietv,
 });
 export const fetchSerietv = (page = 0) => {
@@ -102,7 +102,7 @@ export const fetchSerieTVByQuery =
       }
 
       const data = await response.json();
-      dispatch(setSearchResults(data._embedded.serieTVModels));
+      dispatch(searchResultsSerieTV(data._embedded.serieTVModels));
       dispatch(setPage(page));
       console.log("data ricercati", data);
     } catch (error) {

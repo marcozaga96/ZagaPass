@@ -18,8 +18,8 @@ export const setLoader = (loader) => ({
   type: "SET_LOADER",
   payload: loader,
 });
-export const setSearchResults = (animes) => ({
-  type: "SET_SEARCH_RESULTS",
+export const searchResultsAnime = (animes) => ({
+  type: "SET_SEARCH_RESULTS_ANIME",
   payload: animes,
 });
 export const fetchAnimes = (page = 0) => {
@@ -106,7 +106,7 @@ export const fetchAnimesByQuery =
       }
 
       const data = await response.json();
-      dispatch(setSearchResults(data._embedded.animeModels));
+      dispatch(searchResultsAnime(data._embedded.animeModels));
       dispatch(setPage(page));
       console.log("data ricercati", data);
     } catch (error) {

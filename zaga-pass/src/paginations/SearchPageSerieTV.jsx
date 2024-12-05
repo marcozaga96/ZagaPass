@@ -8,7 +8,7 @@ const SearchPageSerieTV = () => {
   const [query, setQuery] = useState("");
   const location = useLocation();
   const dispatch = useDispatch();
-  const serietv = useSelector((state) => state.films.searchResults);
+  const serietv = useSelector((state) => state.serietv.searchResultsSerieTV);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);

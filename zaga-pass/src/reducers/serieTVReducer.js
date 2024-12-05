@@ -2,7 +2,7 @@ const initialState = {
   serietvList: [],
   currentSerietvList: [],
   topSerietvList: [],
-  searchResults: [],
+  searchResultsSerieTV: [],
   selectedTrailer: null,
   currentPage: 0,
 };
@@ -19,10 +19,10 @@ const serieTVReducer = (state = initialState, action) => {
       return { ...state, selectedTrailer: action.payload };
     case "SET_PAGE":
       return { ...state, currentPage: action.payload };
-    case "SET_SEARCH_RESULTS":
+    case "SET_SEARCH_RESULTS_SERIETV":
       return {
         ...state,
-        searchResults: action.payload,
+        searchResultsSerieTV: action.payload,
       };
     default:
       return state;
