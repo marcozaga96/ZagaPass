@@ -30,18 +30,19 @@ public class AnimeService {
     @Autowired
     private ObjectMapper objectMapper;
 
-    public Page<Anime> getAnimes(Pageable pageable) {
+    public Page<Anime> getAnimes(String query, Pageable pageable) {
         List<Anime> allAnimes = new ArrayList<>();
         int page = pageable.getPageNumber() + 1;
         int size = pageable.getPageSize();
         boolean morePages = true;
         while (morePages && page <= MAX_PAGES && allAnimes.size() < size * pageable.getPageNumber() + size) {
             UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(API_URL)
+                    .queryParam("q", query)
                     .queryParam("page", page)
                     .queryParam("limit", size);
-//            if (query != null && !query.isEmpty()) {
-//                uriBuilder.queryParam("query", query);
-//            }
+            if (query != null && !query.isEmpty()) {
+                uriBuilder.queryParam("query", query);
+            }
 //            if (year != null && !year.isEmpty()) {
 //                uriBuilder.queryParam("year", year);
 //            }

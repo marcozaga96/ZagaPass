@@ -18,6 +18,10 @@ export const setPage = (page) => ({
   type: "SET_PAGE",
   payload: page,
 });
+export const setSearchResults = (films) => ({
+  type: "SET_SEARCH_RESULTS",
+  payload: films,
+});
 
 export const fetchFilms = (page = 0) => {
   return async (dispatch) => {
@@ -85,3 +89,32 @@ export const fetchTrailer = (movieId) => {
     dispatch(setTrailer(trailerUrl));
   };
 };
+export const fetchFilmsByQuery =
+  (query, page = 0) =>
+  async (dispatch, getState) => {
+    const token = getState().auth.token;
+
+    try {
+      const response = await fetch(
+        `http://localhost:3001/api/films?query=${query}&page=${page}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Errore durante la ricerca dei film.");
+      }
+
+      const data = await response.json();
+      dispatch(setSearchResults(data._embedded.filmModels));
+      dispatch(setPage(page));
+      console.log("data ricercati", data);
+    } catch (error) {
+      console.error("Errore nella ricerca dei film:", error);
+    }
+  };

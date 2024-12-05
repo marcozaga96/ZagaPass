@@ -31,10 +31,12 @@ public class AnimeController {
     private PagedResourcesAssembler<Anime> pagedResourcesAssembler;
 
     @GetMapping
-    public PagedModel<AnimeModel> getAnimes(@RequestParam(defaultValue = "0") int page,
-                                            @RequestParam(defaultValue = "20") int size) {
+    public PagedModel<AnimeModel> getAnimes(
+            @RequestParam(required = false) String query,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Anime> animePage = animeService.getAnimes(pageable);
+        Page<Anime> animePage = animeService.getAnimes(query, pageable);
         return pagedResourcesAssembler.toModel(animePage, new AnimeModelAssembler());
     }
 

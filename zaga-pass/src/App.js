@@ -16,6 +16,9 @@ import SerieTVPage from "./paginations/SerieTVPage.jsx";
 import SerieTVPagePiùVotati from "./paginations/SerieTVPagePiùVotati.jsx";
 import SerieTVPageUltimeUscite from "./paginations/SerieTVPageUltimeUscite.jsx";
 import PreferitiPage from "./paginations/PreferitiPage.jsx";
+import SearchPageFilm from "./paginations/SearchPageFilm.jsx";
+import SearchPageAnime from "./paginations/SearchPageAnime.jsx";
+import SearchPageSerieTV from "./paginations/SearchPageSerieTV.jsx";
 
 function App() {
   return (
@@ -39,6 +42,9 @@ function App() {
         />
         <Route path="/serietv/top" element={<SerieTVPagePiùVotati />} />
         <Route path="/favorites" element={<PreferitiPage />} />
+        <Route path="/searchAnime" element={<SearchPageAnime />} />
+        <Route path="/searchFilm" element={<SearchPageFilm />} />
+        <Route path="/searchSerietv" element={<SearchPageSerieTV />} />
       </Routes>
     </BrowserRouter>
   );

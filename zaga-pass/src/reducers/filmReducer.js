@@ -2,6 +2,7 @@ const initialState = {
   filmsList: [],
   currentFilmsList: [],
   topFilmsList: [],
+  searchResults: [],
   selectedTrailer: null,
   currentPage: 0,
 };
@@ -18,6 +19,11 @@ const filmsReducer = (state = initialState, action) => {
       return { ...state, selectedTrailer: action.payload };
     case "SET_PAGE":
       return { ...state, currentPage: action.payload };
+    case "SET_SEARCH_RESULTS":
+      return {
+        ...state,
+        searchResults: action.payload,
+      };
     default:
       return state;
   }

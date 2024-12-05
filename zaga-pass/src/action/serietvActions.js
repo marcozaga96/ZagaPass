@@ -18,6 +18,10 @@ export const setPage = (page) => ({
   type: "SET_PAGE",
   payload: page,
 });
+export const setSearchResults = (serietv) => ({
+  type: "SET_SEARCH_RESULTS",
+  payload: serietv,
+});
 export const fetchSerietv = (page = 0) => {
   return async (dispatch) => {
     const token = localStorage.getItem("Access Token");
@@ -76,3 +80,32 @@ export const fetchTrailer = (serietvId) => {
     dispatch(setTrailer(trailerUrl));
   };
 };
+export const fetchSerieTVByQuery =
+  (query, page = 0) =>
+  async (dispatch, getState) => {
+    const token = getState().auth.token;
+
+    try {
+      const response = await fetch(
+        `http://localhost:3001/api/serietv?query=${query}&page=${page}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Errore durante la ricerca dei film.");
+      }
+
+      const data = await response.json();
+      dispatch(setSearchResults(data._embedded.serieTVModels));
+      dispatch(setPage(page));
+      console.log("data ricercati", data);
+    } catch (error) {
+      console.error("Errore nella ricerca dei film:", error);
+    }
+  };

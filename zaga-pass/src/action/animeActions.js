@@ -18,6 +18,10 @@ export const setLoader = (loader) => ({
   type: "SET_LOADER",
   payload: loader,
 });
+export const setSearchResults = (animes) => ({
+  type: "SET_SEARCH_RESULTS",
+  payload: animes,
+});
 export const fetchAnimes = (page = 0) => {
   return async (dispatch) => {
     try {
@@ -80,3 +84,32 @@ export const fetchTopAnimes = (page = 0) => {
     }
   };
 };
+export const fetchAnimesByQuery =
+  (query, page = 0) =>
+  async (dispatch, getState) => {
+    const token = getState().auth.token;
+
+    try {
+      const response = await fetch(
+        `http://localhost:3001/api/anime?query=${query}&page=${page}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Errore durante la ricerca degli anime.");
+      }
+
+      const data = await response.json();
+      dispatch(setSearchResults(data._embedded.animeModels));
+      dispatch(setPage(page));
+      console.log("data ricercati", data);
+    } catch (error) {
+      console.error("Errore nella ricerca degli anime:", error);
+    }
+  };
