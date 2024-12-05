@@ -33,9 +33,12 @@ public class PreferitiController {
         return ResponseEntity.ok("Preferito eliminato con successo!");
     }
 
-    @GetMapping
-    public ResponseEntity<List<Preferiti>> getPreferitiForCurrentUser() {
-        List<Preferiti> preferiti = preferitiService.getPreferiti();
+    @GetMapping("/list")
+    public ResponseEntity<List<PreferitiDTO>> getPreferiti() {
+        List<PreferitiDTO> preferiti = preferitiService.getPreferiti()
+                .stream()
+                .map(preferito -> new PreferitiDTO(preferito.getMediaId(), preferito.getMediaType()))
+                .toList();
         return ResponseEntity.ok(preferiti);
     }
 

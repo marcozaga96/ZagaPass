@@ -1,3 +1,5 @@
+import { fetchUserFavorites } from "./preferitiActions";
+
 export const loginSuccess = (email, token) => {
   return {
     type: "LOGIN_SUCCESS",
@@ -27,6 +29,7 @@ export const login = (email, password) => async (dispatch) => {
     const { accessToken } = data;
     dispatch(loginSuccess(email, accessToken));
     localStorage.setItem("Access Token", accessToken);
+    dispatch(fetchUserFavorites());
   } catch (error) {
     console.error("Errore durante il login:", error);
   }

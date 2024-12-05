@@ -61,6 +61,36 @@ export const removeFavoriteItem = (id) => async (dispatch, getState) => {
   }
 };
 
+export const fetchUserFavorites = () => async (dispatch, getState) => {
+  const token = getState().auth.token; // Ottieni il token dallo stato
+  dispatch({ type: "SET_FAVORITES_LOADING" });
+  try {
+    const response = await fetch("http://localhost:3001/preferiti/list", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Includi il token nella richiesta
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch user favorites");
+    }
+
+    const data = await response.json();
+    dispatch({
+      type: "SET_FAVORITES",
+      payload: data, // Salva i preferiti nel Redux store
+    });
+  } catch (error) {
+    console.error("Errore durante il recupero dei preferiti:", error);
+    dispatch({
+      type: "SET_FAVORITES_ERROR",
+      payload: error.message, // Gestisci l'errore
+    });
+  }
+};
+
 export const fetchFavorites = () => async (dispatch, getState) => {
   const token = getState().auth.token;
   try {

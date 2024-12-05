@@ -1,5 +1,5 @@
 import React from "react";
-import PaginatedFilmPiùVotati from "../components/PaginatedAnimePiùVotati";
+import PaginatedFilmPiùVotati from "../components/PaginatedFIlmPiùVotati";
 
 const FilmPagePiùVotati = () => {
   return (
