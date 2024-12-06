@@ -23,10 +23,16 @@ const FilmComponents = ({ movieList }) => {
       const favoriteItem = favoritesList.find(
         (item) => item.mediaId === movie.id
       );
+      console.log("sono la lista movie", movie.id);
+      console.log("sono isFavorite", isFavorite);
       dispatch(removeFavoriteItem(favoriteItem.id));
     } else {
-      const favoriteItem = { mediaId: movie.id, mediaType: "film" };
+      const favoriteItem = {
+        mediaId: movie.id,
+        mediaType: "film",
+      };
       dispatch(addFavoriteItem(favoriteItem));
+      console.log("sono la lista item", favoriteItem);
     }
   };
 
