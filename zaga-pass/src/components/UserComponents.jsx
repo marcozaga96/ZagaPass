@@ -1,10 +1,34 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import { Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Modal, Row } from "react-bootstrap";
+import { updateUserProfile } from "../action/userAction";
 
 const UserComponents = () => {
   const { profile } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState({
+    name: profile?.name || "",
+    surname: profile?.surname || "",
+    email: profile?.email || "",
+    password: profile.password,
+  });
+
+  const handleOpenModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(updateUserProfile(formData));
+    handleCloseModal();
+  };
 
   return (
     <Container fluid className="p-4 background">
@@ -29,6 +53,9 @@ const UserComponents = () => {
           <p>
             <strong>Email:</strong> {profile.email}
           </p>
+          <Button variant="dark" onClick={handleOpenModal}>
+            Modifica
+          </Button>
         </Col>
       </Row>
       <Row>
@@ -70,6 +97,57 @@ const UserComponents = () => {
           )}
         </Col>
       </Row>
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modifica Profilo</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3">
+              <Form.Label>Nome</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Cognome</Form.Label>
+              <Form.Control
+                type="text"
+                name="surname"
+                value={formData.surname}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Button variant="dark" type="submit">
+              Salva Modifiche
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
     </Container>
   );
 };

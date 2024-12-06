@@ -44,7 +44,7 @@ public class UsersController {
     }
 
     @PutMapping("/me")
-    public User updateProfile(@AuthenticationPrincipal User currentAuthenticatedUser, @RequestBody @Validated NewUserDTO body) {
+    public User updateProfile(@AuthenticationPrincipal User currentAuthenticatedUser, @RequestBody @Validated(NewUserDTO.UpdateGroup.class) NewUserDTO body) {
         return this.usersService.findByIdAndUpdate(currentAuthenticatedUser.getId(), body);
     }
 

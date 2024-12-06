@@ -41,8 +41,8 @@ const CustomRegister = () => {
       setShowAlert(true);
 
       setTimeout(() => {
-        navigate("/home");
-      }, 3000);
+        navigate("/login");
+      }, 1000);
     } catch (err) {
       console.log("Errore durante la registrazione", err);
     }

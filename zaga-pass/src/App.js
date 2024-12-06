@@ -20,17 +20,9 @@ import SearchPageFilm from "./paginations/SearchPageFilm.jsx";
 import SearchPageAnime from "./paginations/SearchPageAnime.jsx";
 import SearchPageSerieTV from "./paginations/SearchPageSerieTV.jsx";
 import SearchPage from "./paginations/SearchPage.jsx";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { fetchUserFavorites } from "./action/preferitiActions.js";
 import UserComponents from "./components/UserComponents.jsx";
 
 function App() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchUserFavorites());
-  }, [dispatch]);
   return (
     <BrowserRouter>
       <CustomNavbar />

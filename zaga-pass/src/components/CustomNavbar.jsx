@@ -52,7 +52,8 @@ const CustomNavbar = () => {
     navigate("/login");
   };
   if (loading) return <p>Caricamento in corso...</p>;
-  if (location.pathname === "/login") {
+
+  if (location.pathname === "/login" || location.pathname === "/register") {
     return (
       <div className="background p-4">
         <img
