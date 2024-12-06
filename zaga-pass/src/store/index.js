@@ -8,6 +8,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import localStorage from "redux-persist/lib/storage";
 import preferitiReducer from "../reducers/preferitiReducer";
 import { searchReducer } from "../reducers/searchReducer";
+import { userReducer } from "../reducers/userReducer";
 
 const persisConfig = {
   storage: localStorage,
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   preferiti: preferitiReducer,
   search: searchReducer,
+  user: userReducer,
 });
 const persistedReducer = persistReducer(persisConfig, rootReducer);
 

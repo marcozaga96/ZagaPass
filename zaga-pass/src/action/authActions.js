@@ -7,9 +7,9 @@ export const loginSuccess = (email, token) => {
   };
 };
 
-export const logout = () => {
+export const logoutSuccess = () => {
   return {
-    type: "LOGOUT",
+    type: "LOGOUT_SUCCESS",
   };
 };
 
@@ -33,4 +33,12 @@ export const login = (email, password) => async (dispatch) => {
   } catch (error) {
     console.error("Errore durante il login:", error);
   }
+};
+export const logout = () => {
+  return (dispatch) => {
+    localStorage.removeItem("Access Token");
+    dispatch({
+      type: "LOGOUT",
+    });
+  };
 };

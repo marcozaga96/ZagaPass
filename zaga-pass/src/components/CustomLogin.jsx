@@ -30,7 +30,7 @@ const CustomLogin = () => {
           <div className="text-center mb-4">
             <h4 style={{ fontWeight: "300" }}>Benvenuto!</h4>
             <p style={{ fontWeight: "300", color: "#6c757d" }}>
-              Il tuo gestionale aziendale di fiducia.
+              La miglior piattaforma di streaming
             </p>
           </div>
           <Form onSubmit={handleSubmit}>

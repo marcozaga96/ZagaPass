@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Navbar,
   Nav,
@@ -8,26 +8,31 @@ import {
   Button,
   Dropdown,
 } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setSearchQuery, setSearchContext } from "../action/searchActions";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { fetchUserProfile } from "../action/userAction";
+import { logout } from "../action/authActions";
 
 const CustomNavbar = () => {
   const [searchInput, setSearchInput] = useState("");
+  const { profile, loading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    dispatch(fetchUserProfile());
+  }, [dispatch]);
+
   const handleSearch = (e) => {
     e.preventDefault();
 
-    // Determina il contesto basato sul percorso
     let context = "home";
     if (location.pathname.includes("/films")) context = "films";
     if (location.pathname.includes("/anime")) context = "anime";
     if (location.pathname.includes("/serietv")) context = "serietv";
 
-    // Invio delle action
     dispatch(setSearchQuery(searchInput));
     dispatch(setSearchContext(context));
 
@@ -42,6 +47,24 @@ const CustomNavbar = () => {
     }
     setSearchInput("");
   };
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login");
+  };
+  if (loading) return <p>Caricamento in corso...</p>;
+  if (location.pathname === "/login") {
+    return (
+      <div className="background p-4">
+        <img
+          alt=""
+          src="/logo.png"
+          width="150"
+          height="50"
+          className="d-inline-block align-top"
+        />
+      </div>
+    );
+  }
 
   return (
     <Navbar variant="dark" expand="lg" className="background">
@@ -124,15 +147,37 @@ const CustomNavbar = () => {
             </Button>
           </Form>
           <Nav>
-            <Nav.Link as={Link} to="/profile">
-              Profilo
-            </Nav.Link>
-            <Nav.Link as={Link} to="/login">
-              Login
-            </Nav.Link>
-            <Nav.Link as={Link} to="/register">
-              Registrati
-            </Nav.Link>
+            {profile ? (
+              <Dropdown>
+                <Dropdown.Toggle variant="dark" id="user-dropdown">
+                  <img
+                    src={profile.avatarURL || "https://via.placeholder.com/150"}
+                    alt="Avatar"
+                    roundedCircle
+                    style={{ width: "40px", height: "40px" }}
+                  />
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item as={Link} to="/me">
+                    Profilo
+                  </Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/favorites">
+                    Preferiti
+                  </Dropdown.Item>
+                  <Dropdown.Divider />
+                  <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            ) : (
+              <>
+                <Nav.Link as={Link} to="/login">
+                  Login
+                </Nav.Link>
+                <Nav.Link as={Link} to="/register">
+                  Registrati
+                </Nav.Link>
+              </>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

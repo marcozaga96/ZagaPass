@@ -23,12 +23,13 @@ import SearchPage from "./paginations/SearchPage.jsx";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchUserFavorites } from "./action/preferitiActions.js";
+import UserComponents from "./components/UserComponents.jsx";
 
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchUserFavorites()); // Carica i preferiti una volta
+    dispatch(fetchUserFavorites());
   }, [dispatch]);
   return (
     <BrowserRouter>
@@ -37,6 +38,7 @@ function App() {
         <Route path="/login" element={<CustomLogin />} />
         <Route path="/" element={<CustomLogin />} />
         <Route path="/register" element={<CustomRegister />} />
+        <Route path="/me" element={<UserComponents />} />
         <Route path="/home" element={<CustomHome />} />
         <Route path="/anime" element={<AnimePage />} />
         <Route path="/anime/playing-now" element={<AnimePageUltimeUscite />} />
