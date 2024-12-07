@@ -1,4 +1,5 @@
 import { fetchUserFavorites } from "./preferitiActions";
+import { fetchUserProfile } from "./userAction";
 
 export const loginSuccess = (email, token) => {
   return {
@@ -30,6 +31,7 @@ export const login = (email, password) => async (dispatch) => {
     dispatch(loginSuccess(email, accessToken));
     localStorage.setItem("Access Token", accessToken);
     dispatch(fetchUserFavorites());
+    dispatch(fetchUserProfile());
   } catch (error) {
     console.error("Errore durante il login:", error);
   }

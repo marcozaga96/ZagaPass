@@ -69,28 +69,28 @@ export const updateUserProfile = (updatedData) => {
   };
 };
 
-// export const deleteUserProfile = () => {
-//   return async (dispatch) => {
-//     try {
-//       dispatch(setUserLoading(true));
-//       const token = localStorage.getItem("Access Token");
-//       const response = await fetch("http://localhost:3001/users/me", {
-//         method: "DELETE",
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       });
+export const deleteUserProfile = () => {
+  return async (dispatch) => {
+    try {
+      dispatch(setUserLoading(true));
+      const token = localStorage.getItem("Access Token");
+      const response = await fetch("http://localhost:3001/users/me", {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-//       if (!response.ok) {
-//         throw new Error("Errore durante la cancellazione del profilo");
-//       }
+      if (!response.ok) {
+        throw new Error("Errore durante la cancellazione del profilo");
+      }
 
-//       localStorage.removeItem("Access Token");
-//       dispatch(setUserProfile(null));
-//     } catch (error) {
-//       dispatch(setUserError(error.message));
-//     } finally {
-//       dispatch(setUserLoading(false));
-//     }
-//   };
-// };
+      localStorage.removeItem("Access Token");
+      dispatch(setUserProfile(null));
+    } catch (error) {
+      dispatch(setUserError(error.message));
+    } finally {
+      dispatch(setUserLoading(false));
+    }
+  };
+};

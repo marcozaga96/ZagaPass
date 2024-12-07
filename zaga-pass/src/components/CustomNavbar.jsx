@@ -166,7 +166,9 @@ const CustomNavbar = () => {
                     Preferiti
                   </Dropdown.Item>
                   <Dropdown.Divider />
-                  <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/login" onClick={handleLogout}>
+                    Logout
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             ) : (

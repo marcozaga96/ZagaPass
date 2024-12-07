@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Button, Col, Container, Form, Modal, Row } from "react-bootstrap";
-import { updateUserProfile } from "../action/userAction";
+import { deleteUserProfile, updateUserProfile } from "../action/userAction";
+import { Link } from "react-router-dom";
 
 const UserComponents = () => {
   const { profile } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   const [formData, setFormData] = useState({
     name: profile?.name || "",
     surname: profile?.surname || "",
@@ -18,6 +21,13 @@ const UserComponents = () => {
 
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
+  const handleOpenDeleteModal = () => setShowDeleteModal(true);
+  const handleCloseDeleteModal = () => setShowDeleteModal(false);
+
+  const handleDeleteUser = () => {
+    dispatch(deleteUserProfile());
+    setShowDeleteModal(false);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,6 +54,7 @@ const UserComponents = () => {
   return (
     <Container fluid className="p-4 background">
       <h1>Profilo Utente</h1>
+
       <Row className="mt-4">
         <Col md={4} className="text-center">
           <img
@@ -66,6 +77,9 @@ const UserComponents = () => {
           </p>
           <Button variant="dark" onClick={handleOpenModal}>
             Modifica
+          </Button>
+          <Button variant="danger" onClick={handleOpenDeleteModal}>
+            Cancella Profilo
           </Button>
         </Col>
       </Row>
@@ -108,6 +122,27 @@ const UserComponents = () => {
           )}
         </Col>
       </Row>
+
+      <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Conferma Cancellazione</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Sei sicuro di voler cancellare il tuo profilo? Questa azione è
+          irreversibile.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseDeleteModal}>
+            Annulla
+          </Button>
+          <Link to={"/login"}>
+            <Button variant="danger" onClick={handleDeleteUser}>
+              Conferma
+            </Button>
+          </Link>
+        </Modal.Footer>
+      </Modal>
+
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>Modifica Profilo</Modal.Title>
