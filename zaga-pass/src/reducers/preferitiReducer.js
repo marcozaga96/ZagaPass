@@ -20,9 +20,14 @@ const preferitiReducer = (state = initialState, action) => {
     case "REMOVE_FAVORITE_SUCCESS":
       return {
         ...state,
-        favoritesList: state.favoritesList.filter(
-          (item) => item.id !== action.payload
-        ),
+        favoritesList: state.favoritesList.filter((item) => {
+          const id = parseInt(action.payload, 10);
+          if (isNaN(id)) {
+            console.error("Payload is not a valid number:", action.payload);
+            return true;
+          }
+          return item.id !== id;
+        }),
       };
     case "ADD_FAVORITE_FAILURE":
     case "REMOVE_FAVORITE_FAILURE":

@@ -37,8 +37,6 @@ export const login = (email, password) => async (dispatch) => {
 export const logout = () => {
   return (dispatch) => {
     localStorage.removeItem("Access Token");
-    dispatch({
-      type: "LOGOUT",
-    });
+    dispatch(logoutSuccess);
   };
 };

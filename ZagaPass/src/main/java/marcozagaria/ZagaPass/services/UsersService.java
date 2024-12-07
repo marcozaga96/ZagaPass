@@ -68,7 +68,9 @@ public class UsersService {
         found.setName(body.name());
         found.setSurname(body.surname());
         found.setEmail(body.email());
-        found.setPassword(body.password());
+        if (body.password() != null && !body.password().isEmpty()) {
+            found.setPassword(body.password());
+        }
         found.setAvatarURL("https://ui-avatars.com/api/?name=" + body.name() + "+" + body.surname());
 
         return this.usersRepository.save(found);

@@ -33,8 +33,12 @@ export const removeFavoriteItem = (id) => async (dispatch, getState) => {
   const token = getState().auth.token;
 
   try {
+    const numericId = parseInt(id, 10);
+    if (isNaN(numericId)) {
+      throw new Error("ID fornito non è un numero valido.");
+    }
     const response = await fetch(
-      `http://localhost:3001/preferiti/remove/${id}`,
+      `http://localhost:3001/preferiti/remove/${numericId}`,
       {
         method: "DELETE",
         headers: {
@@ -50,7 +54,7 @@ export const removeFavoriteItem = (id) => async (dispatch, getState) => {
 
     dispatch({
       type: "REMOVE_FAVORITE_SUCCESS",
-      payload: id,
+      payload: numericId,
     });
   } catch (error) {
     console.error("Errore durante la rimozione del preferito:", error);

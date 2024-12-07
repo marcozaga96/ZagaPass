@@ -13,7 +13,7 @@ const UserComponents = () => {
     name: profile?.name || "",
     surname: profile?.surname || "",
     email: profile?.email || "",
-    password: profile.password,
+    password: "",
   });
 
   const handleOpenModal = () => setShowModal(true);
@@ -26,7 +26,18 @@ const UserComponents = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateUserProfile(formData));
+
+    const updatedData = {
+      name: formData.name.trim() || profile.name,
+      surname: formData.surname.trim() || profile.surname,
+      email: formData.email.trim() || profile.email,
+    };
+
+    if (formData.password && formData.password.trim() !== "") {
+      updatedData.password = formData.password.trim();
+    }
+
+    dispatch(updateUserProfile(updatedData));
     handleCloseModal();
   };
 
