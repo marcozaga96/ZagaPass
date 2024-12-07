@@ -7,6 +7,7 @@ import { login } from "../action/authActions";
 const CustomLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -17,6 +18,7 @@ const CustomLogin = () => {
       navigate("/home");
     } catch (err) {
       console.log("Errore durante il login", err);
+      setError("Credenziali non valide!");
     }
   };
 
@@ -33,6 +35,7 @@ const CustomLogin = () => {
               La miglior piattaforma di streaming
             </p>
           </div>
+          {error && <div className="alert alert-danger">{error}</div>}
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
@@ -41,6 +44,7 @@ const CustomLogin = () => {
                 placeholder="Enter email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -50,6 +54,7 @@ const CustomLogin = () => {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
             </Form.Group>
             <div className="d-flex justify-content-between align-items-center mb-3">

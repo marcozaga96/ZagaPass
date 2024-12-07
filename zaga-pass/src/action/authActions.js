@@ -27,13 +27,15 @@ export const login = (email, password) => async (dispatch) => {
     }
 
     const data = await response.json();
+    dispatch(fetchUserFavorites());
+    dispatch(fetchUserProfile());
     const { accessToken } = data;
     dispatch(loginSuccess(email, accessToken));
     localStorage.setItem("Access Token", accessToken);
-    dispatch(fetchUserFavorites());
-    dispatch(fetchUserProfile());
+    return Promise.resolve();
   } catch (error) {
     console.error("Errore durante il login:", error);
+    return Promise.reject(error);
   }
 };
 export const logout = () => {
