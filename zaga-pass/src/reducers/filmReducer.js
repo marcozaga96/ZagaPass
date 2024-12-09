@@ -3,6 +3,7 @@ const initialState = {
   currentFilmsList: [],
   topFilmsList: [],
   searchResults: [],
+  filmDetails: null,
   selectedTrailer: null,
   currentPage: 0,
 };
@@ -24,6 +25,12 @@ const filmsReducer = (state = initialState, action) => {
         ...state,
         searchResults: action.payload,
       };
+    case "GET_FILM_DETAILS_SUCCESS":
+      console.log("Setting film details:", action.payload);
+      return { ...state, filmDetails: action.payload, error: null };
+    case "GET_FILM_DETAILS_FAILURE":
+      console.error("Error fetching film details:", action.payload);
+      return { ...state, error: action.payload };
     default:
       return state;
   }

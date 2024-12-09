@@ -22,6 +22,10 @@ export const searchResultsSerieTV = (serietv) => ({
   type: "SET_SEARCH_RESULTS_SERIETV",
   payload: serietv,
 });
+export const setSerietvDetails = (serietv) => ({
+  type: "GET_SERIETV_DETAILS_SUCCESS",
+  payload: serietv,
+});
 export const fetchSerietv = (page = 0) => {
   return async (dispatch) => {
     const token = localStorage.getItem("Access Token");
@@ -109,3 +113,35 @@ export const fetchSerieTVByQuery =
       console.error("Errore nella ricerca dei film:", error);
     }
   };
+export const getSerieTVDetails = (serietvId) => {
+  return async (dispatch) => {
+    try {
+      console.log("Fetching details for serietvId:", serietvId);
+      const token = localStorage.getItem("Access Token");
+      const response = await fetch(
+        `http://localhost:3001/api/serietv/${serietvId}/full`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Errore nella richiesta: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Data received:", data);
+
+      dispatch(setSerietvDetails(data));
+    } catch (error) {
+      console.error(
+        "Errore durante il recupero dei dettagli della serietv:",
+        error
+      );
+      dispatch({
+        type: "GET_SERIETV_DETAILS_FAILURE",
+        payload: error.message,
+      });
+    }
+  };
+};

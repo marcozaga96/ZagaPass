@@ -22,6 +22,10 @@ export const setSearchResults = (films) => ({
   type: "SET_SEARCH_RESULTS",
   payload: films,
 });
+export const setFilmDetails = (films) => ({
+  type: "GET_FILM_DETAILS_SUCCESS",
+  payload: films,
+});
 
 export const fetchFilms = (page = 0) => {
   return async (dispatch) => {
@@ -118,3 +122,32 @@ export const fetchFilmsByQuery =
       console.error("Errore nella ricerca dei film:", error);
     }
   };
+export const getFilmDetails = (movieId) => {
+  return async (dispatch) => {
+    try {
+      console.log("Fetching details for movieId:", movieId);
+      const token = localStorage.getItem("Access Token");
+      const response = await fetch(
+        `http://localhost:3001/api/films/${movieId}/full`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Errore nella richiesta: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Data received:", data);
+
+      dispatch(setFilmDetails(data));
+    } catch (error) {
+      console.error("Errore durante il recupero dei dettagli del film:", error);
+      dispatch({
+        type: "GET_FILM_DETAILS_FAILURE",
+        payload: error.message,
+      });
+    }
+  };
+};

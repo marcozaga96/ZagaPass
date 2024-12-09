@@ -103,17 +103,17 @@ const AnimeComponets = ({ animeList }) => {
                 allowFullScreen
                 title="Trailer"
               ></iframe>
-              <Link
-                to={`/anime/${selectedAnime}/full`}
-                className="btn btn-primary mt-3"
-                onClick={handleClose}
-              >
-                View Details
-              </Link>
             </div>
           ) : (
             <p>Trailer non trovato</p>
           )}
+          <Link
+            to={`/anime/${selectedAnime}/full`}
+            className="btn btn-primary mt-3"
+            onClick={handleClose}
+          >
+            View Details
+          </Link>
         </Modal.Body>
       </Modal>
     </Container>

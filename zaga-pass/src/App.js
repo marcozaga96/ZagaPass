@@ -22,6 +22,8 @@ import SearchPageSerieTV from "./paginations/SearchPageSerieTV.jsx";
 import SearchPage from "./paginations/SearchPage.jsx";
 import UserComponents from "./components/UserComponents.jsx";
 import AnimeDetailsComponent from "./components/AnimeDetailComponent.jsx";
+import FilmDetailComponent from "./components/FilmDetailComponent.jsx";
+import SerieTVDetailComponent from "./components/SerieTVDetailComponent.jsx";
 
 function App() {
   return (
@@ -51,6 +53,11 @@ function App() {
         <Route path="/serietv/search" element={<SearchPageSerieTV />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/anime/:mal_id/full" element={<AnimeDetailsComponent />} />
+        <Route path="/films/:movieId/full" element={<FilmDetailComponent />} />
+        <Route
+          path="/serietv/:serietvId/full"
+          element={<SerieTVDetailComponent />}
+        />
       </Routes>
     </BrowserRouter>
   );

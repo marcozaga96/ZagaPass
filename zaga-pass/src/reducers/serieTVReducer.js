@@ -3,6 +3,7 @@ const initialState = {
   currentSerietvList: [],
   topSerietvList: [],
   searchResultsSerieTV: [],
+  serieTVDetails: null,
   selectedTrailer: null,
   currentPage: 0,
 };
@@ -24,6 +25,12 @@ const serieTVReducer = (state = initialState, action) => {
         ...state,
         searchResultsSerieTV: action.payload,
       };
+    case "GET_SERIETV_DETAILS_SUCCESS":
+      console.log("Setting serietv details:", action.payload);
+      return { ...state, serieTVDetails: action.payload, error: null };
+    case "GET_SERIETV_DETAILS_FAILURE":
+      console.error("Error fetching serietv details:", action.payload);
+      return { ...state, error: action.payload };
     default:
       return state;
   }

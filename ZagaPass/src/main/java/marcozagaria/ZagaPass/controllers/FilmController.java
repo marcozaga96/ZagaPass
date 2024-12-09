@@ -5,6 +5,7 @@ import marcozagaria.ZagaPass.entities.Video;
 import marcozagaria.ZagaPass.entities.filmpackage.Film;
 import marcozagaria.ZagaPass.entities.filmpackage.FilmModel;
 import marcozagaria.ZagaPass.entities.filmpackage.FilmModelAssembler;
+import marcozagaria.ZagaPass.entities.filmpackage.MovieDetailResponse;
 import marcozagaria.ZagaPass.services.FilmService;
 import marcozagaria.ZagaPass.services.ValutazioneService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,13 @@ public class FilmController {
     public void rateMovie(@PathVariable Long movieId, @RequestParam Valutazione value) {
         valutazioneService.rateMovie(movieId, value.getValue());
     }
+
+    @GetMapping("/{movieId}/full")
+    public ResponseEntity<MovieDetailResponse> getFilmDetails(@PathVariable Long movieId) {
+        Optional<MovieDetailResponse> filmDetails = filmService.getFilmDetails(movieId);
+        return filmDetails.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<FilmModel> getFilmById(@PathVariable Long id) {

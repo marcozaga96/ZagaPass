@@ -2,6 +2,7 @@ package marcozagaria.ZagaPass.controllers;
 
 import marcozagaria.ZagaPass.entities.Video;
 import marcozagaria.ZagaPass.entities.serietvpackage.SerieTV;
+import marcozagaria.ZagaPass.entities.serietvpackage.SerieTVDetailResponse;
 import marcozagaria.ZagaPass.entities.serietvpackage.SerieTVModel;
 import marcozagaria.ZagaPass.entities.serietvpackage.SerieTVModelAssembler;
 import marcozagaria.ZagaPass.services.SerieTVService;
@@ -69,6 +70,12 @@ public class SerieTVController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/{id}/full")
+    public ResponseEntity<SerieTVDetailResponse> getFilmDetails(@PathVariable Long id) {
+        Optional<SerieTVDetailResponse> filmDetails = serieTVService.getSerieTVDetails(id);
+        return filmDetails.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/{tvShowId}/videos")

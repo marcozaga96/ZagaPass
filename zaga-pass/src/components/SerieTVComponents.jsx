@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { Container, Row, Col, Card, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTrailer } from "../action/serietvActions";
-import CommentSection from "./CommentSection";
 import {
   addFavoriteItem,
   removeFavoriteItem,
 } from "../action/preferitiActions";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const SerieTVComponents = ({ tvShowList }) => {
   const BASE_URL = "https://image.tmdb.org/t/p/w500";
@@ -96,13 +96,17 @@ const SerieTVComponents = ({ tvShowList }) => {
                 allowFullScreen
                 title="Trailer"
               ></iframe>
-              {currentSerieTV && (
-                <CommentSection mediaId={currentSerieTV} mediaType="serieTV" />
-              )}
             </div>
           ) : (
             <p>Trailer non trovato</p>
           )}
+          <Link
+            to={`/serietv/${currentSerieTV}/full`}
+            className="btn btn-primary mt-3"
+            onClick={handleClose}
+          >
+            View Details
+          </Link>
         </Modal.Body>
       </Modal>
     </Container>
