@@ -53,7 +53,11 @@ const CustomNavbar = () => {
   };
   if (loading) return <p>Caricamento in corso...</p>;
 
-  if (location.pathname === "/login" || location.pathname === "/register") {
+  if (
+    location.pathname === "/login" ||
+    location.pathname === "/register" ||
+    location.pathname === "/"
+  ) {
     return (
       <div className="background p-4">
         <img
