@@ -3,6 +3,7 @@ const initialState = {
   currentSeasonAnimesList: [],
   topAnimesList: [],
   searchResultsAnime: [],
+  animeDetails: null,
   currentPage: 0,
   loader: true,
 };
@@ -24,6 +25,10 @@ const animesReducer = (state = initialState, action) => {
         ...state,
         searchResultsAnime: action.payload,
       };
+    case "GET_ANIME_DETAILS_SUCCESS":
+      return { ...state, animeDetails: action.payload };
+    case "GET_ANIME_DETAILS_FAILURE":
+      return { ...state, error: action.payload };
     default:
       return state;
   }

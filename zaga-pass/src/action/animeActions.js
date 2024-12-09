@@ -22,6 +22,11 @@ export const searchResultsAnime = (animes) => ({
   type: "SET_SEARCH_RESULTS_ANIME",
   payload: animes,
 });
+export const detailsAnime = (animes) => ({
+  type: "GET_ANIME_DETAILS_SUCCESS",
+  payload: animes,
+});
+
 export const fetchAnimes = (page = 0) => {
   return async (dispatch) => {
     try {
@@ -113,3 +118,23 @@ export const fetchAnimesByQuery =
       console.error("Errore nella ricerca degli anime:", error);
     }
   };
+export const getAnimeDetails = (mal_id) => {
+  return async (dispatch) => {
+    try {
+      console.log("Fetching anime details for ID:", mal_id);
+      const token = localStorage.getItem("Access Token");
+      const response = await fetch(
+        `http://localhost:3001/api/anime/${mal_id}/full`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log("sonoadata", data);
+      dispatch(detailsAnime(data));
+    } catch (error) {
+      console.error("Error fetching animes:", error);
+    }
+  };
+};

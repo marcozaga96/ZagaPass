@@ -9,7 +9,7 @@ const CommentSection = ({ mediaId, mediaType }) => {
   const [text, setText] = useState("");
   const [voto, setVoto] = useState(0);
   const recensioni = useSelector((state) => state.recensioni.recensioniList);
-  const email = useSelector((state) => state.auth.email); // Recupera l'email dallo stato di autenticazione
+  const email = useSelector((state) => state.auth.email);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
 
@@ -20,7 +20,7 @@ const CommentSection = ({ mediaId, mediaType }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const newRecensione = { mediaId, mediaType, commento: text, voto };
-    console.log("Invio nuova recensione: ", newRecensione); // Log del nuovo commento
+    console.log("Invio nuova recensione: ", newRecensione);
     dispatch(addRecensione(newRecensione));
     setText("");
     setVoto(0);

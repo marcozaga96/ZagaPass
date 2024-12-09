@@ -1,6 +1,7 @@
 package marcozagaria.ZagaPass.controllers;
 
 import marcozagaria.ZagaPass.entities.animepcckage.Anime;
+import marcozagaria.ZagaPass.entities.animepcckage.AnimeFullResponse;
 import marcozagaria.ZagaPass.entities.animepcckage.AnimeModel;
 import marcozagaria.ZagaPass.entities.animepcckage.AnimeModelAssembler;
 import marcozagaria.ZagaPass.services.AnimeService;
@@ -68,6 +69,13 @@ public class AnimeController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/{mal_id}/full")
+    public ResponseEntity<AnimeFullResponse.AnimeData> getAnimeDetails(@PathVariable Long mal_id) {
+        Optional<AnimeFullResponse.AnimeData> animeDetails = animeService.getAnimeDetails(mal_id);
+        return animeDetails.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
 
     @GetMapping("/search")
     public PagedModel<Anime> searchAnime(@RequestParam String q, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {

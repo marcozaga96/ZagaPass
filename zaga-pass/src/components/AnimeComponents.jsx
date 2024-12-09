@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Card, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import CommentSection from "./CommentSection";
 import {
   addFavoriteItem,
   removeFavoriteItem,
 } from "../action/preferitiActions";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const AnimeComponets = ({ animeList }) => {
   const [show, setShow] = useState(false);
@@ -103,9 +103,13 @@ const AnimeComponets = ({ animeList }) => {
                 allowFullScreen
                 title="Trailer"
               ></iframe>
-              {selectedAnime && (
-                <CommentSection mediaId={selectedAnime} mediaType="anime" />
-              )}
+              <Link
+                to={`/anime/${selectedAnime}/full`}
+                className="btn btn-primary mt-3"
+                onClick={handleClose}
+              >
+                View Details
+              </Link>
             </div>
           ) : (
             <p>Trailer non trovato</p>

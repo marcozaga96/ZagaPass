@@ -2,6 +2,7 @@ package marcozagaria.ZagaPass.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import marcozagaria.ZagaPass.entities.animepcckage.Anime;
+import marcozagaria.ZagaPass.entities.animepcckage.AnimeFullResponse;
 import marcozagaria.ZagaPass.entities.animepcckage.AnimeResponse;
 import marcozagaria.ZagaPass.repositories.AnimeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -166,6 +167,14 @@ public class AnimeService {
         AnimeResponse response = restTemplate.getForObject(url, AnimeResponse.class);
         return response != null ? response.getData() : null;
     }
+
+    public Optional<AnimeFullResponse.AnimeData> getAnimeDetails(Long mal_id) {
+        String url = API_URL + "/" + mal_id + "/full";
+        System.out.println("Fetching anime details with URL: " + url);
+        AnimeFullResponse response = restTemplate.getForObject(url, AnimeFullResponse.class);
+        return response != null ? Optional.of(response.getData()) : Optional.empty();
+    }
+
 
     public Optional<Anime> findByMalId(long malId) {
         return animeRepository.findByMalId(malId);
