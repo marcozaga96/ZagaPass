@@ -104,7 +104,7 @@ const FilmComponents = ({ movieList }) => {
           )}
           <Link
             to={`/films/${currentMovie}/full`}
-            className="btn btn-primary mt-3"
+            className="btn btn-dark mt-3"
             onClick={handleClose}
           >
             View Details

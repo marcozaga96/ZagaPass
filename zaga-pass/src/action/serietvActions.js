@@ -117,7 +117,16 @@ export const getSerieTVDetails = (serietvId) => {
   return async (dispatch) => {
     try {
       console.log("Fetching details for serietvId:", serietvId);
+
       const token = localStorage.getItem("Access Token");
+      if (!token) {
+        console.error("Access Token mancante.");
+        return dispatch({
+          type: "GET_SERIETV_DETAILS_FAILURE",
+          payload: "Token non trovato.",
+        });
+      }
+
       const response = await fetch(
         `http://localhost:3001/api/serietv/${serietvId}/full`,
         {
@@ -125,22 +134,24 @@ export const getSerieTVDetails = (serietvId) => {
         }
       );
 
+      console.log("Response status:", response.status);
+
       if (!response.ok) {
         throw new Error(`Errore nella richiesta: ${response.status}`);
       }
 
       const data = await response.json();
-      console.log("Data received:", data);
+      console.log("Data ricevuti dal server:", data);
 
       dispatch(setSerietvDetails(data));
     } catch (error) {
       console.error(
         "Errore durante il recupero dei dettagli della serietv:",
-        error
+        error.message || error
       );
       dispatch({
         type: "GET_SERIETV_DETAILS_FAILURE",
-        payload: error.message,
+        payload: error.message || "Errore sconosciuto.",
       });
     }
   };

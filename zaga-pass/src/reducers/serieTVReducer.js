@@ -26,7 +26,7 @@ const serieTVReducer = (state = initialState, action) => {
         searchResultsSerieTV: action.payload,
       };
     case "GET_SERIETV_DETAILS_SUCCESS":
-      console.log("Setting serietv details:", action.payload);
+      console.log("Reducer aggiornando serieTVDetails con:", action.payload);
       return { ...state, serieTVDetails: action.payload, error: null };
     case "GET_SERIETV_DETAILS_FAILURE":
       console.error("Error fetching serietv details:", action.payload);

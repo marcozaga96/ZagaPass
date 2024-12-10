@@ -8,7 +8,7 @@ import CommentSection from "./CommentSection";
 const SerieTVDetailComponent = () => {
   const { serietvId } = useParams();
   const dispatch = useDispatch();
-  const serieTV = useSelector((state) => state.serietv.serieTVDetails);
+  const serieTVDetails = useSelector((state) => state.serietv.serieTVDetails);
   const state = useSelector((state) => state);
   console.log("Redux state:", state);
   const selectedTrailer = useSelector((state) => state.serietv.selectedTrailer);
@@ -17,28 +17,28 @@ const SerieTVDetailComponent = () => {
     dispatch(getSerieTVDetails(serietvId));
   }, [dispatch, serietvId]);
 
-  console.log(serieTV, serietvId);
+  console.log(serieTVDetails, serietvId);
   return (
     <div className="p-4 background">
       <Row>
         <Col md={4}>
           <Image
             src={
-              serieTV && serieTV.poster_path
-                ? `https://image.tmdb.org/t/p/w500${serieTV.poster_path}`
+              serieTVDetails && serieTVDetails.poster_path
+                ? `https://image.tmdb.org/t/p/w500${serieTVDetails.poster_path}`
                 : "default-placeholder-image.jpg"
             }
             fluid
           />
         </Col>
         <Col md={8}>
-          <h1>{serieTV.name}</h1>
-          <p>{serieTV.overview}</p>
+          <h1>{serieTVDetails.name}</h1>
+          <p>{serieTVDetails.overview}</p>
           <p>
-            <strong>Data di rilascio:</strong> {serieTV.release_date}
+            <strong>Data di rilascio:</strong> {serieTVDetails.release_date}
           </p>
           <p>
-            <strong>Valutazione:</strong> {serieTV.vote_average}/10
+            <strong>Valutazione:</strong> {serieTVDetails.vote_average}/10
           </p>
         </Col>
       </Row>
