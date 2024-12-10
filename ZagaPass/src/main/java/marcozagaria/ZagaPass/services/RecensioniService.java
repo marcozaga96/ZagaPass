@@ -59,18 +59,39 @@ public class RecensioniService {
         return recensioniRepository.save(newRecensione);
     }
 
-    public List<Recensioni> findByMediaIdAndType(Long mediaId, String mediaType) {
+    public List<RecensioniDTO> findByMediaIdAndType(Long mediaId, String mediaType) {
+        List<Recensioni> recensioni;
+
         switch (mediaType) {
             case "film":
-                return recensioniRepository.findByFilmId(mediaId);
+                recensioni = recensioniRepository.findByFilmId(mediaId);
+                break;
             case "serieTV":
-                return recensioniRepository.findBySerieTVId(mediaId);
+                recensioni = recensioniRepository.findBySerieTVId(mediaId);
+                break;
             case "anime":
-                return recensioniRepository.findByAnimeMalId(mediaId);
+                recensioni = recensioniRepository.findByAnimeMalId(mediaId);
+                break;
             default:
                 throw new IllegalArgumentException("Tipo di media non valido: " + mediaType);
         }
+
+        return recensioni.stream()
+                .map(recensione -> new RecensioniDTO(
+                        switch (mediaType) {
+                            case "film" -> recensione.getFilmId();
+                            case "serieTV" -> recensione.getSerieTVId();
+                            case "anime" -> recensione.getAnimeMalId();
+                            default -> throw new IllegalArgumentException("Tipo di media non valido: " + mediaType);
+                        },
+                        mediaType,
+                        recensione.getCommento(),
+                        recensione.getVoto(),
+                        recensione.getUser().getUsername()
+                ))
+                .toList();
     }
+
 
 //    public List<Recensioni> findByFilmId(Long film) {
 //        return recensioniRepository.findByFilmId(film);

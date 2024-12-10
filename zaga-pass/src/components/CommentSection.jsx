@@ -9,7 +9,6 @@ const CommentSection = ({ mediaId, mediaType }) => {
   const [text, setText] = useState("");
   const [voto, setVoto] = useState(0);
   const recensioni = useSelector((state) => state.recensioni.recensioniList);
-  const email = useSelector((state) => state.auth.email); // Recupera l'email dallo stato di autenticazione
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
 
@@ -54,7 +53,8 @@ const CommentSection = ({ mediaId, mediaType }) => {
       <ul>
         {recensioni.map((recensione) => (
           <li key={recensione.id}>
-            <strong>{email || "Anonimo"}</strong>: {recensione.commento}{" "}
+            <strong>{recensione.autore || "Anonimo"}</strong>:{" "}
+            {recensione.commento}{" "}
             <em>{new Date(recensione.data).toLocaleDateString()}</em>{" "}
             <span>Voto: {recensione.voto}</span>
           </li>
