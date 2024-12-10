@@ -15,11 +15,11 @@ const FilmPage = () => {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const queryParam = queryParams.get("query");
-    if (queryParam) {
-      setQuery(queryParam);
-      dispatch(fetchFilmsByQuery(queryParam));
-      setQuery("");
-    }
+    // if (queryParam) {
+    setQuery(queryParam);
+    dispatch(fetchFilmsByQuery(queryParam));
+    setQuery("");
+    // }
   }, [dispatch, location]);
   return (
     <div className="p-4 background">

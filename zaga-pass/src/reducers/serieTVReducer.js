@@ -11,6 +11,7 @@ const initialState = {
 const serieTVReducer = (state = initialState, action) => {
   switch (action.type) {
     case "SET_SERIETV":
+      console.log("action serietv", action.payload);
       return { ...state, serietvList: action.payload };
     case "SET_CURRENT_SERIETV":
       return { ...state, currentSerietvList: action.payload };
@@ -21,6 +22,7 @@ const serieTVReducer = (state = initialState, action) => {
     case "SET_PAGE":
       return { ...state, currentPage: action.payload };
     case "SET_SEARCH_RESULTS_SERIETV":
+      console.log("set search serietv", action.payload);
       return {
         ...state,
         searchResultsSerieTV: action.payload,
