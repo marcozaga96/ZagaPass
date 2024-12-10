@@ -10,8 +10,6 @@ const CommentSection = ({ mediaId, mediaType }) => {
   const [voto, setVoto] = useState(0);
   const recensioni = useSelector((state) => state.recensioni.recensioniList);
 
-  const email = useSelector((state) => state.auth.email);
-
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
 

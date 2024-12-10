@@ -29,7 +29,7 @@ const PaginatedSerieTVPreferiti = () => {
   );
   return (
     <Container fluid className="pt-4 background">
-      <h1>Serie TV Preferite</h1>
+      <h1>Serie TV</h1>
       <SerieTVComponents tvShowList={favoriteSerieTV} />
     </Container>
   );

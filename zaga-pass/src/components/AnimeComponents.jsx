@@ -6,7 +6,7 @@ import {
   removeFavoriteItem,
 } from "../action/preferitiActions";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const AnimeComponets = ({ animeList }) => {
   const [show, setShow] = useState(false);
@@ -15,6 +15,7 @@ const AnimeComponets = ({ animeList }) => {
   const favoritesList = useSelector((state) => state.preferiti.favoritesList);
   const dispatch = useDispatch();
   const loader = useSelector((state) => state.animes.loader);
+  const location = useLocation();
   console.log(loader);
 
   const handleFavoriteClick = (anime) => {
@@ -52,8 +53,11 @@ const AnimeComponets = ({ animeList }) => {
           );
           const imageUrl =
             anime.images?.jpg?.image_url || "https://placedog.net/500/280";
+          const colClassName = `mb-4 ${
+            location.pathname === "/home" ? "flex-grow-1" : ""
+          }`;
           return (
-            <Col md={2} className="mb-4 flex-grow-1" key={anime.mal_id}>
+            <Col md={2} className={colClassName} key={anime.mal_id}>
               <Card>
                 <Card.Img
                   variant="top"
@@ -63,7 +67,7 @@ const AnimeComponets = ({ animeList }) => {
                     handleShow(anime.trailer.embed_url, anime.mal_id)
                   }
                 />
-                <Card.Body>
+                <Card.Body className="cardBody">
                   <Card.Title>{anime.title}</Card.Title>
                   <div className="card-overlay d-flex align-items-center justify-content-center">
                     <i

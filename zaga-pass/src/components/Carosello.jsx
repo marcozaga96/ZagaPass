@@ -3,6 +3,7 @@ import AnimeComponets from "./AnimeComponents";
 import FilmComponents from "./FilmComponents";
 import SerieTVComponents from "./SerieTVComponents";
 import { Carousel, Col, Row } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
 
 const getRandomElements = (list, count) => {
   const shuffled = [...list].sort(() => 0.5 - Math.random());
@@ -13,9 +14,10 @@ const Carosello = () => {
   const films = useSelector((state) => state.films.filmsList);
   const animes = useSelector((state) => state.animes.animesList);
   const serietv = useSelector((state) => state.serietv.serietvList);
-
+  const location = useLocation();
+  const colClassName = `mb-4 ${location.pathname === "/home" ? " w-25" : ""}`;
   return (
-    <Row className="mb-4 w-50">
+    <Row className={colClassName}>
       <Col>
         <Carousel>
           <Carousel.Item>

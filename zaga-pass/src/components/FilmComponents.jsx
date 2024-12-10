@@ -7,7 +7,7 @@ import {
   removeFavoriteItem,
 } from "../action/preferitiActions";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const FilmComponents = ({ movieList }) => {
   const BASE_URL = "https://image.tmdb.org/t/p/w500";
@@ -16,6 +16,7 @@ const FilmComponents = ({ movieList }) => {
   const [currentMovie, setCurrentMovie] = useState(null);
   const favoritesList = useSelector((state) => state.preferiti.favoritesList);
   const selectedTrailer = useSelector((state) => state.films.selectedTrailer);
+  const location = useLocation();
 
   const handleFavoriteClick = (movie) => {
     const isFavorite = favoritesList.some((item) => item.mediaId === movie.id);
@@ -52,8 +53,11 @@ const FilmComponents = ({ movieList }) => {
           const isFavorite =
             Array.isArray(favoritesList) &&
             favoritesList.some((item) => item.mediaId === movie.id);
+          const colClassName = `mb-4 ${
+            location.pathname === "/home" ? "flex-grow-1" : ""
+          }`;
           return (
-            <Col md={2} className="mb-4 flex-grow-1" key={movie.id}>
+            <Col md={2} className={colClassName} key={movie.id}>
               <Card>
                 <Card.Img
                   variant="top"
@@ -61,7 +65,7 @@ const FilmComponents = ({ movieList }) => {
                   style={{ height: "400px", objectFit: "fill" }}
                   onClick={() => handleShow(movie.id)}
                 />
-                <Card.Body>
+                <Card.Body className="cardBody">
                   <Card.Title>{movie.title}</Card.Title>
                   <div className="card-overlay d-flex align-items-center justify-content-center">
                     <i

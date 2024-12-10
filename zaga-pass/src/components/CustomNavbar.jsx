@@ -7,6 +7,7 @@ import {
   FormControl,
   Button,
   Dropdown,
+  NavDropdown,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchQuery, setSearchContext } from "../action/searchActions";
@@ -70,10 +71,10 @@ const CustomNavbar = () => {
       </div>
     );
   }
-
+  console.log("sono profile", profile);
   return (
     <Navbar variant="dark" expand="lg" className="background">
-      <Container>
+      <Container fluid>
         <Navbar.Brand as={Link} to="/home">
           <img
             alt=""
@@ -83,60 +84,56 @@ const CustomNavbar = () => {
             className="d-inline-block align-top"
           />
         </Navbar.Brand>
-        <Navbar.Toggle
-          aria-controls="basic-navbar-nav"
-          className="bg-primary"
-        />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Dropdown>
-              <Dropdown.Toggle variant="dark" id="dropdown-serietv">
-                Serie TV
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item as={Link} to="/serietv">
-                  Il Meglio Da Vedere
-                </Dropdown.Item>
-                <Dropdown.Item as={Link} to="/serietv/playing-now">
-                  Ultime Uscite
-                </Dropdown.Item>
-                <Dropdown.Item as={Link} to="/serietv/top">
-                  I Più Votati
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-            <Dropdown>
-              <Dropdown.Toggle variant="dark" id="dropdown-anime">
-                Anime
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item as={Link} to="/anime">
-                  Il Meglio Da Vedere
-                </Dropdown.Item>
-                <Dropdown.Item as={Link} to="/anime/playing-now">
-                  Ultime Uscite
-                </Dropdown.Item>
-                <Dropdown.Item as={Link} to="/anime/top">
-                  I Più Votati
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-            <Dropdown>
-              <Dropdown.Toggle variant="dark" id="dropdown-films">
-                Film
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item as={Link} to="/films">
-                  Il Meglio Da Vedere
-                </Dropdown.Item>
-                <Dropdown.Item as={Link} to="/films/playing-now">
-                  Ultime Uscite
-                </Dropdown.Item>
-                <Dropdown.Item as={Link} to="/films/top">
-                  I Più Votati
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
+        <Navbar.Toggle aria-controls="basic-dark-example" />
+        <Navbar.Collapse id="navbar-dark-example">
+          <Nav>
+            <NavDropdown
+              id="nav-dropdown-dark-example"
+              title="Serie TV"
+              menuVariant="dark"
+            >
+              <NavDropdown.Item as={Link} to="/serietv">
+                Il Meglio Da Vedere
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/serietv/playing-now">
+                Ultime Uscite
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/serietv/top">
+                I Più Votati
+              </NavDropdown.Item>
+            </NavDropdown>
+
+            <NavDropdown
+              id="nav-dropdown-dark-example"
+              title="Anime"
+              menuVariant="dark"
+            >
+              <NavDropdown.Item as={Link} to="/anime">
+                Il Meglio Da Vedere
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/anime/playing-now">
+                Ultime Uscite
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/anime/top">
+                I Più Votati
+              </NavDropdown.Item>
+            </NavDropdown>
+
+            <NavDropdown
+              id="nav-dropdown-dark-example"
+              title="Film"
+              menuVariant="dark"
+            >
+              <NavDropdown.Item as={Link} to="/films">
+                Il Meglio Da Vedere
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/films/playing-now">
+                Ultime Uscite
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/films/top">
+                I Più Votati
+              </NavDropdown.Item>
+            </NavDropdown>
           </Nav>
           <Form className="d-flex" onSubmit={handleSearch}>
             <FormControl
@@ -152,29 +149,28 @@ const CustomNavbar = () => {
             </Button>
           </Form>
           <Nav>
+            <img
+              src={profile.avatarURL || "https://via.placeholder.com/150"}
+              alt="Avatar"
+              roundedCircle
+              style={{ width: "40px", height: "40px", marginLeft: "10px" }}
+            />
             {profile ? (
-              <Dropdown>
-                <Dropdown.Toggle variant="dark" id="user-dropdown">
-                  <img
-                    src={profile.avatarURL || "https://via.placeholder.com/150"}
-                    alt="Avatar"
-                    roundedCircle
-                    style={{ width: "40px", height: "40px" }}
-                  />
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item as={Link} to="/me">
-                    Profilo
-                  </Dropdown.Item>
-                  <Dropdown.Item as={Link} to="/favorites">
-                    Preferiti
-                  </Dropdown.Item>
-                  <Dropdown.Divider />
-                  <Dropdown.Item as={Link} to="/login" onClick={handleLogout}>
-                    Logout
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+              <NavDropdown
+                id="nav-dropdown-dark-example"
+                title={profile.name}
+                menuVariant="dark"
+              >
+                <NavDropdown.Item as={Link} to="/me">
+                  Profilo
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/favorites">
+                  Preferiti
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/login" onClick={handleLogout}>
+                  Logout
+                </NavDropdown.Item>
+              </NavDropdown>
             ) : (
               <>
                 <Nav.Link as={Link} to="/login">

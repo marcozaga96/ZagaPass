@@ -7,7 +7,7 @@ import {
   removeFavoriteItem,
 } from "../action/preferitiActions";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const SerieTVComponents = ({ tvShowList }) => {
   const BASE_URL = "https://image.tmdb.org/t/p/w500";
@@ -16,6 +16,7 @@ const SerieTVComponents = ({ tvShowList }) => {
   const selectedTrailer = useSelector((state) => state.serietv.selectedTrailer);
   const favoritesList = useSelector((state) => state.preferiti.favoritesList);
   const [currentSerieTV, setCurrentSerieTV] = useState(null);
+  const location = useLocation();
 
   const handleFavoriteClick = (serietv) => {
     const isFavorite = favoritesList.some(
@@ -49,8 +50,11 @@ const SerieTVComponents = ({ tvShowList }) => {
           const isFavorite = favoritesList.some(
             (item) => item.mediaId === tvShow.id
           );
+          const colClassName = `mb-4 ${
+            location.pathname === "/home" ? "flex-grow-1" : ""
+          }`;
           return (
-            <Col md={2} className="mb-4 flex-grow-1" key={tvShow.id}>
+            <Col md={2} className={colClassName} key={tvShow.id}>
               <Card>
                 <Card.Img
                   variant="top"
@@ -58,7 +62,7 @@ const SerieTVComponents = ({ tvShowList }) => {
                   style={{ height: "400px", objectFit: "fill" }}
                   onClick={() => handleShow(tvShow.id)}
                 />
-                <Card.Body>
+                <Card.Body className="cardBody">
                   <Card.Title>{tvShow.name}</Card.Title>
                   <div className="card-overlay d-flex align-items-center justify-content-center">
                     <i

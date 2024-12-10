@@ -29,7 +29,7 @@ const PaginatedAnimePreferiti = () => {
   console.log("ciao", favoriteAnime);
   return (
     <Container fluid className="pt-4 background">
-      <h1>Anime Preferiti</h1>
+      <h1>Anime</h1>
       <AnimeComponets animeList={favoriteAnime} />
     </Container>
   );
