@@ -35,8 +35,9 @@ public class RecensioniController {
     }
 
     @GetMapping("/{mediaType}/{mediaId}")
-    public List<Recensioni> getRecensioniPerMedia(@PathVariable Long mediaId, @PathVariable String mediaType) {
-        return recensioniService.findByMediaIdAndType(mediaId, mediaType);
+    public ResponseEntity<List<RecensioniDTO>> getRecensioniPerMedia(@PathVariable Long mediaId, @PathVariable String mediaType) {
+        List<RecensioniDTO> recensioni = recensioniService.findByMediaIdAndType(mediaId, mediaType);
+        return ResponseEntity.ok(recensioni);
     }
 
 //    @GetMapping("/film/{filmId}")
