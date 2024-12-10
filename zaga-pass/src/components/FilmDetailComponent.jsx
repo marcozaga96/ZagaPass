@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Row, Col, Image } from "react-bootstrap";
+import { Row, Col, Image, Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getFilmDetails } from "../action/filmactions";
 import CommentSection from "./CommentSection";
@@ -16,6 +16,13 @@ const FilmDetailComponent = () => {
   useEffect(() => {
     dispatch(getFilmDetails(movieId));
   }, [dispatch, movieId]);
+  if (!movieDetails) {
+    return (
+      <div className="p-4 background">
+        <Alert variant="warning">Dettagli del film non disponibili.</Alert>
+      </div>
+    );
+  }
 
   console.log(movieDetails, movieId);
   return (

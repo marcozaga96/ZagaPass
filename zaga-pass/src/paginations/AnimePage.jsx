@@ -7,17 +7,17 @@ import { useLocation } from "react-router-dom";
 
 const AnimePage = () => {
   const [query, setQuery] = useState("");
-  const animes = useSelector((state) => state.animes.searchResults);
+  const animes = useSelector((state) => state.animes.searchResultsAnime);
   const dispatch = useDispatch();
   const location = useLocation();
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const queryParam = queryParams.get("query");
-    if (queryParam) {
-      setQuery(queryParam);
-      dispatch(fetchAnimesByQuery(queryParam));
-      setQuery("");
-    }
+    // if (queryParam) {
+    setQuery(queryParam);
+    dispatch(fetchAnimesByQuery(queryParam));
+    setQuery("");
+    // }
   }, [dispatch, location]);
   return (
     <div className="p-4 background">

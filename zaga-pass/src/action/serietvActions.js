@@ -37,6 +37,7 @@ export const fetchSerietv = (page = 0) => {
     );
     const data = await response.json();
     dispatch(setSerietv(data._embedded.serieTVModels));
+    console.log("sono data", data);
     dispatch(setPage(page));
   };
 };

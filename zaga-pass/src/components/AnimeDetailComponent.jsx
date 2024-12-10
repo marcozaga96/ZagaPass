@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getAnimeDetails } from "../action/animeActions";
 import CommentSection from "./CommentSection";
-import { Col, Image, Row } from "react-bootstrap";
+import { Alert, Col, Image, Row } from "react-bootstrap";
 
 const AnimeDetailComponent = () => {
   const dispatch = useDispatch();
@@ -15,6 +15,14 @@ const AnimeDetailComponent = () => {
     dispatch(getAnimeDetails(mal_id));
   }, [dispatch, mal_id]);
   console.log(mal_id);
+
+  if (!animeDetails) {
+    return (
+      <div className="p-4 background">
+        <Alert variant="warning">Dettagli dell'anime non disponibili.</Alert>
+      </div>
+    );
+  }
   return (
     <div className="p-4 background">
       <Row>
