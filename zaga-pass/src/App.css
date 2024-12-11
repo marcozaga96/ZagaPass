@@ -133,3 +133,28 @@ body {
 .dropdown-card:hover {
   transform: scale(1.05);
 }
+.carousel-slide {
+  height: 600px;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.carousel-slide h5 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.carousel-slide p {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.carousel-slide img {
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+}
