@@ -26,14 +26,14 @@ const IPiùVotati = () => {
   return (
     <Container className="mt-4 ">
       <Row>
-        <Col md={4} className="flex-grow-1">
-          <FilmComponents movieList={getRandomElements(topFilms, 2)} />
+        <Col md={6} xxl={4} className="flex-grow-1">
+          <FilmComponents movieList={getRandomElements(topFilms, 3)} />
         </Col>
-        <Col md={4} className="flex-grow-1">
-          <AnimeComponets animeList={getRandomElements(topAnimes, 2)} />
+        <Col md={6} xxl={4} className="flex-grow-1">
+          <AnimeComponets animeList={getRandomElements(topAnimes, 3)} />
         </Col>
-        <Col md={4} className="flex-grow-1">
-          <SerieTVComponents tvShowList={getRandomElements(topSerietv, 2)} />
+        <Col md={6} xxl={4} className="flex-grow-1">
+          <SerieTVComponents tvShowList={getRandomElements(topSerietv, 3)} />
         </Col>
       </Row>
     </Container>

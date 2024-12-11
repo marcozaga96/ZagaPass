@@ -5,7 +5,7 @@ import PaginatedAnimePiùVotati from "../components/PaginatedAnimePiùVotati";
 const AnimePagePiùVotati = () => {
   return (
     <div className="p-4 background">
-      <h1>Anime</h1>
+      <h2 className="text-white">Anime</h2>
       <PaginatedAnimePiùVotati />
     </div>
   );

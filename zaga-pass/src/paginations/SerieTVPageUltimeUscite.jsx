@@ -4,7 +4,7 @@ import PaginatedSerieTVUltimeUscite from "../components/PaginatedSerieTVUltimeUs
 const SerieTVPageUltimeUscite = () => {
   return (
     <div className="p-4 background">
-      <h1>Serie TV</h1>
+      <h2 className="text-white">Serie TV</h2>
       <PaginatedSerieTVUltimeUscite />
     </div>
   );

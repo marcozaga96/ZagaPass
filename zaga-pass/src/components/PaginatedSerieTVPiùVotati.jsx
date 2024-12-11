@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Container, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { fetchTopSerietv } from "../action/serietvActions";
 import { setPage } from "../action/serietvActions";
 import SerieTVComponents from "./SerieTVComponents";
@@ -23,22 +23,22 @@ const PaginatedSerieTVPiùVotati = () => {
   };
 
   return (
-    <Container fluid className="pt-4 background">
+    <>
       <SerieTVComponents tvShowList={serietv} />
       <div className="d-flex justify-content-between mt-4">
         <Button
-          variant="secondary"
+          variant="dark"
           onClick={handlePrevious}
           disabled={currentPage === 0}
         >
           Precedente
         </Button>
         <span>Pagina {currentPage + 1}</span>
-        <Button variant="secondary" onClick={handleNext}>
+        <Button variant="dark" onClick={handleNext}>
           Successivo
         </Button>
       </div>
-    </Container>
+    </>
   );
 };
 

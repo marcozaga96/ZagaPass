@@ -26,14 +26,14 @@ const IlMeglioDaVedere = () => {
   return (
     <Container className="mt-4 ">
       <Row>
-        <Col md={4} className="flex-grow-1">
-          <FilmComponents movieList={getRandomElements(films, 2)} />
+        <Col md={6} xxl={4} className="flex-grow-1 ">
+          <FilmComponents movieList={getRandomElements(films, 3)} />
         </Col>
-        <Col md={4} className="flex-grow-1">
-          <AnimeComponents animeList={getRandomElements(animes, 2)} />
+        <Col md={6} xxl={4} className="flex-grow-1">
+          <AnimeComponents animeList={getRandomElements(animes, 3)} />
         </Col>
-        <Col md={4} className="flex-grow-1">
-          <SerieTVComponents tvShowList={getRandomElements(serietv, 2)} />
+        <Col md={6} xxl={4} className="flex-grow-1">
+          <SerieTVComponents tvShowList={getRandomElements(serietv, 3)} />
         </Col>
       </Row>
     </Container>

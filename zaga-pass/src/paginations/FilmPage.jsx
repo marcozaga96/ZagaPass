@@ -23,7 +23,7 @@ const FilmPage = () => {
   }, [dispatch, location]);
   return (
     <div className="p-4 background">
-      <h1>Film</h1>
+      <h2 className="text-white">Film</h2>
       {films && films.length > 0 ? (
         <PaginatedFilm />
       ) : (

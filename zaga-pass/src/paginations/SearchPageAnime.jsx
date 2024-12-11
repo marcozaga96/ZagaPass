@@ -21,7 +21,7 @@ const SearchPageAnime = () => {
 
   return (
     <div className="p-4 background">
-      <h1>Risultati per: "{query}"</h1>
+      <h2 className="text-white">Risultati per: "{query}"</h2>
       <AnimeComponets animeList={animes} />
     </div>
   );

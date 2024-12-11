@@ -4,7 +4,7 @@ import PaginatedFilmUltimeUscite from "../components/PaginatedFIlmUltimeUscite";
 const FilmPageUltimeUscite = () => {
   return (
     <div className="p-4 background">
-      <h1>Film</h1>
+      <h2 className="text-white">Film</h2>
       <PaginatedFilmUltimeUscite />
     </div>
   );

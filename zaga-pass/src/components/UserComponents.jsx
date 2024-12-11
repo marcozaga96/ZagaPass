@@ -50,9 +50,9 @@ const UserComponents = () => {
     dispatch(updateUserProfile(updatedData));
     handleCloseModal();
   };
-
+  console.log(profile.recensioni);
   return (
-    <Container fluid className="p-4 background">
+    <Container fluid className="p-4 background text-white">
       <h1>Profilo Utente</h1>
 
       <Row className="mt-4">
@@ -61,7 +61,11 @@ const UserComponents = () => {
             src={profile.avatarURL}
             alt="Avatar"
             fluid
-            style={{ maxWidth: "150px", maxHeight: "150px" }}
+            style={{
+              width: "150px",
+              height: "150px",
+              borderRadius: "50%",
+            }}
           />
         </Col>
 

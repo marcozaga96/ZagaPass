@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Card, Modal } from "react-bootstrap";
+import { Row, Col, Card, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTrailer } from "../action/serietvActions";
 import {
@@ -14,10 +14,10 @@ const SerieTVComponents = ({ tvShowList }) => {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const selectedTrailer = useSelector((state) => state.serietv.selectedTrailer);
+  const [selectedTrailers, setSelectedTrailer] = useState(null);
   const favoritesList = useSelector((state) => state.preferiti.favoritesList);
-  const [currentSerieTV, setCurrentSerieTV] = useState(null);
+  const [currentSerieTV, setCurrentSerieTV] = useState({ id: null, title: "" });
   const location = useLocation();
-
   const handleFavoriteClick = (serietv) => {
     const isFavorite = favoritesList.some(
       (item) => item.mediaId === serietv.id
@@ -28,65 +28,66 @@ const SerieTVComponents = ({ tvShowList }) => {
       );
       dispatch(removeFavoriteItem(favoriteItem.id));
     } else {
-      const favoriteItem = {
-        mediaId: serietv.id,
-        mediaType: "serieTV",
-      };
+      const favoriteItem = { mediaId: serietv.id, mediaType: "serieTV" };
       dispatch(addFavoriteItem(favoriteItem));
     }
   };
-
   const handleClose = () => setShow(false);
-  const handleShow = async (serietvId) => {
-    dispatch(fetchTrailer(serietvId));
-    setCurrentSerieTV(serietvId);
+  const handleShow = (trailerUrl, serietv) => {
+    dispatch(fetchTrailer(serietv.id));
+    setSelectedTrailer(trailerUrl);
+    setCurrentSerieTV(serietv);
     setShow(true);
   };
-
   return (
-    <Container fluid className="pt-4 background">
+    <>
       <Row>
         {tvShowList.map((tvShow) => {
-          const isFavorite = favoritesList.some(
-            (item) => item.mediaId === tvShow.id
-          );
-          const colClassName = `mb-4 ${
+          const imageUrl = tvShow.poster_path
+            ? `${BASE_URL}${tvShow.poster_path}`
+            : "https://placedog.net/500/280";
+          const colClassName = `my-4 ${
             location.pathname === "/home" ? "flex-grow-1" : ""
           }`;
+          const colProps =
+            location.pathname === "/home"
+              ? { sm: 6, md: 6, lg: 4 }
+              : { sm: 4, md: 3, xxl: 2 };
           return (
-            <Col md={2} className={colClassName} key={tvShow.id}>
+            <Col {...colProps} className={colClassName} key={tvShow.id}>
               <Card>
                 <Card.Img
                   variant="top"
-                  src={`${BASE_URL}${tvShow.poster_path}`}
-                  style={{ height: "400px", objectFit: "fill" }}
-                  onClick={() => handleShow(tvShow.id)}
+                  className="card"
+                  src={imageUrl}
+                  style={{ objectFit: "fill" }}
+                  onClick={() =>
+                    handleShow(tvShow.trailer?.embed_url, {
+                      id: tvShow.id,
+                      title: tvShow.name,
+                    })
+                  }
                 />
-                <Card.Body className="cardBody">
-                  <Card.Title>{tvShow.name}</Card.Title>
-                  <div className="card-overlay d-flex align-items-center justify-content-center">
-                    <i
-                      className="bi bi-play-circle transparent-button"
-                      style={{ fontSize: "3rem" }}
-                      onClick={() => handleShow(tvShow.id)}
-                    ></i>
-                  </div>
-                  <div
-                    className="favorite-icon"
-                    onClick={() => handleFavoriteClick(tvShow)}
-                  >
-                    {isFavorite ? <FaHeart color="red" /> : <FaRegHeart />}
-                  </div>
-                </Card.Body>
+                <div className="card-overlay d-flex align-items-center justify-content-center">
+                  <i
+                    className="bi bi-play-circle transparent-button"
+                    style={{ fontSize: "3rem" }}
+                    onClick={() =>
+                      handleShow(tvShow.trailer?.embed_url, {
+                        id: tvShow.id,
+                        title: tvShow.name,
+                      })
+                    }
+                  ></i>
+                </div>
               </Card>
             </Col>
           );
         })}
       </Row>
-
       <Modal show={show} onHide={handleClose} size="lg" centered>
         <Modal.Header closeButton>
-          <Modal.Title>Trailer</Modal.Title>
+          <Modal.Title>{currentSerieTV.title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {selectedTrailer ? (
@@ -104,8 +105,20 @@ const SerieTVComponents = ({ tvShowList }) => {
           ) : (
             <p>Trailer non trovato</p>
           )}
+          <div
+            className="favorite-icon"
+            onClick={() => handleFavoriteClick(currentSerieTV)}
+          >
+            {favoritesList.some(
+              (item) => item.mediaId === currentSerieTV.id
+            ) ? (
+              <FaHeart color="red" />
+            ) : (
+              <FaRegHeart />
+            )}
+          </div>
           <Link
-            to={`/serietv/${currentSerieTV}/full`}
+            to={`/serietv/${currentSerieTV.id}/full`}
             className="btn btn-dark mt-3"
             onClick={handleClose}
           >
@@ -113,8 +126,7 @@ const SerieTVComponents = ({ tvShowList }) => {
           </Link>
         </Modal.Body>
       </Modal>
-    </Container>
+    </>
   );
 };
-
 export default SerieTVComponents;

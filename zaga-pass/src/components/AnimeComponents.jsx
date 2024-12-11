@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Card, Modal } from "react-bootstrap";
+import { Row, Col, Card, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addFavoriteItem,
@@ -11,7 +11,10 @@ import { Link, useLocation } from "react-router-dom";
 const AnimeComponets = ({ animeList }) => {
   const [show, setShow] = useState(false);
   const [selectedTrailer, setSelectedTrailer] = useState(null);
-  const [selectedAnime, setSelectedAnime] = useState(null);
+  const [selectedAnime, setSelectedAnime] = useState({
+    mal_id: null,
+    title: "",
+  });
   const favoritesList = useSelector((state) => state.preferiti.favoritesList);
   const dispatch = useDispatch();
   const loader = useSelector((state) => state.animes.loader);
@@ -42,49 +45,48 @@ const AnimeComponets = ({ animeList }) => {
     setSelectedAnime(anime);
     setShow(true);
   };
-  console.log("Anime List:", animeList);
-  console.log("sono animecurrent", selectedAnime);
+
   return (
-    <Container fluid className="pt-4 background">
+    <>
       <Row>
         {animeList.map((anime) => {
-          const isFavorite = favoritesList.some(
-            (item) => item.mediaId === anime.mal_id
-          );
           const imageUrl =
             anime.images?.jpg?.image_url || "https://placedog.net/500/280";
-          const colClassName = `mb-4 ${
+          const colClassName = `my-4 ${
             location.pathname === "/home" ? "flex-grow-1" : ""
           }`;
+          const colProps =
+            location.pathname === "/home"
+              ? { sm: 6, md: 6, lg: 4 }
+              : { sm: 4, md: 3, xxl: 2 };
           return (
-            <Col md={2} className={colClassName} key={anime.mal_id}>
+            <Col {...colProps} className={colClassName} key={anime.mal_id}>
               <Card>
                 <Card.Img
                   variant="top"
                   src={imageUrl}
-                  style={{ height: "400px", objectFit: "fill" }}
+                  className="card"
+                  style={{ objectFit: "fill" }}
                   onClick={() =>
-                    handleShow(anime.trailer.embed_url, anime.mal_id)
+                    handleShow(anime.trailer.embed_url, {
+                      mal_id: anime.mal_id,
+                      title: anime.title,
+                    })
                   }
                 />
-                <Card.Body className="cardBody">
-                  <Card.Title>{anime.title}</Card.Title>
-                  <div className="card-overlay d-flex align-items-center justify-content-center">
-                    <i
-                      className="bi bi-play-circle transparent-button"
-                      style={{ fontSize: "3rem" }}
-                      onClick={() =>
-                        handleShow(anime.trailer.embed_url, anime.mal_id)
-                      }
-                    ></i>
-                  </div>
-                  <div
-                    className="favorite-icon"
-                    onClick={() => handleFavoriteClick(anime)}
-                  >
-                    {isFavorite ? <FaHeart color="red" /> : <FaRegHeart />}
-                  </div>
-                </Card.Body>
+
+                <div className="card-overlay d-flex align-items-center justify-content-center">
+                  <i
+                    className="bi bi-play-circle transparent-button"
+                    style={{ fontSize: "3rem" }}
+                    onClick={() =>
+                      handleShow(anime.trailer.embed_url, {
+                        mal_id: anime.mal_id,
+                        title: anime.title,
+                      })
+                    }
+                  ></i>
+                </div>
               </Card>
             </Col>
           );
@@ -93,7 +95,7 @@ const AnimeComponets = ({ animeList }) => {
 
       <Modal show={show} onHide={handleClose} size="lg" centered>
         <Modal.Header closeButton>
-          <Modal.Title>Trailer</Modal.Title>
+          <Modal.Title>{selectedAnime.title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {selectedTrailer ? (
@@ -111,8 +113,20 @@ const AnimeComponets = ({ animeList }) => {
           ) : (
             <p>Trailer non trovato</p>
           )}
+          <div
+            className="favorite-icon"
+            onClick={() => handleFavoriteClick(selectedAnime)}
+          >
+            {favoritesList.some(
+              (item) => item.mediaId === selectedAnime.mal_id
+            ) ? (
+              <FaHeart color="red" />
+            ) : (
+              <FaRegHeart />
+            )}
+          </div>
           <Link
-            to={`/anime/${selectedAnime}/full`}
+            to={`/anime/${selectedAnime.mal_id}/full`}
             className="btn btn-dark mt-3"
             onClick={handleClose}
           >
@@ -120,7 +134,7 @@ const AnimeComponets = ({ animeList }) => {
           </Link>
         </Modal.Body>
       </Modal>
-    </Container>
+    </>
   );
 };
 

@@ -21,7 +21,7 @@ const AnimePage = () => {
   }, [dispatch, location]);
   return (
     <div className="p-4 background">
-      <h1>Anime</h1>
+      <h2 className="text-white">Anime</h2>
       {animes && animes.length > 0 ? (
         <PaginatedAnime />
       ) : (

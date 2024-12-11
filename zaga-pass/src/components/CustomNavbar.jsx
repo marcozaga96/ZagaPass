@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Navbar,
   Nav,
   Container,
   Form,
   FormControl,
-  Button,
-  Dropdown,
   NavDropdown,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,6 +15,8 @@ import { logout } from "../action/authActions";
 
 const CustomNavbar = () => {
   const [searchInput, setSearchInput] = useState("");
+  const [showSearch, setShowSearch] = useState(false);
+  const [typingTimeout, setTypingTimeout] = useState(null);
   const { profile, loading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const location = useLocation();
@@ -26,27 +26,40 @@ const CustomNavbar = () => {
     dispatch(fetchUserProfile());
   }, [dispatch]);
 
-  const handleSearch = (e) => {
-    e.preventDefault();
+  const performSearch = useCallback(
+    (query) => {
+      if (!query.trim()) return;
+      let context = "home";
+      if (location.pathname.includes("/films")) context = "films";
+      if (location.pathname.includes("/anime")) context = "anime";
+      if (location.pathname.includes("/serietv")) context = "serietv";
 
-    let context = "home";
-    if (location.pathname.includes("/films")) context = "films";
-    if (location.pathname.includes("/anime")) context = "anime";
-    if (location.pathname.includes("/serietv")) context = "serietv";
+      dispatch(setSearchQuery(query));
+      dispatch(setSearchContext(context));
 
-    dispatch(setSearchQuery(searchInput));
-    dispatch(setSearchContext(context));
+      if (context === "films") {
+        navigate(`/films/search?query=${query}`);
+      } else if (context === "anime") {
+        navigate(`/anime/search?query=${query}`);
+      } else if (context === "serietv") {
+        navigate(`/serietv/search?query=${query}`);
+      } else {
+        navigate(`/search?query=${query}`);
+      }
+    },
+    [dispatch, location.pathname, navigate]
+  );
 
-    if (context === "films") {
-      navigate(`/films/search?query=${searchInput}`);
-    } else if (context === "anime") {
-      navigate(`/anime/search?query=${searchInput}`);
-    } else if (context === "serietv") {
-      navigate(`/serietv/search?query=${searchInput}`);
-    } else {
-      navigate(`/search?query=${searchInput}`);
-    }
-    setSearchInput("");
+  const handleSearchInputChange = (e) => {
+    const query = e.target.value;
+    setSearchInput(query);
+    if (typingTimeout) clearTimeout(typingTimeout);
+
+    setTypingTimeout(
+      setTimeout(() => {
+        performSearch(query);
+      }, 500)
+    );
   };
   const handleLogout = () => {
     dispatch(logout());
@@ -73,7 +86,7 @@ const CustomNavbar = () => {
   }
   console.log("sono profile", profile);
   return (
-    <Navbar variant="dark" expand="lg" className="background">
+    <Navbar variant="dark" expand="lg" className="background text-color p-3">
       <Container fluid>
         <Navbar.Brand as={Link} to="/home">
           <img
@@ -86,19 +99,37 @@ const CustomNavbar = () => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-dark-example" />
         <Navbar.Collapse id="navbar-dark-example">
-          <Nav>
+          <Nav
+            className="me-auto my-2 my-lg-0"
+            style={{ maxHeight: "100px" }}
+            navbarScroll
+          >
             <NavDropdown
               id="nav-dropdown-dark-example"
+              className="text-color"
+              style={{ color: "White" }}
               title="Serie TV"
               menuVariant="dark"
             >
-              <NavDropdown.Item as={Link} to="/serietv">
+              <NavDropdown.Item
+                as={Link}
+                to="/serietv"
+                className="dropdown-card"
+              >
                 Il Meglio Da Vedere
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/serietv/playing-now">
+              <NavDropdown.Item
+                as={Link}
+                to="/serietv/playing-now"
+                className="dropdown-card"
+              >
                 Ultime Uscite
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/serietv/top">
+              <NavDropdown.Item
+                as={Link}
+                to="/serietv/top"
+                className="dropdown-card"
+              >
                 I Più Votati
               </NavDropdown.Item>
             </NavDropdown>
@@ -108,13 +139,21 @@ const CustomNavbar = () => {
               title="Anime"
               menuVariant="dark"
             >
-              <NavDropdown.Item as={Link} to="/anime">
+              <NavDropdown.Item as={Link} to="/anime" className="dropdown-card">
                 Il Meglio Da Vedere
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/anime/playing-now">
+              <NavDropdown.Item
+                as={Link}
+                to="/anime/playing-now"
+                className="dropdown-card"
+              >
                 Ultime Uscite
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/anime/top">
+              <NavDropdown.Item
+                as={Link}
+                to="/anime/top"
+                className="dropdown-card"
+              >
                 I Più Votati
               </NavDropdown.Item>
             </NavDropdown>
@@ -124,53 +163,86 @@ const CustomNavbar = () => {
               title="Film"
               menuVariant="dark"
             >
-              <NavDropdown.Item as={Link} to="/films">
+              <NavDropdown.Item as={Link} to="/films" className="dropdown-card">
                 Il Meglio Da Vedere
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/films/playing-now">
+              <NavDropdown.Item
+                as={Link}
+                to="/films/playing-now"
+                className="dropdown-card"
+              >
                 Ultime Uscite
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/films/top">
+              <NavDropdown.Item
+                as={Link}
+                to="/films/top"
+                className="dropdown-card"
+              >
                 I Più Votati
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
-          <Form className="d-flex" onSubmit={handleSearch}>
-            <FormControl
-              type="search"
-              placeholder="Cerca"
-              className="me-2 bg-secondary"
-              aria-label="Search"
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-            />
-            <Button variant="outline-secondary">
-              <i class="bi bi-search"></i>
-            </Button>
-          </Form>
+          {showSearch && (
+            <Form className="d-flex ">
+              <FormControl
+                type="search"
+                placeholder="Cerca"
+                className="me-2 bg-dark text-white"
+                aria-label="Search"
+                value={searchInput}
+                onChange={handleSearchInputChange}
+                onClick={() => setSearchInput("")}
+              />
+            </Form>
+          )}
+
+          <i
+            className="bi bi-search search-icon mx-3"
+            onClick={() => setShowSearch(!showSearch)}
+          ></i>
+
           <Nav>
-            <img
-              src={profile.avatarURL || "https://via.placeholder.com/150"}
-              alt="Avatar"
-              roundedCircle
-              style={{ width: "40px", height: "40px", marginLeft: "10px" }}
-            />
             {profile ? (
-              <NavDropdown
-                id="nav-dropdown-dark-example"
-                title={profile.name}
-                menuVariant="dark"
-              >
-                <NavDropdown.Item as={Link} to="/me">
-                  Profilo
-                </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/favorites">
-                  Preferiti
-                </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/login" onClick={handleLogout}>
-                  Logout
-                </NavDropdown.Item>
-              </NavDropdown>
+              <>
+                <NavDropdown
+                  id="nav-dropdown-dark-example"
+                  title={profile.name}
+                  menuVariant="dark"
+                >
+                  <NavDropdown.Item
+                    as={Link}
+                    to="/me"
+                    className="dropdown-card"
+                  >
+                    Profilo
+                  </NavDropdown.Item>
+                  <NavDropdown.Item
+                    as={Link}
+                    to="/favorites"
+                    className="dropdown-card"
+                  >
+                    Preferiti
+                  </NavDropdown.Item>
+                  <NavDropdown.Item
+                    as={Link}
+                    to="/login"
+                    onClick={handleLogout}
+                    className="dropdown-card"
+                  >
+                    Logout
+                  </NavDropdown.Item>
+                </NavDropdown>
+                <img
+                  src={profile.avatarURL || "https://via.placeholder.com/150"}
+                  alt="Avatar"
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    marginLeft: "20px",
+                    borderRadius: "50%",
+                  }}
+                />
+              </>
             ) : (
               <>
                 <Nav.Link as={Link} to="/login">

@@ -12,7 +12,7 @@ const CustomHome = () => {
 
       <Row>
         <Col>
-          <h2>Il Meglio Da Vedere</h2>
+          <h2 className="text-white pt-5">Il Meglio Da Vedere</h2>
         </Col>
       </Row>
       <Row>
@@ -21,7 +21,7 @@ const CustomHome = () => {
 
       <Row>
         <Col>
-          <h2> Ultime Uscite</h2>
+          <h2 className="text-white pt-5"> Ultime Uscite</h2>
         </Col>
       </Row>
       <Row>
@@ -29,7 +29,7 @@ const CustomHome = () => {
       </Row>
       <Row>
         <Col>
-          <h2>I Più Votati</h2>
+          <h2 className="text-white pt-5">I Più Votati</h2>
         </Col>
       </Row>
       <Row>

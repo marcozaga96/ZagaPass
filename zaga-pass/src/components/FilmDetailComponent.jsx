@@ -26,7 +26,7 @@ const FilmDetailComponent = () => {
 
   console.log(movieDetails, movieId);
   return (
-    <div className="p-4 background">
+    <div className="p-4 background text-white">
       <Row>
         <Col md={4}>
           <Image

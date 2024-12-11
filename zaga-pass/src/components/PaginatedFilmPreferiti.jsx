@@ -27,7 +27,7 @@ const PaginatedFilmPreferiti = () => {
 
   return (
     <Container fluid className="pt-4 background">
-      <h1>Film</h1>
+      <h1 className="text-white">Film</h1>
       <FilmComponents movieList={favoriteMovies} />
     </Container>
   );

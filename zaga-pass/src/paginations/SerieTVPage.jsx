@@ -23,7 +23,7 @@ const SerieTVPage = () => {
   }, [dispatch, location]);
   return (
     <div className="p-4 background">
-      <h1>Serie TV</h1>
+      <h2 className="text-white">Serie TV</h2>
       {serietv && serietv.length > 0 ? (
         <PaginatedSerieTV />
       ) : (

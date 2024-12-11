@@ -4,7 +4,7 @@ import PaginatedSerieTVPiùVotati from "../components/PaginatedSerieTVPiùVotati
 const SerieTVPagePiùVotati = () => {
   return (
     <div className="p-4 background">
-      <h1>Serie TV</h1>
+      <h2 className="text-white">Serie TV</h2>
       <PaginatedSerieTVPiùVotati />
     </div>
   );

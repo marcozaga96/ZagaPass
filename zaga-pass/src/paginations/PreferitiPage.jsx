@@ -6,7 +6,7 @@ import PaginatedAnimePreferiti from "../components/PaginatedAnimePreferiti";
 const PreferitiPage = () => {
   return (
     <div className="p-4 background">
-      <h1>I Tuoi Preferiti</h1>
+      <h2 className="text-white">I Tuoi Preferiti</h2>
       <PaginatedFilmPreferiti />
       <PaginatedSerieTVPreferiti />
       <PaginatedAnimePreferiti />

@@ -28,7 +28,7 @@ const CustomLogin = () => {
       className="vh-100 d-flex align-items-center justify-content-center background"
     >
       <Row className="w-100 d-flex justify-content-center">
-        <Col lg={4} className="card p-4 shadow-sm">
+        <Col lg={4} className="cardLogin p-4 shadow-sm">
           <div className="text-center mb-4">
             <h4 style={{ fontWeight: "300" }}>Benvenuto!</h4>
             <p style={{ fontWeight: "300", color: "#6c757d" }}>

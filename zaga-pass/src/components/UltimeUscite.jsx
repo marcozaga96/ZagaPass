@@ -31,17 +31,17 @@ const UltimeUscite = () => {
   return (
     <Container className="mt-4 ">
       <Row>
-        <Col md={4} className="flex-grow-1">
-          <FilmComponents movieList={getRandomElements(currentFilms, 2)} />
+        <Col md={6} xxl={4} className="flex-grow-1">
+          <FilmComponents movieList={getRandomElements(currentFilms, 3)} />
         </Col>
-        <Col md={4} className="flex-grow-1">
+        <Col md={6} xxl={4} className="flex-grow-1">
           <AnimeComponets
-            animeList={getRandomElements(currentSeasonAnimes, 2)}
+            animeList={getRandomElements(currentSeasonAnimes, 3)}
           />
         </Col>
-        <Col md={4} className="flex-grow-1">
+        <Col md={6} xxl={4} className="flex-grow-1">
           <SerieTVComponents
-            tvShowList={getRandomElements(currentSerietv, 2)}
+            tvShowList={getRandomElements(currentSerietv, 3)}
           />
         </Col>
       </Row>

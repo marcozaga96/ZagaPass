@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Card, Modal } from "react-bootstrap";
+import { Row, Col, Card, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTrailer } from "../action/filmactions";
 import {
@@ -13,9 +13,10 @@ const FilmComponents = ({ movieList }) => {
   const BASE_URL = "https://image.tmdb.org/t/p/w500";
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
-  const [currentMovie, setCurrentMovie] = useState(null);
-  const favoritesList = useSelector((state) => state.preferiti.favoritesList);
   const selectedTrailer = useSelector((state) => state.films.selectedTrailer);
+  const [selectedTrailer2, setSelectedTrailer] = useState(null);
+  const [currentMovie, setCurrentMovie] = useState({ id: null, title: "" });
+  const favoritesList = useSelector((state) => state.preferiti.favoritesList);
   const location = useLocation();
 
   const handleFavoriteClick = (movie) => {
@@ -24,8 +25,6 @@ const FilmComponents = ({ movieList }) => {
       const favoriteItem = favoritesList.find(
         (item) => item.mediaId === movie.id
       );
-      console.log("sono la lista movie", movie.id);
-      console.log("sono isFavorite", isFavorite);
       dispatch(removeFavoriteItem(favoriteItem.id));
     } else {
       const favoriteItem = {
@@ -33,54 +32,59 @@ const FilmComponents = ({ movieList }) => {
         mediaType: "film",
       };
       dispatch(addFavoriteItem(favoriteItem));
-      console.log("sono la lista item", favoriteItem);
     }
   };
 
   const handleClose = () => setShow(false);
-  const handleShow = async (movieId) => {
-    dispatch(fetchTrailer(movieId));
-    setCurrentMovie(movieId);
+  const handleShow = (trailerUrl, movie) => {
+    dispatch(fetchTrailer(movie.id));
+    setSelectedTrailer(trailerUrl);
+    setCurrentMovie(movie);
     setShow(true);
   };
 
-  console.log("sono cirrent", currentMovie);
-
   return (
-    <Container fluid className="pt-4 background">
+    <>
       <Row>
         {movieList.map((movie) => {
-          const isFavorite =
-            Array.isArray(favoritesList) &&
-            favoritesList.some((item) => item.mediaId === movie.id);
-          const colClassName = `mb-4 ${
+          const imageUrl = movie.poster_path
+            ? `${BASE_URL}${movie.poster_path}`
+            : "https://placedog.net/500/280";
+          const colClassName = `my-4 ${
             location.pathname === "/home" ? "flex-grow-1" : ""
           }`;
+          const colProps =
+            location.pathname === "/home"
+              ? { sm: 6, md: 6, lg: 4 }
+              : { sm: 4, md: 3, xxl: 2 };
           return (
-            <Col md={2} className={colClassName} key={movie.id}>
+            <Col {...colProps} className={colClassName} key={movie.id}>
               <Card>
                 <Card.Img
                   variant="top"
-                  src={`${BASE_URL}${movie.poster_path}`}
-                  style={{ height: "400px", objectFit: "fill" }}
-                  onClick={() => handleShow(movie.id)}
+                  src={imageUrl}
+                  className="card"
+                  style={{ objectFit: "fill" }}
+                  onClick={() =>
+                    handleShow(movie.trailer?.embed_url, {
+                      id: movie.id,
+                      title: movie.title,
+                    })
+                  }
                 />
-                <Card.Body className="cardBody">
-                  <Card.Title>{movie.title}</Card.Title>
-                  <div className="card-overlay d-flex align-items-center justify-content-center">
-                    <i
-                      className="bi bi-play-circle transparent-button"
-                      style={{ fontSize: "3rem" }}
-                      onClick={() => handleShow(movie.id)}
-                    ></i>
-                  </div>
-                  <div
-                    className="favorite-icon"
-                    onClick={() => handleFavoriteClick(movie)}
-                  >
-                    {isFavorite ? <FaHeart color="red" /> : <FaRegHeart />}
-                  </div>
-                </Card.Body>
+
+                <div className="card-overlay d-flex align-items-center justify-content-center">
+                  <i
+                    className="bi bi-play-circle transparent-button"
+                    style={{ fontSize: "3rem" }}
+                    onClick={() =>
+                      handleShow(movie.trailer?.embed_url, {
+                        id: movie.id,
+                        title: movie.title,
+                      })
+                    }
+                  ></i>
+                </div>
               </Card>
             </Col>
           );
@@ -88,7 +92,7 @@ const FilmComponents = ({ movieList }) => {
       </Row>
       <Modal show={show} onHide={handleClose} size="lg" centered>
         <Modal.Header closeButton>
-          <Modal.Title>Trailer</Modal.Title>
+          <Modal.Title>{currentMovie.title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {selectedTrailer ? (
@@ -106,8 +110,18 @@ const FilmComponents = ({ movieList }) => {
           ) : (
             <p>Trailer non trovato</p>
           )}
+          <div
+            className="favorite-icon"
+            onClick={() => handleFavoriteClick(currentMovie)}
+          >
+            {favoritesList.some((item) => item.mediaId === currentMovie.id) ? (
+              <FaHeart color="red" />
+            ) : (
+              <FaRegHeart />
+            )}
+          </div>
           <Link
-            to={`/films/${currentMovie}/full`}
+            to={`/films/${currentMovie.id}/full`}
             className="btn btn-dark mt-3"
             onClick={handleClose}
           >
@@ -115,7 +129,7 @@ const FilmComponents = ({ movieList }) => {
           </Link>
         </Modal.Body>
       </Modal>
-    </Container>
+    </>
   );
 };
 
