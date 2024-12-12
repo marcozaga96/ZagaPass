@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { Row, Col, Card, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +16,7 @@ const SerieTVComponents = ({ tvShowList }) => {
   const dispatch = useDispatch();
   const selectedTrailer = useSelector((state) => state.serietv.selectedTrailer);
   const [selectedTrailers, setSelectedTrailer] = useState(null);
-  const favoritesList = useSelector((state) => state.preferiti.favoritesList);
+  const favoritesList = useSelector((state) => state.user.profile.preferiti);
   const [currentSerieTV, setCurrentSerieTV] = useState({ id: null, title: "" });
   const location = useLocation();
   const handleFavoriteClick = (serietv) => {

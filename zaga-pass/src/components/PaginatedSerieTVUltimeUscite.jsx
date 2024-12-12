@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap";
 import { fetchCurrentSerietv } from "../action/serietvActions";
 import { setPage } from "../action/serietvActions";
 import SerieTVComponents from "./SerieTVComponents";
+import Carosello from "./Carosello";
 
 const PaginatedSerieTVUltimeUscite = () => {
   const serietv = useSelector((state) => state.serietv.currentSerietvList);
@@ -24,17 +25,19 @@ const PaginatedSerieTVUltimeUscite = () => {
 
   return (
     <>
+      <Carosello />
       <SerieTVComponents tvShowList={serietv} />
       <div className="d-flex justify-content-between mt-4">
         <Button
           variant="dark"
           onClick={handlePrevious}
+          className="mybutton"
           disabled={currentPage === 0}
         >
           Precedente
         </Button>
         <span>Pagina {currentPage + 1}</span>
-        <Button variant="dark" onClick={handleNext}>
+        <Button variant="dark" onClick={handleNext} className="mybutton">
           Successivo
         </Button>
       </div>

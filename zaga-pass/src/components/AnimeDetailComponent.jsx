@@ -26,26 +26,44 @@ const AnimeDetailComponent = () => {
   return (
     <div className="p-4 background text-white">
       <Row>
-        <Col md={4}>
+        <Col md={3}>
           <Image
             src={animeDetails.images?.jpg.large_image_url}
             alt={animeDetails.title}
             fluid
           />
         </Col>
-        <Col md={8}>
+        <Col md={7}>
           <h1>{animeDetails.title}</h1>
           <p>{animeDetails.synopsis}</p>
           <p>
-            Genres: {animeDetails.genres?.map((genre) => genre.name).join(", ")}
+            <strong> Genere:</strong>{" "}
+            {animeDetails.genres?.map((genre) => genre.name).join(", ")}
           </p>
-          <p>Score: {animeDetails.score}</p>
-          <p>Episodes: {animeDetails.episodes}</p>
+          <p>
+            <strong>Data di rilascio:</strong> {animeDetails.aired.from}
+          </p>
+          <p>
+            <strong>Episodi:</strong> {animeDetails.episodes}
+          </p>
+          <p>
+            <strong>Durata episodio:</strong> {animeDetails.duration}
+          </p>
+          <p>
+            <strong>Stato:</strong> {animeDetails.status}
+          </p>
+          <p>
+            <strong>Classifica popolarità:</strong> {animeDetails.popularity}
+          </p>
+          <p>
+            <strong>Valutazione:</strong> {Math.round(animeDetails.score)}
+          </p>
         </Col>
       </Row>
       <Row className="mt-4">
-        <Col md={8}>
+        <Col>
           <h2>Trailer</h2>
+
           <iframe
             width="100%"
             height="500"
@@ -55,8 +73,8 @@ const AnimeDetailComponent = () => {
             allowFullScreen
             title="Trailer"
           ></iframe>
-          <CommentSection mediaId={animeDetails.mal_id} mediaType="anime" />
         </Col>
+        <CommentSection mediaId={animeDetails.mal_id} mediaType="anime" />
       </Row>
     </div>
   );

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { Row, Col, Card, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,7 +17,7 @@ const FilmComponents = ({ movieList }) => {
   const selectedTrailer = useSelector((state) => state.films.selectedTrailer);
   const [selectedTrailer2, setSelectedTrailer] = useState(null);
   const [currentMovie, setCurrentMovie] = useState({ id: null, title: "" });
-  const favoritesList = useSelector((state) => state.preferiti.favoritesList);
+  const favoritesList = useSelector((state) => state.user.profile.preferiti);
   const location = useLocation();
 
   const handleFavoriteClick = (movie) => {

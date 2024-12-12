@@ -87,7 +87,8 @@ public class RecensioniService {
                         mediaType,
                         recensione.getCommento(),
                         recensione.getVoto(),
-                        recensione.getUser().getUsername()
+                        recensione.getUser().getUsername(),
+                        recensione.getData()
                 ))
                 .toList();
     }

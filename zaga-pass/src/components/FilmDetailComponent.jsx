@@ -28,7 +28,7 @@ const FilmDetailComponent = () => {
   return (
     <div className="p-4 background text-white">
       <Row>
-        <Col md={4}>
+        <Col md={3}>
           <Image
             src={
               movieDetails && movieDetails.poster_path
@@ -38,20 +38,35 @@ const FilmDetailComponent = () => {
             fluid
           />
         </Col>
-        <Col md={8}>
+        <Col md={7}>
           <h1>{movieDetails.title}</h1>
           <p>{movieDetails.overview}</p>
+          <p>
+            <strong>Genere: </strong>
+            {movieDetails.genres?.map((genre) => genre.name).join(", ")}
+          </p>
           <p>
             <strong>Data di rilascio:</strong> {movieDetails.release_date}
           </p>
           <p>
-            <strong>Valutazione:</strong> {movieDetails.vote_average}/10
+            <strong>Durata:</strong> {movieDetails.runtime} minuti
+          </p>
+          <p>
+            <strong>Budget:</strong> {movieDetails.budget}
+          </p>
+          <p>
+            <strong>Popolarità:</strong> {movieDetails.popularity}
+          </p>
+          <p>
+            <strong>Valutazione:</strong>{" "}
+            {Math.round(movieDetails.vote_average)}/10
           </p>
         </Col>
       </Row>
       <Row className="mt-4">
-        <Col md={8}>
+        <Col>
           <div>
+            <h2>Trailer</h2>
             <iframe
               width="100%"
               height="500"

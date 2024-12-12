@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap";
 import { fetchCurrentFilms } from "../action/filmactions";
 import { setPage } from "../action/filmactions";
 import FilmComponents from "./FilmComponents";
+import Carosello from "./Carosello";
 
 const PaginatedFilmUltimeUscite = () => {
   const films = useSelector((state) => state.films.currentFilmsList);
@@ -24,17 +25,19 @@ const PaginatedFilmUltimeUscite = () => {
 
   return (
     <>
+      <Carosello />
       <FilmComponents movieList={films} />
       <div className="d-flex justify-content-between mt-4">
         <Button
           variant="dark"
           onClick={handlePrevious}
+          className="mybutton"
           disabled={currentPage === 0}
         >
           Precedente
         </Button>
         <span>Pagina {currentPage + 1}</span>
-        <Button variant="dark" onClick={handleNext}>
+        <Button variant="dark" onClick={handleNext} className="mybutton">
           Successivo
         </Button>
       </div>

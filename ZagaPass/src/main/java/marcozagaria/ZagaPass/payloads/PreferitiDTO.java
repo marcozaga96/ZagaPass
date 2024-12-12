@@ -1,4 +1,4 @@
 package marcozagaria.ZagaPass.payloads;
 
-public record PreferitiDTO(Long mediaId, String mediaType) {
+public record PreferitiDTO(Long id, Long mediaId, String mediaType) {
 }

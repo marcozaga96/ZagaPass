@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap";
 import { fetchCurrentSeasonAnimes } from "../action/animeActions";
 import { setPage } from "../action/animeActions";
 import AnimeComponents from "./AnimeComponents";
+import Carosello from "./Carosello";
 
 const PaginatedAnimeUltimeUscite = () => {
   const animes = useSelector((state) => state.animes.currentSeasonAnimesList);
@@ -24,9 +25,11 @@ const PaginatedAnimeUltimeUscite = () => {
 
   return (
     <>
+      <Carosello />
       <AnimeComponents animeList={animes} />
       <div className="d-flex justify-content-between mt-4">
         <Button
+          className="mybutton"
           variant="dark"
           onClick={handlePrevious}
           disabled={currentPage === 0}
@@ -34,7 +37,7 @@ const PaginatedAnimeUltimeUscite = () => {
           Precedente
         </Button>
         <span>Pagina {currentPage + 1}</span>
-        <Button variant="dark" onClick={handleNext}>
+        <Button variant="dark" onClick={handleNext} className="mybutton">
           Successivo
         </Button>
       </div>

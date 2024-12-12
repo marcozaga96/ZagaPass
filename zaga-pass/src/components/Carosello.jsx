@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Carousel, Button } from "react-bootstrap";
+import { Row, Col, Carousel } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
@@ -14,7 +14,7 @@ const Carosello = () => {
     const shuffledArray = [...array].sort(() => 0.5 - Math.random());
     return shuffledArray.slice(0, numberOfElements);
   };
-  console.log(animes);
+
   const getImageUrl = (item, type) => {
     if (type === "anime") {
       return (
@@ -39,13 +39,6 @@ const Carosello = () => {
         color: "white",
       }}
     >
-      <div>
-        <h5 className="mb-2">
-          {type === "film" ? item.title : item.name || item.title}
-        </h5>
-        <p>{item.overview || item.synopsis || "Descrizione non disponibile"}</p>
-        <Button variant="light">Guarda</Button>
-      </div>
       <img
         src={
           type === "anime"
@@ -57,24 +50,49 @@ const Carosello = () => {
           width: "250px",
           height: "320px",
           borderRadius: "10px",
+          marginRight: "20px",
         }}
       />
+      <div className="flex-grow-1">
+        <h1 className="mb-2 ">
+          {type === "film" ? item.title : item.name || item.title}
+        </h1>
+        <h3>
+          {item.overview || item.synopsis || "Descrizione non disponibile"}
+        </h3>
+      </div>
     </div>
   );
-
+  let itemsToShow;
+  if (location.pathname.includes("/films")) {
+    itemsToShow = getRandomElements(films, 1);
+  } else if (location.pathname.includes("/anime")) {
+    itemsToShow = getRandomElements(animes, 1);
+  } else if (location.pathname.includes("/serietv")) {
+    itemsToShow = getRandomElements(serietv, 1);
+  } else {
+    itemsToShow = [
+      ...getRandomElements(films, 1),
+      ...getRandomElements(serietv, 1),
+    ];
+  }
+  console.log("item", itemsToShow);
   return (
     <Row className={colClassName}>
       <Col>
         <Carousel>
-          <Carousel.Item>
-            {renderSlide(getRandomElements(films, 1)[0], "film")}
-          </Carousel.Item>
-          <Carousel.Item>
-            {renderSlide(getRandomElements(animes, 1)[0], "anime")}
-          </Carousel.Item>
-          <Carousel.Item>
-            {renderSlide(getRandomElements(serietv, 1)[0], "serietv")}
-          </Carousel.Item>
+          {itemsToShow.map((item) => (
+            <Carousel.Item key={item.id || item.mal_id}>
+              {renderSlide(
+                item,
+                location.pathname.includes("/anime")
+                  ? "anime"
+                  : location.pathname.includes("/films")
+                  ? "film"
+                  : "serietv"
+              )}
+            </Carousel.Item>
+          ))}
         </Carousel>
       </Col>
     </Row>

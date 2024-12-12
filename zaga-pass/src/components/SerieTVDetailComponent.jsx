@@ -28,7 +28,7 @@ const SerieTVDetailComponent = () => {
   return (
     <div className="p-4 background text-white">
       <Row>
-        <Col md={4}>
+        <Col md={3}>
           <Image
             src={
               serieTVDetails && serieTVDetails.poster_path
@@ -38,20 +38,43 @@ const SerieTVDetailComponent = () => {
             fluid
           />
         </Col>
-        <Col md={8}>
+        <Col md={7}>
           <h1>{serieTVDetails.name}</h1>
           <p>{serieTVDetails.overview}</p>
           <p>
-            <strong>Data di rilascio:</strong> {serieTVDetails.release_date}
+            <strong>Genere: </strong>
+            {serieTVDetails.genres?.map((genre) => genre.name).join(", ")}
           </p>
           <p>
-            <strong>Valutazione:</strong> {serieTVDetails.vote_average}/10
+            <strong>Data di rilascio:</strong> {serieTVDetails.first_air_date}
+          </p>
+          <p>
+            <strong>Data ultima puntata:</strong> {serieTVDetails.last_air_date}
+          </p>
+          <p>
+            <strong>Episodi: </strong>
+            {serieTVDetails.number_of_episodes}
+          </p>
+          <p>
+            <strong>Stagioni: </strong>
+            {serieTVDetails.number_of_seasons}
+          </p>
+          <p>
+            <strong>Stato:</strong> {serieTVDetails.status}
+          </p>
+          <p>
+            <strong>Popolarità:</strong> {serieTVDetails.popularity}
+          </p>
+          <p>
+            <strong>Valutazione:</strong>{" "}
+            {Math.round(serieTVDetails.vote_average)}/10
           </p>
         </Col>
       </Row>
       <Row className="mt-4">
-        <Col md={8}>
+        <Col>
           <div>
+            <h2>Trailer</h2>
             <iframe
               width="100%"
               height="500"

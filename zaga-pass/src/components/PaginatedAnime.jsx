@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap";
 import { fetchAnimes } from "../action/animeActions";
 import { setPage } from "../action/animeActions";
 import AnimeComponents from "./AnimeComponents";
+import Carosello from "./Carosello";
 
 const PaginatedAnime = () => {
   const animes = useSelector((state) => state.animes.animesList);
@@ -24,17 +25,19 @@ const PaginatedAnime = () => {
 
   return (
     <>
+      <Carosello />
       <AnimeComponents animeList={animes} />
       <div className="d-flex justify-content-between mt-4">
         <Button
           variant="dark"
+          className="mybutton"
           onClick={handlePrevious}
           disabled={currentPage === 0}
         >
           Precedente
         </Button>
         <span>Pagina {currentPage + 1}</span>
-        <Button variant="dark" onClick={handleNext}>
+        <Button variant="dark" onClick={handleNext} className="mybutton">
           Successivo
         </Button>
       </div>

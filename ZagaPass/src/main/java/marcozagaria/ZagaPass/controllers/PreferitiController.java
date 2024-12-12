@@ -36,10 +36,10 @@ public class PreferitiController {
     public ResponseEntity<List<PreferitiDTO>> getPreferiti() {
         List<PreferitiDTO> preferiti = preferitiService.getPreferiti()
                 .stream()
-                .map(preferito -> new PreferitiDTO(preferito.getMediaId(), preferito.getMediaType()))
+                .map(preferito -> new PreferitiDTO(preferito.getId(), preferito.getMediaId(), preferito.getMediaType()))
                 .toList();
         return ResponseEntity.ok(preferiti);
     }
 
-    
+
 }

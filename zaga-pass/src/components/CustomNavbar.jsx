@@ -17,6 +17,7 @@ const CustomNavbar = () => {
   const [searchInput, setSearchInput] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [typingTimeout, setTypingTimeout] = useState(null);
+  const [navbarScrolled, setNavbarScrolled] = useState(false);
   const { profile, loading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const location = useLocation();
@@ -24,6 +25,18 @@ const CustomNavbar = () => {
 
   useEffect(() => {
     dispatch(fetchUserProfile());
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setNavbarScrolled(true);
+      } else {
+        setNavbarScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, [dispatch]);
 
   const performSearch = useCallback(
@@ -61,10 +74,12 @@ const CustomNavbar = () => {
       }, 500)
     );
   };
+
   const handleLogout = () => {
     dispatch(logout());
     navigate("/login");
   };
+
   if (loading) return <p>Caricamento in corso...</p>;
 
   if (
@@ -84,10 +99,16 @@ const CustomNavbar = () => {
       </div>
     );
   }
+
   console.log("sono profile", profile);
+
   return (
-    <Navbar variant="dark" expand="lg" className="background text-color p-3">
-      <Container fluid>
+    <Navbar
+      variant="dark"
+      expand="lg"
+      className={"background text-color p-3 mynavbar "}
+    >
+      <Container fluid className={`${navbarScrolled ? "mynavbar p-4" : ""}`}>
         <Navbar.Brand as={Link} to="/home">
           <img
             alt=""
@@ -183,7 +204,7 @@ const CustomNavbar = () => {
             </NavDropdown>
           </Nav>
           {showSearch && (
-            <Form className="d-flex ">
+            <Form className="d-flex">
               <FormControl
                 type="search"
                 placeholder="Cerca"

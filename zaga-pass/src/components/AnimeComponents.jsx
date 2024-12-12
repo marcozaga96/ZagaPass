@@ -15,7 +15,7 @@ const AnimeComponets = ({ animeList }) => {
     mal_id: null,
     title: "",
   });
-  const favoritesList = useSelector((state) => state.preferiti.favoritesList);
+  const favoritesList = useSelector((state) => state.user.profile.preferiti);
   const dispatch = useDispatch();
   const loader = useSelector((state) => state.animes.loader);
   const location = useLocation();
