@@ -54,10 +54,10 @@ const Carosello = () => {
         }}
       />
       <div className="flex-grow-1">
-        <h1 className="mb-2 ">
+        <h1 className="mb-2 text-white">
           {type === "film" ? item.title : item.name || item.title}
         </h1>
-        <h3>
+        <h3 className="text-white">
           {item.overview || item.synopsis || "Descrizione non disponibile"}
         </h3>
       </div>

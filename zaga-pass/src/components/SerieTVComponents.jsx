@@ -47,7 +47,7 @@ const SerieTVComponents = ({ tvShowList }) => {
           const imageUrl = tvShow.poster_path
             ? `${BASE_URL}${tvShow.poster_path}`
             : "https://placedog.net/500/280";
-          const colClassName = `my-4 ${
+          const colClassName = `mb-4 ${
             location.pathname === "/home" ? "flex-grow-1" : ""
           }`;
           const colProps =

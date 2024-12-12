@@ -52,7 +52,7 @@ const AnimeComponets = ({ animeList }) => {
         {animeList.map((anime) => {
           const imageUrl =
             anime.images?.jpg?.image_url || "https://placedog.net/500/280";
-          const colClassName = `my-4 ${
+          const colClassName = `mb-4 ${
             location.pathname === "/home" ? "flex-grow-1" : ""
           }`;
           const colProps =

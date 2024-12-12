@@ -53,10 +53,10 @@ const UserComponents = () => {
   console.log(profile.recensioni);
   return (
     <Container fluid className="p-4 background text-white">
-      <h1>Profilo Utente</h1>
+      <h2>Profilo Utente</h2>
 
-      <Row className="mt-4">
-        <Col md={4} className="text-center">
+      <Row className="my-5">
+        <Col md={2} className="text-center">
           <img
             src={profile.avatarURL}
             alt="Avatar"
@@ -69,7 +69,7 @@ const UserComponents = () => {
           />
         </Col>
 
-        <Col md={8}>
+        <Col md={9} className="mx-5">
           <p>
             <strong>Nome:</strong> {profile.name}
           </p>
@@ -79,48 +79,63 @@ const UserComponents = () => {
           <p>
             <strong>Email:</strong> {profile.email}
           </p>
-          <Button variant="dark" onClick={handleOpenModal}>
+          <Button variant="dark" onClick={handleOpenModal} className="mybutton">
             Modifica
           </Button>
-          <Button variant="danger" onClick={handleOpenDeleteModal}>
+          <Button
+            variant="danger"
+            onClick={handleOpenDeleteModal}
+            className="mybutton"
+          >
             Cancella Profilo
           </Button>
         </Col>
       </Row>
-      <Row>
-        <h2>Le tue Recensioni</h2>
-        <Col>
+      <Row className="mt-5">
+        <Col md={8}>
+          <h2 className="mb-4">Le tue Recensioni</h2>
           {profile.recensioni && profile.recensioni.length > 0 ? (
-            profile.recensioni.map((recensioni) => (
-              <div key={recensioni.id} className="review-card">
-                <p>
-                  <strong>Voto:</strong> {recensioni.voto}
-                </p>
-                <p>
-                  <strong>Commento:</strong> {recensioni.commento}
-                </p>
-                <p>
-                  <strong>Data:</strong> {recensioni.data}
-                </p>
-
-                {recensioni.filmId && (
-                  <p>
-                    <strong>Film ID:</strong> {recensioni.filmId}
-                  </p>
-                )}
-                {recensioni.serieTVId && (
-                  <p>
-                    <strong>Serie TV ID:</strong> {recensioni.serieTVId}
-                  </p>
-                )}
-                {recensioni.animeMalId && (
-                  <p>
-                    <strong>Anime ID:</strong> {recensioni.animeMalId}
-                  </p>
-                )}
-                <hr />
-              </div>
-            ))
+            <ul className="list-unstyled">
+              {profile.recensioni.map((recensioni) => (
+                <li
+                  key={recensioni.id}
+                  className="p-3 mb-3 border rounded shadow-sm"
+                >
+                  <div>
+                    <strong>Voto:</strong>
+                    <p>{recensioni.voto}</p>
+                  </div>
+                  <div>
+                    <strong>Commento:</strong>
+                    <p>{recensioni.commento}</p>
+                  </div>
+                  <div>
+                    <strong>Data:</strong>
+                    <span>
+                      {new Date(recensioni.data).toLocaleDateString()}
+                    </span>
+                  </div>
+                  {recensioni.filmId && (
+                    <div>
+                      <strong>Film ID:</strong>
+                      <span>{recensioni.filmId}</span>
+                    </div>
+                  )}
+                  {recensioni.serieTVId && (
+                    <div>
+                      <strong>Serie TV ID:</strong>
+                      <span>{recensioni.serieTVId}</span>
+                    </div>
+                  )}
+                  {recensioni.animeMalId && (
+                    <div>
+                      <strong>Anime ID:</strong>
+                      <span>{recensioni.animeMalId}</span>
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
           ) : (
             <p>Non hai ancora recensioni.</p>
           )}
@@ -136,11 +151,19 @@ const UserComponents = () => {
           irreversibile.
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseDeleteModal}>
+          <Button
+            variant="dark"
+            onClick={handleCloseDeleteModal}
+            className="mybutton"
+          >
             Annulla
           </Button>
           <Link to={"/login"}>
-            <Button variant="danger" onClick={handleDeleteUser}>
+            <Button
+              variant="danger"
+              onClick={handleDeleteUser}
+              className="mybutton"
+            >
               Conferma
             </Button>
           </Link>
@@ -192,7 +215,7 @@ const UserComponents = () => {
                 onChange={handleChange}
               />
             </Form.Group>
-            <Button variant="dark" type="submit">
+            <Button variant="dark" type="submit" className="mybutton">
               Salva Modifiche
             </Button>
           </Form>

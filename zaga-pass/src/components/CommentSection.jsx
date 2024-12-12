@@ -73,7 +73,7 @@ const CommentSection = ({ mediaId, mediaType }) => {
 
       <Row>
         <Col md={8}>
-          <h3>Recensioni</h3>
+          <h3 className="mt-5">Recensioni</h3>
           <ul className="list-unstyled mt-4">
             {recensioni.map((recensione) => (
               <li

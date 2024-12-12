@@ -51,7 +51,7 @@ const FilmComponents = ({ movieList }) => {
           const imageUrl = movie.poster_path
             ? `${BASE_URL}${movie.poster_path}`
             : "https://placedog.net/500/280";
-          const colClassName = `my-4 ${
+          const colClassName = `mb-4 ${
             location.pathname === "/home" ? "flex-grow-1" : ""
           }`;
           const colProps =
