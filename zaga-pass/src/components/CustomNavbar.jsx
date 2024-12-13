@@ -16,6 +16,7 @@ import { logout } from "../action/authActions";
 const CustomNavbar = () => {
   const [searchInput, setSearchInput] = useState("");
   const [showSearch, setShowSearch] = useState(false);
+  const [originPath, setOriginPath] = useState("");
   const [typingTimeout, setTypingTimeout] = useState(null);
   const [navbarScrolled, setNavbarScrolled] = useState(false);
   const { profile, loading } = useSelector((state) => state.user);
@@ -42,10 +43,15 @@ const CustomNavbar = () => {
   const performSearch = useCallback(
     (query) => {
       if (!query.trim()) return;
-      let context = "home";
-      if (location.pathname.includes("/films")) context = "films";
-      if (location.pathname.includes("/anime")) context = "anime";
-      if (location.pathname.includes("/serietv")) context = "serietv";
+      let context = "home" + setOriginPath(location.pathname);
+      if (location.pathname.includes("/films"))
+        context = "films" + setOriginPath(location.pathname);
+
+      if (location.pathname.includes("/anime"))
+        context = "anime" + setOriginPath(location.pathname);
+
+      if (location.pathname.includes("/serietv"))
+        context = "serietv" + setOriginPath(location.pathname);
 
       dispatch(setSearchQuery(query));
       dispatch(setSearchContext(context));
@@ -67,6 +73,15 @@ const CustomNavbar = () => {
     const query = e.target.value;
     setSearchInput(query);
     if (typingTimeout) clearTimeout(typingTimeout);
+
+    if (!query.trim()) {
+      if (originPath) {
+        navigate(originPath);
+      } else {
+        navigate("/");
+      }
+      return;
+    }
 
     setTypingTimeout(
       setTimeout(() => {
@@ -99,8 +114,6 @@ const CustomNavbar = () => {
       </div>
     );
   }
-
-  console.log("sono profile", profile);
 
   return (
     <Navbar
@@ -208,11 +221,12 @@ const CustomNavbar = () => {
               <FormControl
                 type="search"
                 placeholder="Cerca"
-                className="me-2 bg-dark text-white"
+                className="me-2 bg-dark text-white "
                 aria-label="Search"
                 value={searchInput}
                 onChange={handleSearchInputChange}
                 onClick={() => setSearchInput("")}
+                autoFocus
               />
             </Form>
           )}

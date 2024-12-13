@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Card, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTrailer } from "../action/serietvActions";
@@ -16,21 +16,34 @@ const SerieTVComponents = ({ tvShowList }) => {
   const dispatch = useDispatch();
   const selectedTrailer = useSelector((state) => state.serietv.selectedTrailer);
   const [selectedTrailers, setSelectedTrailer] = useState(null);
-  const favoritesList = useSelector((state) => state.user.profile.preferiti);
+  const favoritesList = useSelector((state) => state.preferiti.favoritesList);
+  const [localFavoritesList, setLocalFavoritesList] = useState(favoritesList);
   const [currentSerieTV, setCurrentSerieTV] = useState({ id: null, title: "" });
   const location = useLocation();
+
+  useEffect(() => {
+    setLocalFavoritesList(favoritesList);
+  }, [favoritesList]);
   const handleFavoriteClick = (serietv) => {
-    const isFavorite = favoritesList.some(
+    const isFavorite = localFavoritesList.some(
       (item) => item.mediaId === serietv.id
     );
+    const heartElement = document.getElementById(`heart-icon-${serietv.id}`);
     if (isFavorite) {
-      const favoriteItem = favoritesList.find(
+      const favoriteItem = localFavoritesList.find(
         (item) => item.mediaId === serietv.id
       );
       dispatch(removeFavoriteItem(favoriteItem.id));
+      setLocalFavoritesList((prevList) =>
+        prevList.filter((item) => item.mediaId !== serietv.id)
+      );
     } else {
       const favoriteItem = { mediaId: serietv.id, mediaType: "serieTV" };
       dispatch(addFavoriteItem(favoriteItem));
+      setLocalFavoritesList((prevList) => [...prevList, favoriteItem]);
+    }
+    if (heartElement) {
+      heartElement.classList.toggle("color-red");
     }
   };
   const handleClose = () => setShow(false);
@@ -107,13 +120,21 @@ const SerieTVComponents = ({ tvShowList }) => {
             <p>Trailer non trovato</p>
           )}
           <div
-            className="favorite-icon"
+            id={`heart-icon-${currentSerieTV.id}`}
+            className={`favorite-icon ${
+              localFavoritesList.some(
+                (item) => item.mediaId === currentSerieTV.id
+              )
+                ? "color-red"
+                : ""
+            }`}
             onClick={() => handleFavoriteClick(currentSerieTV)}
           >
-            {favoritesList.some(
+            {" "}
+            {localFavoritesList.some(
               (item) => item.mediaId === currentSerieTV.id
             ) ? (
-              <FaHeart color="red" />
+              <FaHeart />
             ) : (
               <FaRegHeart />
             )}

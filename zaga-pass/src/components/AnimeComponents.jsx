@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Card, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -15,27 +15,36 @@ const AnimeComponets = ({ animeList }) => {
     mal_id: null,
     title: "",
   });
-  const favoritesList = useSelector((state) => state.user.profile.preferiti);
+  const favoritesList = useSelector((state) => state.preferiti.favoritesList);
+  const [localFavoritesList, setLocalFavoritesList] = useState(favoritesList);
   const dispatch = useDispatch();
   const loader = useSelector((state) => state.animes.loader);
   const location = useLocation();
   console.log(loader);
 
+  useEffect(() => {
+    setLocalFavoritesList(favoritesList);
+  }, [favoritesList]);
   const handleFavoriteClick = (anime) => {
-    const isFavorite = favoritesList.some(
+    const isFavorite = localFavoritesList.some(
       (item) => item.mediaId === anime.mal_id
     );
     if (isFavorite) {
-      const favoriteItem = favoritesList.find(
+      const favoriteItem = localFavoritesList.find(
         (item) => item.mediaId === anime.mal_id
       );
       dispatch(removeFavoriteItem(favoriteItem.id));
+      setLocalFavoritesList((prevList) =>
+        prevList.filter((item) => item.mediaId !== anime.mal_id)
+      );
     } else {
-      const favoriteItem = {
-        mediaId: anime.mal_id,
-        mediaType: "anime",
-      };
+      const favoriteItem = { mediaId: anime.mal_id, mediaType: "anime" };
       dispatch(addFavoriteItem(favoriteItem));
+      setLocalFavoritesList((prevList) => [...prevList, favoriteItem]);
+    }
+    const heartElement = document.getElementById(`heart-icon-${anime.mal_id}`);
+    if (heartElement) {
+      heartElement.classList.toggle("color-red");
     }
   };
 
@@ -114,16 +123,24 @@ const AnimeComponets = ({ animeList }) => {
             <p>Trailer non trovato</p>
           )}
           <div
-            className="favorite-icon"
+            id={`heart-icon-${selectedAnime.mal_id}`}
+            className={`favorite-icon ${
+              localFavoritesList.some(
+                (item) => item.mediaId === selectedAnime.mal_id
+              )
+                ? "color-red"
+                : ""
+            }`}
             onClick={() => handleFavoriteClick(selectedAnime)}
           >
-            {favoritesList.some(
+            {" "}
+            {localFavoritesList.some(
               (item) => item.mediaId === selectedAnime.mal_id
             ) ? (
-              <FaHeart color="red" />
+              <FaHeart />
             ) : (
               <FaRegHeart />
-            )}
+            )}{" "}
           </div>
           <Link
             to={`/anime/${selectedAnime.mal_id}/full`}

@@ -45,24 +45,26 @@ const SearchPage = () => {
       <h2 className="text-white">Risultati della ricerca per "{query}"</h2>
       {films.length > 0 && (
         <div>
-          <h2 className="text-white">Film</h2>
+          <h2 className="text-white mt-5">Film</h2>
           <FilmComponents movieList={films} />
         </div>
       )}
       {animes.length > 0 && (
         <div>
-          <h2 className="text-white">Anime</h2>
+          <h2 className="text-white mt-5">Anime</h2>
           <AnimeComponets animeList={animes} />
         </div>
       )}
       {serietv.length > 0 && (
         <div>
-          <h2 className="text-white">Serie TV</h2>
+          <h2 className="text-white mt-5">Serie TV</h2>
           <SerieTVComponents tvShowList={serietv} />
         </div>
       )}
       {films.length === 0 && animes.length === 0 && serietv.length === 0 && (
-        <p className="text-white">Nessun risultato trovato per "{query}"</p>
+        <p className="text-white mt-5">
+          Nessun risultato trovato per "{query}"
+        </p>
       )}
     </Container>
   );

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Card, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTrailer } from "../action/filmactions";
@@ -17,22 +17,33 @@ const FilmComponents = ({ movieList }) => {
   const selectedTrailer = useSelector((state) => state.films.selectedTrailer);
   const [selectedTrailer2, setSelectedTrailer] = useState(null);
   const [currentMovie, setCurrentMovie] = useState({ id: null, title: "" });
-  const favoritesList = useSelector((state) => state.user.profile.preferiti);
+  const favoritesList = useSelector((state) => state.preferiti.favoritesList);
+  const [localFavoritesList, setLocalFavoritesList] = useState(favoritesList);
   const location = useLocation();
 
+  useEffect(() => {
+    setLocalFavoritesList(favoritesList);
+  }, [favoritesList]);
   const handleFavoriteClick = (movie) => {
-    const isFavorite = favoritesList.some((item) => item.mediaId === movie.id);
+    const isFavorite = localFavoritesList.some(
+      (item) => item.mediaId === movie.id
+    );
+    const heartElement = document.getElementById(`heart-icon-${movie.id}`);
     if (isFavorite) {
-      const favoriteItem = favoritesList.find(
+      const favoriteItem = localFavoritesList.find(
         (item) => item.mediaId === movie.id
       );
       dispatch(removeFavoriteItem(favoriteItem.id));
+      setLocalFavoritesList((prevList) =>
+        prevList.filter((item) => item.mediaId !== movie.id)
+      );
     } else {
-      const favoriteItem = {
-        mediaId: movie.id,
-        mediaType: "film",
-      };
+      const favoriteItem = { mediaId: movie.id, mediaType: "film" };
       dispatch(addFavoriteItem(favoriteItem));
+      setLocalFavoritesList((prevList) => [...prevList, favoriteItem]);
+    }
+    if (heartElement) {
+      heartElement.classList.toggle("color-red");
     }
   };
 
@@ -112,11 +123,21 @@ const FilmComponents = ({ movieList }) => {
             <p>Trailer non trovato</p>
           )}
           <div
-            className="favorite-icon"
+            id={`heart-icon-${currentMovie.id}`}
+            className={`favorite-icon ${
+              localFavoritesList.some(
+                (item) => item.mediaId === currentMovie.id
+              )
+                ? "color-red"
+                : ""
+            }`}
             onClick={() => handleFavoriteClick(currentMovie)}
           >
-            {favoritesList.some((item) => item.mediaId === currentMovie.id) ? (
-              <FaHeart color="red" />
+            {" "}
+            {localFavoritesList.some(
+              (item) => item.mediaId === currentMovie.id
+            ) ? (
+              <FaHeart />
             ) : (
               <FaRegHeart />
             )}
