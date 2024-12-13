@@ -24,6 +24,13 @@ const Carosello = () => {
     return `https://image.tmdb.org/t/p/original${item.backdrop_path}`;
   };
 
+  const truncateWords = (text, wordLimit) => {
+    if (!text) return "Descrizione non disponibile";
+    const words = text.split(" ");
+    return words.length > wordLimit
+      ? words.slice(0, wordLimit).join(" ") + "..."
+      : text;
+  };
   const renderSlide = (item, type) => (
     <div
       className="carousel-slide"
@@ -58,7 +65,10 @@ const Carosello = () => {
           {type === "film" ? item.title : item.name || item.title}
         </h1>
         <h3 className="text-white">
-          {item.overview || item.synopsis || "Descrizione non disponibile"}
+          {truncateWords(
+            item.overview || item.synopsis || "Descrizione non disponibile",
+            20
+          )}
         </h3>
       </div>
     </div>

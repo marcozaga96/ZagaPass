@@ -24,6 +24,7 @@ import UserComponents from "./components/UserComponents.jsx";
 import AnimeDetailsComponent from "./components/AnimeDetailComponent.jsx";
 import FilmDetailComponent from "./components/FilmDetailComponent.jsx";
 import SerieTVDetailComponent from "./components/SerieTVDetailComponent.jsx";
+import CustomFooter from "./components/CustomFooter.jsx";
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
           element={<SerieTVDetailComponent />}
         />
       </Routes>
+      <CustomFooter />
     </BrowserRouter>
   );
 }

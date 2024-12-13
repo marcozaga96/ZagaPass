@@ -39,31 +39,31 @@ const CustomNavbar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [dispatch]);
-
   const performSearch = useCallback(
     (query) => {
       if (!query.trim()) return;
-      let context = "home" + setOriginPath(location.pathname);
-      if (location.pathname.includes("/films"))
-        context = "films" + setOriginPath(location.pathname);
+      let context = "home";
+      if (location.pathname.includes("/films")) context = "films";
 
-      if (location.pathname.includes("/anime"))
-        context = "anime" + setOriginPath(location.pathname);
+      if (location.pathname.includes("/anime")) context = "anime";
 
-      if (location.pathname.includes("/serietv"))
-        context = "serietv" + setOriginPath(location.pathname);
+      if (location.pathname.includes("/serietv")) context = "serietv";
 
       dispatch(setSearchQuery(query));
       dispatch(setSearchContext(context));
 
       if (context === "films") {
         navigate(`/films/search?query=${query}`);
+        setOriginPath(location.pathname);
       } else if (context === "anime") {
         navigate(`/anime/search?query=${query}`);
+        setOriginPath(location.pathname);
       } else if (context === "serietv") {
         navigate(`/serietv/search?query=${query}`);
+        setOriginPath(location.pathname);
       } else {
         navigate(`/search?query=${query}`);
+        setOriginPath(location.pathname);
       }
     },
     [dispatch, location.pathname, navigate]
@@ -131,8 +131,11 @@ const CustomNavbar = () => {
             className="d-inline-block align-top"
           />
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-light-example" />
-        <Navbar.Collapse id="navbar-light-example">
+        <Navbar.Toggle
+          aria-controls="basic-dark-example"
+          style={{ backgroundColor: "#141313", border: "2px solid #413e3e" }}
+        />
+        <Navbar.Collapse id="navbar-dark-example">
           <Nav
             className="me-auto my-2 my-lg-0"
             style={{ maxHeight: "100px" }}
