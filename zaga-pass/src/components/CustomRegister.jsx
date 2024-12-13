@@ -56,8 +56,10 @@ const CustomRegister = () => {
       <Row className="w-100 d-flex justify-content-center">
         <Col lg={4} className="cardLogin p-4 shadow-sm">
           <div className="text-center mb-4">
-            <h4 style={{ fontWeight: "300" }}>Registrazione</h4>
-            <p style={{ fontWeight: "300", color: "#6c757d" }}>
+            <h4 style={{ fontWeight: "300" }} className="text-white">
+              Registrazione
+            </h4>
+            <p style={{ fontWeight: "300" }} className="text-white">
               Crea il tuo account.
             </p>
           </div>
@@ -74,7 +76,7 @@ const CustomRegister = () => {
 
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formFirstName">
-              <Form.Label>Nome</Form.Label>
+              <Form.Label className="text-white">Nome</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Inserisci nome"
@@ -84,7 +86,7 @@ const CustomRegister = () => {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formLastName">
-              <Form.Label>Cognome</Form.Label>
+              <Form.Label className="text-white">Cognome</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Inserisci cognome"
@@ -94,7 +96,7 @@ const CustomRegister = () => {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email</Form.Label>
+              <Form.Label className="text-white">Email</Form.Label>
               <Form.Control
                 type="email"
                 placeholder="Inserisci email"
@@ -104,7 +106,7 @@ const CustomRegister = () => {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
+              <Form.Label className="text-white">Password</Form.Label>
               <Form.Control
                 type="password"
                 placeholder="Inserisci password"
@@ -114,7 +116,7 @@ const CustomRegister = () => {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formConfirmPassword">
-              <Form.Label>Conferma Password</Form.Label>
+              <Form.Label className="text-white">Conferma Password</Form.Label>
               <Form.Control
                 type="password"
                 placeholder="Conferma password"
@@ -123,12 +125,12 @@ const CustomRegister = () => {
               />
             </Form.Group>
 
-            <Button variant="dark" type="submit" className="w-100">
+            <Button variant="dark" type="submit" className="w-100 text-white">
               Registrati
             </Button>
 
             <div className="text-center mt-3">
-              <span className="text-muted">Già registrato?</span>
+              <span className=" text-white">Già registrato?</span>
               <Link to="/login" className="ms-2">
                 Accedi
               </Link>

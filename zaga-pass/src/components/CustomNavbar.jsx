@@ -117,7 +117,7 @@ const CustomNavbar = () => {
 
   return (
     <Navbar
-      variant="dark"
+      variant="light"
       expand="lg"
       className={"background text-color p-3 mynavbar "}
     >
@@ -131,8 +131,8 @@ const CustomNavbar = () => {
             className="d-inline-block align-top"
           />
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-dark-example" />
-        <Navbar.Collapse id="navbar-dark-example">
+        <Navbar.Toggle aria-controls="basic-light-example" />
+        <Navbar.Collapse id="navbar-light-example">
           <Nav
             className="me-auto my-2 my-lg-0"
             style={{ maxHeight: "100px" }}
