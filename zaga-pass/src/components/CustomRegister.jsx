@@ -125,7 +125,7 @@ const CustomRegister = () => {
               />
             </Form.Group>
 
-            <Button variant="dark" type="submit" className="w-100 text-white">
+            <Button type="submit" className="w-100 text-white">
               Registrati
             </Button>
 

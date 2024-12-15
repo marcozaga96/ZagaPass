@@ -100,10 +100,12 @@ const SerieTVComponents = ({ tvShowList }) => {
         })}
       </Row>
       <Modal show={show} onHide={handleClose} size="lg" centered>
-        <Modal.Header closeButton>
-          <Modal.Title>{currentSerieTV.title}</Modal.Title>
+        <Modal.Header closeButton className="modal-color">
+          <Modal.Title className="text-white">
+            {currentSerieTV.title}
+          </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="modal-color">
           {selectedTrailer ? (
             <div>
               <iframe
@@ -141,10 +143,10 @@ const SerieTVComponents = ({ tvShowList }) => {
           </div>
           <Link
             to={`/serietv/${currentSerieTV.id}/full`}
-            className="btn btn-dark mt-3"
+            className="btn btn-primary mt-3 mybutton"
             onClick={handleClose}
           >
-            View Details
+            Dettagli
           </Link>
         </Modal.Body>
       </Modal>

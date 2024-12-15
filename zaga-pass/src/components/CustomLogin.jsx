@@ -60,13 +60,13 @@ const CustomLogin = () => {
               />
             </Form.Group>
 
-            <Button variant="dark" type="submit" className="w-100">
-              Sign in
+            <Button type="submit" className="w-100 ">
+              Accedi
             </Button>
             <div className="text-center mt-3">
-              <span className="text-muted">Not a member?</span>
+              <span className="text-muted">Non sei iscritto?</span>
               <Link to="/register" className="ms-2">
-                Register
+                Registrati
               </Link>
             </div>
           </Form>

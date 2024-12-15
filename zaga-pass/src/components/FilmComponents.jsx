@@ -103,10 +103,10 @@ const FilmComponents = ({ movieList }) => {
         })}
       </Row>
       <Modal show={show} onHide={handleClose} size="lg" centered>
-        <Modal.Header closeButton>
-          <Modal.Title>{currentMovie.title}</Modal.Title>
+        <Modal.Header closeButton className="modal-color">
+          <Modal.Title className="text-white">{currentMovie.title}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="modal-color">
           {selectedTrailer ? (
             <div>
               <iframe
@@ -144,10 +144,10 @@ const FilmComponents = ({ movieList }) => {
           </div>
           <Link
             to={`/films/${currentMovie.id}/full`}
-            className="btn btn-dark mt-3"
+            className="btn btn-primary mt-3 mybutton"
             onClick={handleClose}
           >
-            View Details
+            Dettagli
           </Link>
         </Modal.Body>
       </Modal>

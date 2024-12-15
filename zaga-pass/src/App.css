@@ -48,7 +48,9 @@ body {
   background-color: #121212;
   border-radius: 1rem;
 }
-
+.modal-color {
+  background-color: #121212;
+}
 .card-overlay {
   position: absolute;
   top: 88%;

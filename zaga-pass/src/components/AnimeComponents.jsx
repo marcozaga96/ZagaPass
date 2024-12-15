@@ -103,10 +103,12 @@ const AnimeComponets = ({ animeList }) => {
       </Row>
 
       <Modal show={show} onHide={handleClose} size="lg" centered>
-        <Modal.Header closeButton>
-          <Modal.Title>{selectedAnime.title}</Modal.Title>
+        <Modal.Header closeButton className="modal-color text-white">
+          <Modal.Title className="text-white">
+            {selectedAnime.title}
+          </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="modal-color">
           {selectedTrailer ? (
             <div>
               <iframe
@@ -133,21 +135,20 @@ const AnimeComponets = ({ animeList }) => {
             }`}
             onClick={() => handleFavoriteClick(selectedAnime)}
           >
-            {" "}
             {localFavoritesList.some(
               (item) => item.mediaId === selectedAnime.mal_id
             ) ? (
               <FaHeart />
             ) : (
               <FaRegHeart />
-            )}{" "}
+            )}
           </div>
           <Link
             to={`/anime/${selectedAnime.mal_id}/full`}
-            className="btn btn-dark mt-3"
+            className="btn btn-primary mt-3 mybutton"
             onClick={handleClose}
           >
-            View Details
+            Dettagli
           </Link>
         </Modal.Body>
       </Modal>
